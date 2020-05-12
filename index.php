@@ -16,7 +16,8 @@
     <?php 
       echo "echo from php is working!<br>Testing!";
       echo "Tim was here deploy testing";
-      
+            echo "Tim was here deploy testing 12:08";
+
       // SQL and QUERY example
       // $sql = "SELECT * FROM Products";
       // $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
