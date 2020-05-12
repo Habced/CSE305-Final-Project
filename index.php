@@ -15,7 +15,7 @@
     index.php is working!<br>
     <?php 
       echo "echo from php is working!<br>Testing!";
-
+      echo "Tim was here deploy testing";
       
       // SQL and QUERY example
       // $sql = "SELECT * FROM Products";
