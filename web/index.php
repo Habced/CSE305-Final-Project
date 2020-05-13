@@ -8,12 +8,12 @@
     <meta content="" name="keywords">
 
     <?php 
-      require('../vendor/autoload.php');
-      $app->get('/cowsay', function() use($app) {
-        $app['monolog']->addDebug('cowsay');
-        return "<pre>".\Cowsayphp\Cow::say("Cool beans")."</pre>";
-      });
-      include 'include/dbConn.php';
+      // include '../vendor/autoload.php';
+      // $app->get('/', function() use($app) {
+      //   $app['monolog']->addDebug('logging output');
+      //   return "Hello World";
+      // });
+      include '../include/dbConn.php';
     ?>
   </head>
   <body>
@@ -50,6 +50,6 @@
 
 
 
-    <?php include 'include/EndDbConn.php';?>
+    <?php include '../include/EndDbConn.php';?>
   </body>
 </html>
