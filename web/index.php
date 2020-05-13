@@ -19,9 +19,7 @@
   <body>
     index.php is working!<br>
     <?php 
-      echo "echo from php is working!<br>Testing!";
-      echo "Tim was here deploy testing";
-            echo "Tim was here deploy testing 12:08";
+      echo "echo from php is working!";
 
       // SQL and QUERY example
       // $sql = "SELECT * FROM Products";
