@@ -85,9 +85,9 @@
       $create_business_open = $create_business_out = "";
 
       $create_restaurant_open = $create_restaurant_out = "";
-      $create_restaurant_weekday_open_time = $create_restaurant_weekday_end_time = $create_restaurant_weekend_open_time = $create_restaurant_weekend_end_time
+      $create_restaurant_restaurant_id = $create_restaurant_weekday_open_time = $create_restaurant_weekday_end_time = $create_restaurant_weekend_open_time = $create_restaurant_weekend_end_time
       = $create_restaurant_has_weekly_break = $create_restaurant_weekly_break_date = $create_restaurant_create_date = $create_restaurant_last_update = $create_restaurant_is_active = "";
-      $create_restaurant_weekday_open_timeErr = $create_restaurant_weekday_end_timeErr = $create_restaurant_weekend_open_timeErr = $create_restaurant_weekend_end_timeErr
+      $create_restaurant_restaurant_idErr = $create_restaurant_weekday_open_timeErr = $create_restaurant_weekday_end_timeErr = $create_restaurant_weekend_open_timeErr = $create_restaurant_weekend_end_timeErr
       = $create_restaurant_has_weekly_breakErr = $create_restaurant_weekly_break_dateErr = $create_restaurant_create_dateErr = $create_restaurant_last_updateErr = $create_restaurant_is_activeErr = "";
 
       $create_cuisine_open = $create_cuisine_out = "";
@@ -230,40 +230,151 @@
             $create_location_out = "Success";
           }
         }
+        
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
+          $create_restaurant_open = "is_open";
+          if (empty($_POST["create_restaurant_restaurant_id"])){
+            $create_restaurant_restaurant_idErr = "You must enter a value for create_restaurant_restaurant_id";
+          } else {
+            $create_restaurant_restaurant_id = test_input($_POST["create_restaurant_restaurant_id"]);
+          }
           if (empty($_POST["create_restaurant_weekday_open_time"])) {
             $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time";
+          } else {
+            $create_restaurant_weekday_open_time = test_input($_POST["create_restaurant_weekday_open_time"]);
           }
           if (empty($_POST["create_restaurant_weekday_end_time"])) {
             $create_restaurant_weekday_end_timeErr = "You must enter a value for create_restaurant_weekday_end_time";
+          } else {
+            $create_restaurant_weekday_end_time = test_input($_POST["create_restaurant_weekday_end_time"]);
           }
           if (empty($_POST["create_restaurant_weekend_open_time"])) {
             $create_restaurant_weekend_open_timeErr = "You must enter a value for create_restaurant_weekend_open_time";
+          } else {
+            $create_restaurant_weekend_open_time = test_input($_POST["create_restaurant_weekend_open_time"]);
           }
           if (empty($_POST["create_restaurant_weekend_end_time"])) {
             $create_restaurant_weekend_end_timeErr = "You must enter a value for create_restaurant_weekend_end_time";
+          } else {
+            $create_restaurant_weekend_end_time = test_input($_POST["create_restaurant_weekend_end_time"]);
           }
-          if (empty($_POST["create_restaurant_has_weekly_break"])) {
-            $create_restaurant_has_weekly_breakErr = "You must enter a value for create_restaurant_has_weekly_break";
-          }
-          if (empty($_POST["create_restaurant_weekly_break_date"])) {
-            $create_restaurant_weekly_break_dateErr = "You must enter a value for create_restaurant_weekly_break_date";
+          if ($_POST["create_restaurant_has_weekly_break"] == "on" && empty($_POST["create_restaurant_weekly_break_date"])){
+            $create_restaurant_has_weekly_breakErr = "You must uncheck the checkbox for create_restaurant_has_weekly_break"
+            $create_restaurant_weekly_break_dateErr = "Or you must enter a value for create_restaurant_weekly_break_date";
+          } else if (empty($_POST["create_restaurant_has_weekly_break"]) && !empty($_POST["create_restaurant_weekly_break_date"])) {
+            $create_restaurant_has_weekly_breakErr = "You must check the checkbox for create_restaurant_has_weekly_break"
+            $create_restaurant_weekly_break_dateErr = "Or you must not enter a value for create_restaurant_weekly_break_date";
+          } elseif ($_POST["create_restaurant_has_weekly_break"] == "on"){
+            $create_restaurnat_has_weekly_break = 1;
+            $create_restaurant_weekly_break_date = $_POST["create_restaurant_weekly_break_date"];
+          } 
+          }else {
+            $create_restaurnat_has_weekly_break = 0;
+            $create_restaurant_weekly_break_date = "None";
           }
           if (empty($_POST["create_restaurant_create_date"])) {
             $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
+          } else {
+            $create_restaurant_create_date = test_input($_POST["create_restaurant_create_date"]);
           }
           if (empty($_POST["create_restaurant_last_update"])) {
             $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
+          } else {
+            $create_restaurant_last_update = test_input($_POST["create_restaurant_last_update"]);
           }
-          if (empty($_POST["create_restaurant_is_active"])) {
-            $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
+          // if (empty($_POST["create_restaurant_is_active"])) {
+          //   $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
+          // } else {
+          //   $create_restaurant_is_active = test_input($_POST["create_restaurant_is_active"]);
+          // }
+          if ($create_restaurant_weekday_open_timeErr === "" && $create_restaurant_weekday_end_timeErr === "" && $create_restaurant_weekend_open_timeErr === "" &&
+          $create_restaurant_weekend_end_timeErr === "" && $create_restaurant_has_weekly_breakErr === "" && $create_restaurant_weekly_break_dateErr === "" && 
+          $create_restaurant_create_dateErr === "" && $create_restaurant_last_updateErr === "" && $create_restaurant_is_activeErr == "" && $create_restaurant_restaurant_idErr === ""){
+            $sql = "INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, has_weekly_break, weekly_break_date, create_date, last_update, is_active) 
+            VALUES (" . $create_restaurant_restaurant_id . ", \"" . $create_restaurant_weekday_open_time . "\", \"" . $create_restaurant_weekday_end_time . "\", \"" 
+            . $create_restaurant_weekend_open_time . "\", \"" . $create_restaurant_has_weekly_break . "\", \"" . $create_restaurant_weekly_break_date . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " . 1 . ")";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_restaurant_out = "Success";
           }
         }
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_create_serves"] )){ }
-        elseif ( isset($_POST["submit_form_create_person"] )){ }
-        elseif ( isset($_POST["submit_form_create_works_at"] )){ }
+        elseif ( isset($_POST["submit_form_create_person"] )){ 
+          $create_person_open = "is_open";
+          if (empty($_POST["create_person_person_id"])) {
+            $create_person_person_idErr = "You must enter a value for create_person_person_id";
+          } else {
+            $create_person_person_id = test_input($_POST["create_person_person_id"]);
+          }
+          if (empty($_POST["create_person_fullname"])) {
+            $create_person_fullnameErr = "You must enter a value for create_person_fullname";
+          } else {
+            $create_person_fullname = test_input($_POST["create_person_fullname"]);
+          }
+          if (empty($_POST["create_person_email"])) {
+            $create_person_emailErr = "You must enter a value for create_person_email";
+          } else {
+            $create_person_email = test_input($_POST["create_person_email"]);
+          }
+          if (empty($_POST["create_person_username"])) {
+            $create_person_usernameErr = "You must enter a value for create_person_username";
+          } else {
+            $create_person_username = test_input($_POST["create_person_username"]);
+          }
+          if (empty($_POST["create_person_password"])) {
+            $create_person_passwordErr = "You must enter a value for create_person_password";
+          } else {
+            $create_person_password = test_input($_POST["create_person_password"]);
+          }
+          // if (empty($_POST["create_person_create_date"])) {
+          //   $create_person_create_dateErr = "You must enter a value for create_person_create_date";
+          // } else {
+          //   $create_person_create_date = test_input($_POST["create_person_create_date"]);
+          // }
+          if (empty($_POST["create_person_last_update"])) {
+            $create_person_last_updateErr = "You must enter a value for create_person_last_update";
+          } else {
+            $create_person_last_update = test_input($_POST["create_person_last_update"]);
+          }
+          // if (empty($_POST["create_person_is_activate"])) {
+          //   $create_person_is_activateErr = "You must enter a value for create_person_is_activate";
+          // } else {
+          //   $create_person_is_activate = test_input($_POST["create_person_is_activate"]);
+          // }
+          if ($create_person_person_idErr === "" && $create_person_fullnameErr === "" &&  $create_person_emailErr === "" &&  $create_person_usernameErr === "" &&  
+          $create_person_passwordErr === "" && $create_person_is_activateErr === "") {
+            $sql = "INSERT INTO person (person_id, fullname, email, username, password, create_date, last_update, is_activate) 
+            VALUES (" . $create_person_person_id . ", \"" . $create_person_fullname . "\", \"" . $create_person_email . "\", \"" . $create_person_username . "\", \"" 
+            . $create_person_password . "\", " . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_person_out = "Success";
+          }
+        }
+        elseif ( isset($_POST["submit_form_create_works_at"] )){ 
+          $create_works_at_open = "is_open";
+          if (empty($_POST["create_works_at_works_for"])) {
+            $create_works_at_works_forErr = "You must enter a value for create_works_at_works_for";
+          } else {
+            $create_works_at_works_for = test_input($_POST["create_works_at_works_for"]);
+          }
+          if (empty($_POST["create_works_at_employed"])) {
+            $create_works_at_employedErr = "You must enter a value for create_works_at_employed";
+          } else {
+            $create_works_at_employed = test_input($_POST["create_works_at_employed"]);
+          }
+          if (empty($_POST["create_works_at_employee_type"])) {
+            $create_works_at_employee_typeErr = "You must enter a value for create_works_at_employee_type";
+          } else {
+            $create_works_at_employee_type = test_input($_POST["create_works_at_employee_type"]);
+          }
+          if ($create_works_at_works_forErr === "" && $create_works_at_employedErr === "" && $create_works_at_employee_typeErr === "") {
+            $sql = "INSERT INTO works_at (works_for, employed, employee_type) 
+            VALUES (" . $create_works_at_works_for . ", " . $create_works_at_employed . ", \"" . $create_works_at_employee_type . "\")";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_person_out = "Success";
+          }
+        }
         elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_create_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant_discussion"] )){ }
@@ -415,24 +526,26 @@
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        weekday_open_time: <input type="text" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
+        restaurant_id: <input type="number" id="create_restaurant_restaurant_id" name="create_restaurant_restaurant_id" value="<?php echo $create_restaurant_restaurant_id ?>">
+        <font color="red"><?php echo $create_restaurant_restaurant_idErr ?></font><br>
+        weekday_open_time: <input type="time" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
         <font color="red"><?php echo $create_restaurant_weekday_open_timeErr ?></font><br>
-        weekday_end_time: <input type="text" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
+        weekday_end_time: <input type="time" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $create_restaurant_weekday_end_timeErr ?></font><br>
-        weekend_open_time: <input type="text" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
+        weekend_open_time: <input type="time" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
-        weekend_end_time: <input type="text" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
+        weekend_end_time: <input type="time" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
         has_weekly_break: <input type="checkbox" id="create_restaurant_has_weekly_break" name="create_restaurant_has_weekly_break" value="<?php echo $create_restaurant_has_weekly_break ?>">
         <font color="red"><?php echo $create_restaurant_has_weekly_breakErr ?></font><br>
         weekly_break_date: <input type="text" id="create_restaurant_weekly_break_date" name="create_restaurant_weekly_break_date" value="<?php echo $create_restaurant_weekly_break_date ?>">
         <font color="red"><?php echo $create_restaurant_weekly_break_dateErr ?></font><br>
-        create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
+        <!-- create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
         <font color="red"><?php echo $create_restaurant_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_restaurant_last_update" name="create_restaurant_last_update" value="<?php echo $create_restaurant_last_update ?>">
         <font color="red"><?php echo $create_restaurant_last_updateErr ?></font><br>
         is_active: <input type="checkbox" id="create_restaurant_is_active" name="create_restaurant_is_active" value="<?php echo $create_restaurant_is_active ?>">
-        <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br>
+        <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_restaurant" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_div')">Clear Output</button>
@@ -470,17 +583,17 @@
           <font color="red"><?php echo $create_person_person_idErr ?></font><br>
         fullname: <input type="text" id="create_person_fullname" name="create_person_fullname" value="<?php echo $create_person_fullname ?>">
           <font color="red"><?php echo $create_person_fullnameErr ?></font><br>
-        email: <input type="text" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
+        email: <input type="email" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
           <font color="red"><?php echo $create_person_emailErr ?></font><br>
         username: <input type="text" id="create_person_username" name="create_person_username" value="<?php echo $create_person_username ?>">
           <font color="red"><?php echo $create_person_usernameErr ?></font><br>
-        password: <input type="text" id="create_person_password" name="create_person_password" value="<?php echo $create_person_password ?>">
+        password: <input type="password" id="create_person_password" name="create_person_password" value="<?php echo $create_person_password ?>">
           <font color="red"><?php echo $create_person_passwordErr ?></font><br>
-        create_date: <input type="date" id="create_person_create_date" name="create_person_create_date" value="<?php echo $create_person_create_date ?>">
+        <!-- create_date: <input type="date" id="create_person_create_date" name="create_person_create_date" value="<?php echo $create_person_create_date ?>">
           <font color="red"><?php echo $create_person_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_person_last_update" name="create_person_last_update" value="<?php echo $create_person_last_update ?>">
-          <font color="red"><?php echo $create_person_last_updateErr ?></font><br>
-        is_activate: <input type="checkbox" id="create_person_is_activate" name="create_person_is_activate" value="<?php echo $create_person_is_activate ?>">
+          <font color="red"><?php echo $create_person_last_updateErr ?></font><br> -->
+        <!-- is_activate: <input type="checkbox" id="create_person_is_activate" name="create_person_is_activate" value="<?php echo $create_person_is_activate ?>"> -->
         <font color="red"><?php echo $create_person_is_activateErr ?></font><br>
         <input type="submit" name="submit_form_create_person" value="Submit">
       </form>
