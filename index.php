@@ -79,7 +79,9 @@
       // https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_complete
       // define variables and set to empty values
       // $__open = $__out = $__fields = $__fieldsErr = "";
-      $create_location_open = $create_location_out = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = "";
+      $create_location_open = $create_location_out = ""; 
+      $create_location_bldgMgmtNo = $create_location_zip_no = $create_location_jibun_juso = "";
+      $create_location_bldgMgmtNoErr = $create_location_zip_noErr = $create_location_jibun_jusoErr = "";
       $create_business_open = $create_business_out = "";
       $create_restaurant_open = $create_restaurant_out = "";
       $create_cuisine_open = $create_cuisine_out = "";
@@ -129,9 +131,6 @@
 
       // // 
       // $create_location_open = "is_open";
-      // //   bldgMgmtNo
-      // // zip_no
-      // // jibun_juso
       //   if (empty($_POST["a_field1"])) {
       //     $a_field1Err = "You must enter a value for field1";
       //   }
@@ -153,7 +152,31 @@
         // Hand multiple submits in a single file
         //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
         if ( isset($_POST["submit_form_create_location"] )){ 
-
+          $create_location_open = "is_open";
+          if (empty($_POST["create_location_bldgMgmtNo"])) { 
+            $create_location_bldgMgmtNoErr = "You must enter a value for bldgMgmtNo"; 
+          } else {
+            $create_location_bldgMgmtNo = test_input($_POST["create_location_bldgMgmtNo"]);
+          }
+          if (empty($_POST["create_location_zip_no"])) { 
+            $create_location_zip_noErr = "You must enter a value for zip_no"; 
+          } 
+          elseif (strlen($_POST["create_location_zip_no"]) > 7) {
+            $create_location_zip_noErr = "Value zip_no is too long. Must be under 7 characters"; 
+          } else {
+            $create_location_zip_no = test_input($_POST["create_location_zip_no"]);
+          }
+          if (empty($_POST["create_location_jibun_juso"])) { 
+            $create_location_jibun_jusoErr = "You must enter a value for field1"; 
+          } else {
+            $create_location_jibun_juso = test_input($_POST["create_location_jibun_juso"]);
+          }
+          if( $create_location_bldgMgmtNoErr === "" && $create_location_zip_noErr === "" && $create_location_jibun_jusoErr === "" ) {
+            $sql = "INSERT INTO location (bldgMgmtNo, zip_no, jibun_juso, create_date, last_update, is_active) VALUES (" . $create_location_bldgMgmtNo . ", \"" . $create_location_zip_no . "\", \"" . $create_location_jibun_juso . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            echo $sql . "<br>";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_location_out = "Success";
+          }
         }
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ }
@@ -284,17 +307,17 @@
     <div id="create_location" class="tabcontent">
       <h3>Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $a_bldgMgmtNo ?>">
-        <font color="red"><?php echo $a_bldgMgmtNoErr ?></font><br>
-        zip_no: <input type="number" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $a_zip_no ?>">
-        <font color="red"><?php echo $a_zip_noErr ?></font><br>
-        jibun_juso: <input type="number" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $a_jibun_juso ?>">
-        <font color="red"><?php echo $a_jibun_jusoErr ?></font><br>
+        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $create_location_bldgMgmtNoErr ?></font><br>
+        zip_no: <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
+        <font color="red"><?php echo $create_location_zip_noErr ?></font><br>
+        jibun_juso: <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
+        <font color="red"><?php echo $create_location_jibun_jusoErr ?></font><br>
         <input type="submit" name="submit_form_create_location" value="Submit">
       </form>
-      <button onclick="clearElement('a_div')">Clear Output</button>
-      <div id="a_div">
-        <?php echo $a_out; ?>
+      <button onclick="clearElement('create_location_div')">Clear Output</button>
+      <div id="create_location_div">
+        <?php echo $create_location_out; ?>
       </div> 
     </div>
 
