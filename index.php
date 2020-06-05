@@ -729,9 +729,9 @@
         <!-- create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
         <font color="red"><?php echo $create_restaurant_review_create_date ?></font><br>
         last_update: <input type="date" id="create_restaurant_review_last_update" name="create_restaurant_review_last_update" value="<?php echo $create_restaurant_review_last_update ?>">
-        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br> -->
+        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br> 
         is_active: <input type="checkbox" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
-        <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>
+        <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>-->
         <input type="submit" name="submit_form_create_restaurant_review" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_review_div')">Clear Output</button>
@@ -755,9 +755,9 @@
         <!-- create_date: <input type="date" id="create_review_followup_create_date" name="create_review_followup_create_date" value="<?php echo $create_review_followup_create_date ?>">
         <font color="red"><?php echo $create_review_followup_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_review_followup_last_update" name="create_review_followup_last_update" value="<?php echo $create_review_followup_last_update ?>">
-        <font color="red"><?php echo $create_review_followup_last_updateErr ?></font><br> -->
+        <font color="red"><?php echo $create_review_followup_last_updateErr ?></font><br>
         is_active: <input type="checkbox" id="create_review_followup_is_active" name="create_review_followup_is_active" value="<?php echo $create_review_followup_is_active ?>">
-        <font color="red"><?php echo $create_review_followup_is_activeErr ?></font><br>
+        <font color="red"><?php echo $create_review_followup_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_review_followup" value="Submit">
       </form>
       <button onclick="clearElement('create_review_followup_div')">Clear Output</button>
@@ -780,9 +780,9 @@
         <!-- create_date: <input type="date" id="create_restaurant_discussion_create_date" name="create_restaurant_discussion_create_date" value="<?php echo $create_restaurant_discussion_create_date ?>">
         <font color="red"><?php echo $create_restaurant_discussion_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_restaurant_discussion_last_update" name="create_restaurant_discussion_last_update" value="<?php echo $create_restaurant_discussion_last_update ?>">
-        <font color="red"><?php echo $create_restaurant_discussion_last_updateErr ?></font><br> -->
+        <font color="red"><?php echo $create_restaurant_discussion_last_updateErr ?></font><br>
         is_active: <input type="checkbox" id="create_restaurant_discussion_is_active" name="create_restaurant_discussion_is_active" value="<?php echo $create_restaurant_discussion_is_active ?>">
-        <font color="red"><?php echo $create_restaurant_discussion_is_active ?></font><br>
+        <font color="red"><?php echo $create_restaurant_discussion_is_active ?></font><br> -->
         <input type="submit" name="submit_form_create_restaurant_discussion" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_discussion_div')">Clear Output</button>
@@ -805,9 +805,9 @@
         <!-- create_date: <input type="date" id="create_discussion_reply_create_date" name="create_discussion_reply_create_date" value="<?php echo $create_discussion_reply_create_date ?>">
         <font color="red"><?php echo $create_discussion_reply_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_discussion_reply_last_update" name="create_discussion_reply_last_update" value="<?php echo $create_discussion_reply_last_update ?>">
-        <font color="red"><?php echo $create_discussion_reply_last_updateErr ?></font><br> -->
+        <font color="red"><?php echo $create_discussion_reply_last_updateErr ?></font><br> 
         is_active: <input type="checkbox" id="create_discussion_reply_is_active" name="create_discussion_reply_is_active" value="<?php echo $create_discussion_reply_is_active ?>">
-        <font color="red"><?php echo $create_discussion_reply_is_activeErr ?></font><br>
+        <font color="red"><?php echo $create_discussion_reply_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_discussion_reply" value="Submit">
       </form>
       <button onclick="clearElement('create_discussion_reply_div')">Clear Output</button>
