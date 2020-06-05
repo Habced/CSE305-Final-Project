@@ -94,9 +94,14 @@
       $create_serves_open = $create_serves_out = "";
 
       $create_person_open = $create_person_out = "";
+      $create_person_person_id = $create_person_fullname = $create_person_email = $create_person_username = $create_person_password = $create_person_create_date
+      = $create_person_last_update = $create_person_is_activate = "";
+      $create_person_person_idErr = $create_person_fullnameErr = $create_person_emailErr = $create_person_usernameErr = $create_person_passwordErr = $create_person_create_dateErr
+      = $create_person_last_updateErr = $create_person_is_activateErr = "";
 
-      
       $create_works_at_open = $create_works_at_out = "";
+      $create_works_at_works_for = $create_works_at_employed = $create_works_at_employee_type = "";
+      $create_works_at_works_forErr = $create_works_at_employedErr = $create_works_at_employee_typeErr = "";
 
       $create_restaurant_review_open = $create_restaurant_review_out = 
       $create_restaurant_review_review_id = $create_restaurant_review_reviewed_by = $create_restaurant_review_reviewed_restaurant= $create_restaurant_review_review_star = $create_restaurant_review_review_content = $create_restaurant_review_create_date= $create_restaurant_review_last_update = $create_restaurant_review_is_active=
@@ -144,7 +149,7 @@
       $update_restaurant_review_open = $update_restaurant_review_out = 
       $update_restaurant_review_review_id = $update_restaurant_review_reviewed_by = $update_restaurant_review_reviewed_restaurant= $update_restaurant_review_review_star = $update_restaurant_review_review_content = $update_restaurant_review_update_date= $update_restaurant_review_last_update = $update_restaurant_review_is_active=
       $update_restaurant_review_review_idErr = $update_restaurant_review_reviewed_byErr = $update_restaurant_review_reviewed_restaurantErr = $update_restaurant_review_review_starErr = $update_restaurant_review_review_contentErr = $update_restaurant_review_update_dateErr= $update_restaurant_review_last_updateErr = $update_restaurant_review_is_activeErr="";
-      $update_review_followup_open = $update_review_followup_out = "";
+      $update_review_followup_open = $update_review_followup_out =
       $update_review_followup_followup_id= $update_review_followup_followup_up_by = $update_review_followup_for_review= $update_review_followup_followup_content =$update_review_followup_update_date =$update_review_followup_last_date = $update_review_followup_is_active=
       $update_review_followup_followup_idErr= $update_review_followup_followup_up_byErr = $update_review_followup_for_reviewErr= $update_review_followup_followup_contentErr =$update_review_followup_update_dateErr =$update_review_followup_last_dateErr = $update_review_followup_is_activeErr=""; 
       $update_restaurant_discussion_open = $update_restaurant_discussion_out = 
@@ -228,31 +233,31 @@
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
           if (empty($_POST["create_restaurant_weekday_open_time"])) {
-            $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time"
+            $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time";
           }
           if (empty($_POST["create_restaurant_weekday_end_time"])) {
-            $create_restaurant_weekday_end_timeErr = "You must enter a value for create_restaurant_weekday_end_time"
+            $create_restaurant_weekday_end_timeErr = "You must enter a value for create_restaurant_weekday_end_time";
           }
           if (empty($_POST["create_restaurant_weekend_open_time"])) {
-            $create_restaurant_weekend_open_timeErr = "You must enter a value for create_restaurant_weekend_open_time"
+            $create_restaurant_weekend_open_timeErr = "You must enter a value for create_restaurant_weekend_open_time";
           }
           if (empty($_POST["create_restaurant_weekend_end_time"])) {
-            $create_restaurant_weekend_end_timeErr = "You must enter a value for create_restaurant_weekend_end_time"
+            $create_restaurant_weekend_end_timeErr = "You must enter a value for create_restaurant_weekend_end_time";
           }
           if (empty($_POST["create_restaurant_has_weekly_break"])) {
-            $create_restaurant_has_weekly_breakErr = "You must enter a value for create_restaurant_has_weekly_break"
+            $create_restaurant_has_weekly_breakErr = "You must enter a value for create_restaurant_has_weekly_break";
           }
           if (empty($_POST["create_restaurant_weekly_break_date"])) {
-            $create_restaurant_weekly_break_dateErr = "You must enter a value for create_restaurant_weekly_break_date"
+            $create_restaurant_weekly_break_dateErr = "You must enter a value for create_restaurant_weekly_break_date";
           }
           if (empty($_POST["create_restaurant_create_date"])) {
-            $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date"
+            $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
           }
           if (empty($_POST["create_restaurant_last_update"])) {
-            $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update"
+            $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
           }
           if (empty($_POST["create_restaurant_is_active"])) {
-            $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active"
+            $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
           }
         }
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
