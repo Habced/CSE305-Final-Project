@@ -79,17 +79,28 @@
       // https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_complete
       // define variables and set to empty values
       // $__open = $__out = $__fields = $__fieldsErr = "";
-      $create_location_open = $create_location_out = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = "";
+      $create_location_open = $create_location_out = ""; 
+      $create_location_bldgMgmtNo = $create_location_zip_no = $create_location_jibun_juso = "";
+      $create_location_bldgMgmtNoErr = $create_location_zip_noErr = $create_location_jibun_jusoErr = "";
       $create_business_open = $create_business_out = "";
       $create_restaurant_open = $create_restaurant_out = "";
       $create_cuisine_open = $create_cuisine_out = "";
       $create_serves_open = $create_serves_out = "";
       $create_person_open = $create_person_out = "";
       $create_works_at_open = $create_works_at_out = "";
-      $create_restaurant_review_open = $create_restaurant_review_out = "";
-      $create_review_followup_open = $create_review_followup_out = "";
-      $create_restaurant_discussion_open = $create_restaurant_discussion_out = "";
-      $create_discussion_reply_open =   $create_discussion_reply_out = "";
+
+      $create_restaurant_review_open = $create_restaurant_review_out = 
+      $create_restaurant_review_review_id = $create_restaurant_review_reviewed_by = $create_restaurant_review_reviewed_restaurant= $create_restaurant_review_review_star = $create_restaurant_review_review_content = $create_restaurant_review_create_date= $create_restaurant_review_last_update = $create_restaurant_review_is_active=
+      $create_restaurant_review_review_idErr = $create_restaurant_review_reviewed_byErr = $create_restaurant_review_reviewed_restaurantErr = $create_restaurant_review_review_starErr = $create_restaurant_review_review_contentErr = $create_restaurant_review_create_dateErr= $create_restaurant_review_last_updateErr = $create_restaurant_review_is_activeErr="";
+      $create_review_followup_open = $create_review_followup_out = 
+      $create_review_followup_followup_id= $create_review_followup_followup_up_by = $create_review_followup_for_review= $create_review_followup_followup_content =$create_review_followup_create_date =$create_review_followup_last_date = $create_review_followup_is_active=
+      $create_review_followup_followup_idErr= $create_review_followup_followup_up_byErr = $create_review_followup_for_reviewErr= $create_review_followup_followup_contentErr =$create_review_followup_create_dateErr =$create_review_followup_last_dateErr = $create_review_followup_is_activeErr=""; 
+      $create_restaurant_discussion_open = $create_restaurant_discussion_out = 
+      $create_restaurant_discussion_discussion_id=$create_restaurant_discussion_discussed_by=$create_restaurant_discussion_discussed_restaurant = $create_restaurant_discussion_discussion_content = $create_restaurant_discussion_create_date =$create_restaurant_discussion_last_update= $create_restaurant_discussion_is_active =
+      $create_restaurant_discussion_discussion_idErr=$create_restaurant_discussion_discussed_byErr=$create_restaurant_discussion_discussed_restaurantErr = $create_restaurant_discussion_discussion_contentErr = $create_restaurant_discussion_create_dateErr =$create_restaurant_discussion_last_updateErr= $create_restaurant_discussion_is_activeErr ="";
+      $create_discussion_reply_open = $create_discussion_reply_out = 
+      $create_discussion_reply_reply_id = $create_discussion_reply_replied_by = $create_discussion_reply_for_discussion = $create_discussion_reply_reply_content =$create_discussion_reply_create_date = $create_discussion_reply_last_update = $create_discussion_reply_is_active =
+      $create_discussion_reply_reply_idErr = $create_discussion_reply_replied_byErr = $create_discussion_reply_for_discussionErr = $create_discussion_reply_reply_contentErr =$create_discussion_reply_create_dateErr = $create_discussion_reply_last_updateErr = $create_discussion_reply_is_activeErr ="";
 
       $read_location_open = $read_location_out = "";
       $read_business_open =  $read_business_out = "";
@@ -98,10 +109,20 @@
       $read_serves_open = $read_serves_out = "";
       $read_person_open = $read_person_out = "";
       $read_works_at_open = $read_works_at_out = "";
-      $read_restaurant_review_open = $read_restaurant_review_out = "";
-      $read_review_followup_open = $read_review_followup_out = "";
-      $read_restaurant_discussion_open = $read_restaurant_discussion_out = "";
-      $read_discussion_reply_open = $read_discussion_reply_out = "";
+   
+      $read_restaurant_review_open = $read_restaurant_review_out = 
+      $read_restaurant_review_review_id = $read_restaurant_review_reviewed_by = $read_restaurant_review_reviewed_restaurant= $read_restaurant_review_review_star = $read_restaurant_review_review_content = $read_restaurant_review_read_date= $read_restaurant_review_last_update = $read_restaurant_review_is_active=
+      $read_restaurant_review_review_idErr = $read_restaurant_review_reviewed_byErr = $read_restaurant_review_reviewed_restaurantErr = $read_restaurant_review_review_starErr = $read_restaurant_review_review_contentErr = $read_restaurant_review_read_dateErr= $read_restaurant_review_last_updateErr = $read_restaurant_review_is_activeErr="";
+      $read_review_followup_open = $read_review_followup_out = 
+      $read_review_followup_followup_id= $read_review_followup_followup_up_by = $read_review_followup_for_review= $read_review_followup_followup_content =$read_review_followup_read_date =$read_review_followup_last_date = $read_review_followup_is_active=
+      $read_review_followup_followup_idErr= $read_review_followup_followup_up_byErr = $read_review_followup_for_reviewErr= $read_review_followup_followup_contentErr =$read_review_followup_read_dateErr =$read_review_followup_last_dateErr = $read_review_followup_is_activeErr=""; 
+      $read_restaurant_discussion_open = $read_restaurant_discussion_out = 
+      $read_restaurant_discussion_discussion_id=$read_restaurant_discussion_discussed_by=$read_restaurant_discussion_discussed_restaurant = $read_restaurant_discussion_discussion_content = $read_restaurant_discussion_read_date =$read_restaurant_discussion_last_update= $read_restaurant_discussion_is_active =
+      $read_restaurant_discussion_discussion_idErr=$read_restaurant_discussion_discussed_byErr=$read_restaurant_discussion_discussed_restaurantErr = $read_restaurant_discussion_discussion_contentErr = $read_restaurant_discussion_read_dateErr =$read_restaurant_discussion_last_updateErr= $read_restaurant_discussion_is_activeErr ="";
+      $read_discussion_reply_open = $read_discussion_reply_out = 
+      $read_discussion_reply_reply_id = $read_discussion_reply_replied_by = $read_discussion_reply_for_discussion = $read_discussion_reply_reply_content =$read_discussion_reply_read_date = $read_discussion_reply_last_update = $read_discussion_reply_is_active =
+      $read_discussion_reply_reply_idErr = $read_discussion_reply_replied_byErr = $read_discussion_reply_for_discussionErr = $read_discussion_reply_reply_contentErr =$read_discussion_reply_read_dateErr = $read_discussion_reply_last_updateErr = $read_discussion_reply_is_activeErr ="";
+
 
       $update_location_open = $update_location_out = "";
       $update_business_open = $update_business_out = "";
@@ -110,10 +131,20 @@
       $update_serves_open = $update_serves_out = "";
       $update_person_open = $update_person_out = "";
       $update_works_at_open = $update_works_at_out = "";
-      $update_restaurant_review_open = $update_restaurant_review_out = "";
-      $update_review_followup_open = $update_review_followup_out = "";
-      $update_restaurant_discussion_open = $update_restaurant_discussion_out = "";
-      $update_discussion_reply_open = $update_discussion_reply_out = "";
+  
+      $update_restaurant_review_open = $update_restaurant_review_out = 
+      $update_restaurant_review_review_id = $update_restaurant_review_reviewed_by = $update_restaurant_review_reviewed_restaurant= $update_restaurant_review_review_star = $update_restaurant_review_review_content = $update_restaurant_review_update_date= $update_restaurant_review_last_update = $update_restaurant_review_is_active=
+      $update_restaurant_review_review_idErr = $update_restaurant_review_reviewed_byErr = $update_restaurant_review_reviewed_restaurantErr = $update_restaurant_review_review_starErr = $update_restaurant_review_review_contentErr = $update_restaurant_review_update_dateErr= $update_restaurant_review_last_updateErr = $update_restaurant_review_is_activeErr="";
+      $update_review_followup_open = $update_review_followup_out = 
+      $update_review_followup_followup_id= $update_review_followup_followup_up_by = $update_review_followup_for_review= $update_review_followup_followup_content =$update_review_followup_update_date =$update_review_followup_last_date = $update_review_followup_is_active=
+      $update_review_followup_followup_idErr= $update_review_followup_followup_up_byErr = $update_review_followup_for_reviewErr= $update_review_followup_followup_contentErr =$update_review_followup_update_dateErr =$update_review_followup_last_dateErr = $update_review_followup_is_activeErr=""; 
+      $update_restaurant_discussion_open = $update_restaurant_discussion_out = 
+      $update_restaurant_discussion_discussion_id=$update_restaurant_discussion_discussed_by=$update_restaurant_discussion_discussed_restaurant = $update_restaurant_discussion_discussion_content = $update_restaurant_discussion_update_date =$update_restaurant_discussion_last_update= $update_restaurant_discussion_is_active =
+      $update_restaurant_discussion_discussion_idErr=$update_restaurant_discussion_discussed_byErr=$update_restaurant_discussion_discussed_restaurantErr = $update_restaurant_discussion_discussion_contentErr = $update_restaurant_discussion_update_dateErr =$update_restaurant_discussion_last_updateErr= $update_restaurant_discussion_is_activeErr ="";
+      $update_discussion_reply_open = $update_discussion_reply_out = 
+      $update_discussion_reply_reply_id = $update_discussion_reply_replied_by = $update_discussion_reply_for_discussion = $update_discussion_reply_reply_content =$update_discussion_reply_update_date = $update_discussion_reply_last_update = $update_discussion_reply_is_active =
+      $update_discussion_reply_reply_idErr = $update_discussion_reply_replied_byErr = $update_discussion_reply_for_discussionErr = $update_discussion_reply_reply_contentErr =$update_discussion_reply_update_dateErr = $update_discussion_reply_last_updateErr = $update_discussion_reply_is_activeErr ="";
+
 
       $delete_location_open = $delete_location_out = "";
       $delete_business_open = $delete_business_out = "";
@@ -122,16 +153,23 @@
       $delete_serves_open = $delete_serves_out = "";
       $delete_person_open = $delete_person_out = "";
       $delete_works_at_open = $delete_works_at_out = "";
-      $delete_restaurant_review_open = $delete_restaurant_review_out = "";
-      $delete_review_followup_open = $delete_review_followup_out = "";
-      $delete_restaurant_discussion_open = $delete_restaurant_discussion_out = "";
-      $delete_discussion_reply_open = $delete_discussion_reply_out = "";
+
+      $delete_restaurant_review_open = $delete_restaurant_review_out = 
+      $delete_restaurant_review_review_id = $delete_restaurant_review_reviewed_by = $delete_restaurant_review_reviewed_restaurant= $delete_restaurant_review_review_star = $delete_restaurant_review_review_content = $delete_restaurant_review_delete_date= $delete_restaurant_review_last_update = $delete_restaurant_review_is_active=
+      $delete_restaurant_review_review_idErr = $delete_restaurant_review_reviewed_byErr = $delete_restaurant_review_reviewed_restaurantErr = $delete_restaurant_review_review_starErr = $delete_restaurant_review_review_contentErr = $delete_restaurant_review_delete_dateErr= $delete_restaurant_review_last_updateErr = $delete_restaurant_review_is_activeErr="";
+      $delete_review_followup_open = $delete_review_followup_out = 
+      $delete_review_followup_followup_id= $delete_review_followup_followup_up_by = $delete_review_followup_for_review= $delete_review_followup_followup_content =$delete_review_followup_delete_date =$delete_review_followup_last_date = $delete_review_followup_is_active=
+      $delete_review_followup_followup_idErr= $delete_review_followup_followup_up_byErr = $delete_review_followup_for_reviewErr= $delete_review_followup_followup_contentErr =$delete_review_followup_delete_dateErr =$delete_review_followup_last_dateErr = $delete_review_followup_is_activeErr=""; 
+      $delete_restaurant_discussion_open = $delete_restaurant_discussion_out = 
+      $delete_restaurant_discussion_discussion_id=$delete_restaurant_discussion_discussed_by=$delete_restaurant_discussion_discussed_restaurant = $delete_restaurant_discussion_discussion_content = $delete_restaurant_discussion_delete_date =$delete_restaurant_discussion_last_update= $delete_restaurant_discussion_is_active =
+      $delete_restaurant_discussion_discussion_idErr=$delete_restaurant_discussion_discussed_byErr=$delete_restaurant_discussion_discussed_restaurantErr = $delete_restaurant_discussion_discussion_contentErr = $delete_restaurant_discussion_delete_dateErr =$delete_restaurant_discussion_last_updateErr= $delete_restaurant_discussion_is_activeErr ="";
+      $delete_discussion_reply_open = $delete_discussion_reply_out = 
+      $delete_discussion_reply_reply_id = $delete_discussion_reply_replied_by = $delete_discussion_reply_for_discussion = $delete_discussion_reply_reply_content =$delete_discussion_reply_delete_date = $delete_discussion_reply_last_update = $delete_discussion_reply_is_active =
+      $delete_discussion_reply_reply_idErr = $delete_discussion_reply_replied_byErr = $delete_discussion_reply_for_discussionErr = $delete_discussion_reply_reply_contentErr =$delete_discussion_reply_delete_dateErr = $delete_discussion_reply_last_updateErr = $delete_discussion_reply_is_activeErr ="";
+
 
       // // 
       // $create_location_open = "is_open";
-      // //   bldgMgmtNo
-      // // zip_no
-      // // jibun_juso
       //   if (empty($_POST["a_field1"])) {
       //     $a_field1Err = "You must enter a value for field1";
       //   }
@@ -153,7 +191,30 @@
         // Hand multiple submits in a single file
         //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
         if ( isset($_POST["submit_form_create_location"] )){ 
-
+          $create_location_open = "is_open";
+          if (empty($_POST["create_location_bldgMgmtNo"])) { 
+            $create_location_bldgMgmtNoErr = "You must enter a value for bldgMgmtNo"; 
+          } else {
+            $create_location_bldgMgmtNo = test_input($_POST["create_location_bldgMgmtNo"]);
+          }
+          if (empty($_POST["create_location_zip_no"])) { 
+            $create_location_zip_noErr = "You must enter a value for zip_no"; 
+          } 
+          elseif (strlen($_POST["create_location_zip_no"]) > 7) {
+            $create_location_zip_noErr = "Value zip_no is too long. Must be under 7 characters"; 
+          } else {
+            $create_location_zip_no = test_input($_POST["create_location_zip_no"]);
+          }
+          if (empty($_POST["create_location_jibun_juso"])) { 
+            $create_location_jibun_jusoErr = "You must enter a value for field1"; 
+          } else {
+            $create_location_jibun_juso = test_input($_POST["create_location_jibun_juso"]);
+          }
+          if( $create_location_bldgMgmtNoErr === "" && $create_location_zip_noErr === "" && $create_location_jibun_jusoErr === "" ) {
+            $sql = "INSERT INTO location (bldgMgmtNo, zip_no, jibun_juso, create_date, last_update, is_active) VALUES (" . $create_location_bldgMgmtNo . ", \"" . $create_location_zip_no . "\", \"" . $create_location_jibun_juso . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_location_out = "Success";
+          }
         }
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
@@ -331,17 +392,17 @@
     <div id="create_location" class="tabcontent">
       <h3>Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $a_bldgMgmtNo ?>">
-        <font color="red"><?php echo $a_bldgMgmtNoErr ?></font><br>
-        zip_no: <input type="number" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $a_zip_no ?>">
-        <font color="red"><?php echo $a_zip_noErr ?></font><br>
-        jibun_juso: <input type="number" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $a_jibun_juso ?>">
-        <font color="red"><?php echo $a_jibun_jusoErr ?></font><br>
+        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $create_location_bldgMgmtNoErr ?></font><br>
+        zip_no: <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
+        <font color="red"><?php echo $create_location_zip_noErr ?></font><br>
+        jibun_juso: <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
+        <font color="red"><?php echo $create_location_jibun_jusoErr ?></font><br>
         <input type="submit" name="submit_form_create_location" value="Submit">
       </form>
-      <button onclick="clearElement('a_div')">Clear Output</button>
-      <div id="a_div">
-        <?php echo $a_out; ?>
+      <button onclick="clearElement('create_location_div')">Clear Output</button>
+      <div id="create_location_div">
+        <?php echo $create_location_out; ?>
       </div> 
     </div>
 
@@ -454,6 +515,12 @@
     <div id="create_restaurant_review" class="tabcontent">
       <h3>create_restaurant_review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $a_bldgMgmtNo ?>">
+        <font color="red"><?php echo $a_bldgMgmtNoErr ?></font><br>
+        zip_no: <input type="number" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $a_zip_no ?>">
+        <font color="red"><?php echo $a_zip_noErr ?></font><br>
+        jibun_juso: <input type="number" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $a_jibun_juso ?>">
+        <font color="red"><?php echo $a_jibun_jusoErr ?></font><br>
         <input type="submit" name="submit_form_create_restaurant_review" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_review_div')">Clear Output</button>
@@ -896,4 +963,4 @@
 
     <?php mysqli_close($conn); ?>
   </body>
-</html>
+</html> 
