@@ -26,7 +26,7 @@
         border: none;
         outline: none;
         cursor: pointer;
-        padding: 14px 16px;
+        padding: 5px 5px;
         transition: 0.3s;
       }
 
@@ -78,14 +78,22 @@
 
       // https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_complete
       // define variables and set to empty values
-      $a_open = $b_open = "";
-      $a_out = $b_out = "";
+      $a_open = $b_open = $review_open = "";
+      $a_out = $b_out = $review_out = "";
+
       $a_field1 = $a_field1Err = "";
+      $c_field1 = $c_field1Err = "";
+      $c_field2 = $c_field2Err = "";
+      $c_field3 = $c_field3Err = "";
+
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Hand multiple submits in a single file
         //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
         if ( isset($_POST["submit_form_a"] )){
           $a_open = "is_open";
+        //   bldgMgmtNo
+        // zip_no
+        // jibun_juso
           if (empty($_POST["a_field1"])) {
             $a_field1Err = "You must enter a value for field1";
           }
@@ -104,37 +112,119 @@
           }
         } elseif ( isset($_POST["submit_form_b"] )) {
           $b_open = "is_open";
+        } elseif ( isset($_POST["submit_form_reviewsubmission"] )) {
+          $review_open = "is_open";
+          if (empty($_POST["c_field1"])) {
+            $c_field1Err = "You must enter a value for field1";
+          }
+          if (empty($_POST["c_field2"])) {
+            $c_field2Err = "You must enter a value for field1";
+          }
+          if (empty($_POST["c_field3"])) {
+            $c_field3Err = "You must enter a value for field1";
+          }
+          if( $c_field1Err === "" ) {
+            $sql = "SELECT * FROM playground_tests;";
+          }
         }
       }
 
     ?>
 
-    <h1>
-      Kyuri Kyeong <br>
-      Daekyung (Tim) Kim <br>
+    <h5>
+      Kyuri Kyeong - 111827215 - kyuri.kyeong@stonybrook.edu<br>
+      Daekyung (Tim) Kim - 110887867 - daekyung.kim@stonybrooke.du<br>
       Haseung Lee - 110983860 - haseung.lee@stonybrook.edu
-    </h1>
+    </h5>
     <!-- Tab links -->
     <div class="tab">
-      <button class="tablinks" onclick="openPart(event, 'a')" id="<?php echo $a_open; ?>">Part (a)</button>
-      <button class="tablinks" onclick="openPart(event, 'b')" id="<?php echo $b_open; ?>">Part (b)</button>
+      <!-- CREATE -->
+      <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
+      <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
+      <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'create_cuisine')" id="<?php echo $create_cuisine_open; ?>">Create Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'create_serves')" id="<?php echo $create_serves_open; ?>">Create Serves</button>
+      <button class="tablinks" onclick="openPart(event, 'create_person')" id="<?php echo $create_person_open; ?>">Create Person</button>
+      <button class="tablinks" onclick="openPart(event, 'create_works_at')" id="<?php echo $create_works_at_open; ?>">Create Works At</button>
+      <button class="tablinks" onclick="openPart(event, 'create_restaurant_review')" id="<?php echo $create_restaurant_review_open; ?>">Create Restaurant Review</button>
+      <button class="tablinks" onclick="openPart(event, 'create_review_followup')" id="<?php echo $create_review_followup_open; ?>">Create Review Followup</button>
+      <button class="tablinks" onclick="openPart(event, 'create_restaurant_discussion')" id="<?php echo $create_restaurant_discussion_open; ?>">Create Restaurant Discussion</button>
+      <button class="tablinks" onclick="openPart(event, 'create_discussion_reply')" id="<?php echo $create_discussion_reply_open; ?>">Create Discussion Reply</button>
+    </div>
+    <div class="tab">
+      <!-- READ -->
+      <button class="tablinks" onclick="openPart(event, 'read_location')" id="<?php echo $read_location_open; ?>">Read Location</button>
+      <button class="tablinks" onclick="openPart(event, 'read_business')" id="<?php echo $read_business_open; ?>">Read Business</button>
+      <button class="tablinks" onclick="openPart(event, 'read_restaurant')" id="<?php echo $read_restaurant_open; ?>">Read Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'read_cuisine')" id="<?php echo $read_cuisine_open; ?>">Read Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'read_serves')" id="<?php echo $read_serves_open; ?>">Read Serves</button>
+      <button class="tablinks" onclick="openPart(event, 'read_person')" id="<?php echo $read_person_open; ?>">Read Person</button>
+      <button class="tablinks" onclick="openPart(event, 'read_works_at')" id="<?php echo $read_works_at_open; ?>">Read Works At</button>
+      <button class="tablinks" onclick="openPart(event, 'read_restaurant_review')" id="<?php echo $read_restaurant_review_open; ?>">Read Restaurant Review</button>
+      <button class="tablinks" onclick="openPart(event, 'read_review_followup')" id="<?php echo $read_review_followup_open; ?>">Read Review Followup</button>
+      <button class="tablinks" onclick="openPart(event, 'read_restaurant_discussion')" id="<?php echo $read_restaurant_discussion_open; ?>">Read Restaurant Discussion</button>
+      <button class="tablinks" onclick="openPart(event, 'read_discussion_reply')" id="<?php echo $read_discussion_reply_open; ?>">Read Discussion Reply</button>
+    </div>
+    <div class="tab">
+      <!-- UPDATE -->
+      <button class="tablinks" onclick="openPart(event, 'update_location')" id="<?php echo $update_location_open; ?>">Update Location</button>
+      <button class="tablinks" onclick="openPart(event, 'update_business')" id="<?php echo $update_business_open; ?>">Update Business</button>
+      <button class="tablinks" onclick="openPart(event, 'update_restaurant')" id="<?php echo $update_restaurant_open; ?>">Update Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'update_cuisine')" id="<?php echo $update_cuisine_open; ?>">Update Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'update_serves')" id="<?php echo $update_serves_open; ?>">Update Serves</button>
+      <button class="tablinks" onclick="openPart(event, 'update_person')" id="<?php echo $update_person_open; ?>">Update Person</button>
+      <button class="tablinks" onclick="openPart(event, 'update_works_at')" id="<?php echo $update_works_at_open; ?>">Update Works At</button>
+      <button class="tablinks" onclick="openPart(event, 'update_restaurant_review')" id="<?php echo $create_restaurant_review_open; ?>">Update Restaurant Review</button>
+      <button class="tablinks" onclick="openPart(event, 'update_review_followup')" id="<?php echo $update_review_followup_open; ?>">Update Review Followup</button>
+      <button class="tablinks" onclick="openPart(event, 'update_restaurant_discussion')" id="<?php echo $update_restaurant_discussion_open; ?>">Update Restaurant Discussion</button>
+      <button class="tablinks" onclick="openPart(event, 'update_discussion_reply')" id="<?php echo $update_discussion_reply_open; ?>">Update Discussion Reply</button>
+      <br>
+    </div>
+    <div class="tab">  
+      <!-- DELETE -->
+      <button class="tablinks" onclick="openPart(event, 'delete_location')" id="<?php echo $delete_location_open; ?>">Delete Location</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_business')" id="<?php echo $delete_business_open; ?>">Delete Business</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_restaurant')" id="<?php echo $delete_restaurant_open; ?>">Delete Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_cuisine')" id="<?php echo $delete_cuisine_open; ?>">Delete Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_serves')" id="<?php echo $delete_serves_open; ?>">Delete Serves</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_person')" id="<?php echo $delete_person_open; ?>">Delete Person</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_works_at')" id="<?php echo $delete_works_at_open; ?>">Delete Works At</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_restaurant_review')" id="<?php echo $delete_restaurant_review_open; ?>">Delete Restaurant Review</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_review_followup')" id="<?php echo $delete_review_followup_open; ?>">Delete Review Followup</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_restaurant_discussion')" id="<?php echo $delete_restaurant_discussion_open; ?>">Delete Restaurant Discussion</button>
+      <button class="tablinks" onclick="openPart(event, 'delete_discussion_reply')" id="<?php echo $delete_discussion_reply_open; ?>">Delete Discussion Reply</button>
+      <br>
     </div>
 
+
+
+
+
+
+
+
+
     <!-- Tab content -->
-    <div id="a" class="tabcontent">
-      <h3>Part (a)</h3>
+    <div id="create_location" class="tabcontent">
+      <h3>Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        Field1: <input type="number" id="a_field1" name="a_field1" value="<?php echo $a_field1 ?>">
-        <font color="red"><?php echo $a_field1Err ?></font><br>
+        bldgMgmtNo: <input type="number" id="a_bldgMgmtNo" name="a_bldgMgmtNo" value="<?php echo $a_bldgMgmtNo ?>">
+        <font color="red"><?php echo $a_bldgMgmtNoErr ?></font><br>
+        zip_no: <input type="number" id="a_zip_no" name="a_zip_no" value="<?php echo $a_zip_no ?>">
+        <font color="red"><?php echo $a_zip_noErr ?></font><br>
+        jibun_juso: <input type="number" id="a_jibun_juso" name="a_jibun_juso" value="<?php echo $a_jibun_juso ?>">
+        <font color="red"><?php echo $a_jibun_jusoErr ?></font><br>
         <input type="submit" name="submit_form_a" value="Submit">
       </form>
       <button onclick="clearElement('a_div')">Clear Output</button>
       <div id="a_div">
         <?php echo $a_out; ?>
-      </div>
+      </div> 
     </div>
 
     <div id="b" class="tabcontent">
+    </div>
+    <div id="asdf" class="tabcontent">
     </div>
 
 
