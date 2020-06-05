@@ -144,7 +144,7 @@
       $update_restaurant_review_open = $update_restaurant_review_out = 
       $update_restaurant_review_review_id = $update_restaurant_review_reviewed_by = $update_restaurant_review_reviewed_restaurant= $update_restaurant_review_review_star = $update_restaurant_review_review_content = $update_restaurant_review_update_date= $update_restaurant_review_last_update = $update_restaurant_review_is_active=
       $update_restaurant_review_review_idErr = $update_restaurant_review_reviewed_byErr = $update_restaurant_review_reviewed_restaurantErr = $update_restaurant_review_review_starErr = $update_restaurant_review_review_contentErr = $update_restaurant_review_update_dateErr= $update_restaurant_review_last_updateErr = $update_restaurant_review_is_activeErr="";
-      $update_review_followup_open = update_review_followup_out = "";
+      $update_review_followup_open = $update_review_followup_out = "";
       $update_review_followup_followup_id= $update_review_followup_followup_up_by = $update_review_followup_for_review= $update_review_followup_followup_content =$update_review_followup_update_date =$update_review_followup_last_date = $update_review_followup_is_active=
       $update_review_followup_followup_idErr= $update_review_followup_followup_up_byErr = $update_review_followup_for_reviewErr= $update_review_followup_followup_contentErr =$update_review_followup_update_dateErr =$update_review_followup_last_dateErr = $update_review_followup_is_activeErr=""; 
       $update_restaurant_discussion_open = $update_restaurant_discussion_out = 
@@ -505,12 +505,22 @@
     <div id="create_restaurant_review" class="tabcontent">
       <h3>create_restaurant_review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $a_bldgMgmtNo ?>">
-        <font color="red"><?php echo $a_bldgMgmtNoErr ?></font><br>
-        zip_no: <input type="number" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $a_zip_no ?>">
-        <font color="red"><?php echo $a_zip_noErr ?></font><br>
-        jibun_juso: <input type="number" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $a_jibun_juso ?>">
-        <font color="red"><?php echo $a_jibun_jusoErr ?></font><br>
+        review_id: <input type="number" id="create_restaurant_review_review_id" name="create_restaurant_review_review_id" value="<?php echo $create_restaurant_review_review_id ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_idErr ?></font><br>
+        reviewed_by: <input type="number" id="create_restaurant_review_reviewed_by" name="create_restaurant_review_reviewed_by" value="<?php echo $create_restaurant_review_reviewed_by ?>">
+        <font color="red"><?php echo $create_restaurant_review_reviewed_byErr ?></font><br>
+        reviewed_restaurant: <input type="number" id="create_restaurant_review_reviewed_restaurant" name="create_restaurant_review_reviewed_restaurant" value="<?php echo $create_restaurant_review_reviewed_restaurant ?>">
+        <font color="red"><?php echo $create_restaurant_review_reviewed_restaurantErr ?></font><br>
+        review_star: <input type="number" id="create_restaurant_review_review_star" name="create_restaurant_review_review_star" value="<?php echo $create_restaurant_review_review_star ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_starErr ?></font><br>
+        review_content: <input type="number" id="create_restaurant_review_review_content" name="create_restaurant_review_review_content" value="<?php echo $create_restaurant_review_review_content ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_contentErr ?></font><br>
+        create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_review_create_date ?></font><br>
+        last_update: <input type="date" id="create_restaurant_review_last_update" name="create_restaurant_review_last_update" value="<?php echo $create_restaurant_review_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br>
+        is_active: <input type="boolean" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_restaurant_review" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_review_div')">Clear Output</button>
@@ -522,6 +532,23 @@
     <div id="create_review_followup" class="tabcontent">
       <h3>create_review_followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+
+      followup_id: <input type="number" id="create_restaurant_review_review_id" name="create_restaurant_review_review_id" value="<?php echo $create_restaurant_review_review_id ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_idErr ?></font><br>
+        followup_up_by: <input type="number" id="create_restaurant_review_reviewed_by" name="create_restaurant_review_reviewed_by" value="<?php echo $create_restaurant_review_reviewed_by ?>">
+        <font color="red"><?php echo $create_restaurant_review_reviewed_byErr ?></font><br>
+        reviewed_restaurant: <input type="number" id="create_restaurant_review_reviewed_restaurant" name="create_restaurant_review_reviewed_restaurant" value="<?php echo $create_restaurant_review_reviewed_restaurant ?>">
+        <font color="red"><?php echo $create_restaurant_review_reviewed_restaurantErr ?></font><br>
+        review_star: <input type="number" id="create_restaurant_review_review_star" name="create_restaurant_review_review_star" value="<?php echo $create_restaurant_review_review_star ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_starErr ?></font><br>
+        review_content: <input type="number" id="create_restaurant_review_review_content" name="create_restaurant_review_review_content" value="<?php echo $create_restaurant_review_review_content ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_contentErr ?></font><br>
+        create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_review_create_date ?></font><br>
+        last_update: <input type="date" id="create_restaurant_review_last_update" name="create_restaurant_review_last_update" value="<?php echo $create_restaurant_review_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br>
+        is_active: <input type="boolean" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_review_followup" value="Submit">
       </form>
       <button onclick="clearElement('create_review_followup_div')">Clear Output</button>
