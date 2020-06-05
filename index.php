@@ -79,7 +79,7 @@
       // https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_complete
       // define variables and set to empty values
       // $__open = $__out = $__fields = $__fieldsErr = "";
-      $create_location_open = $create_location_out = "";
+      $create_location_open = $create_location_out = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = $create_location_bldgMgmtNo = "";
       $create_business_open = $create_business_out = "";
       $create_restaurant_open = $create_restaurant_out = "";
       $create_cuisine_open = $create_cuisine_out = "";
@@ -152,7 +152,9 @@
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Hand multiple submits in a single file
         //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
-        if ( isset($_POST["submit_form_create_location"] )){ }
+        if ( isset($_POST["submit_form_create_location"] )){ 
+
+        }
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ }
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
@@ -296,7 +298,7 @@
       </div> 
     </div>
 
-    <div id="create_cuisine" class="tabcontent">
+    <div id="create_business" class="tabcontent">
       <h3>create_business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_create_business" value="Submit">
@@ -421,7 +423,7 @@
       </div> 
     </div> 
 
-    <div id="read_cuisine" class="tabcontent">
+    <div id="read_business" class="tabcontent">
       <h3>read_business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_business" value="Submit">
@@ -547,7 +549,7 @@
       </div> 
     </div>
     
-    <div id="update_cuisine" class="tabcontent">
+    <div id="update_business" class="tabcontent">
       <h3>update_business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_update_business" value="Submit">
@@ -671,7 +673,7 @@
       </div> 
     </div>
     
-    <div id="delete_cuisine" class="tabcontent">
+    <div id="delete_business" class="tabcontent">
       <h3>delete_business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_delete_business" value="Submit">
