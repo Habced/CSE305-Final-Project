@@ -173,7 +173,6 @@
           }
           if( $create_location_bldgMgmtNoErr === "" && $create_location_zip_noErr === "" && $create_location_jibun_jusoErr === "" ) {
             $sql = "INSERT INTO location (bldgMgmtNo, zip_no, jibun_juso, create_date, last_update, is_active) VALUES (" . $create_location_bldgMgmtNo . ", \"" . $create_location_zip_no . "\", \"" . $create_location_jibun_juso . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
-            echo $sql . "<br>";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_location_out = "Success";
           }
