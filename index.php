@@ -156,7 +156,54 @@
 
         }
         elseif ( isset($_POST["submit_form_create_business"] )){ }
-        elseif ( isset($_POST["submit_form_create_restaurant"] )){ }
+        elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
+          if (empty($_POST["create_restaurant_weekday_open_time"])) {
+            $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time"
+          }
+          if (empty($_POST["create_restaurant_weekday_end_time"])) {
+            $create_restaurant_weekday_end_timeErr = "You must enter a value for create_restaurant_weekday_end_time"
+          }
+          if (empty($_POST["create_restaurant_weekend_open_time"])) {
+            $create_restaurant_weekend_open_timeErr = "You must enter a value for create_restaurant_weekend_open_time"
+          }
+          if (empty($_POST["create_restaurant_weekend_end_time"])) {
+            $create_restaurant_weekend_end_timeErr = "You must enter a value for create_restaurant_weekend_end_time"
+          }
+          if (empty($_POST["create_restaurant_has_weekly_break"])) {
+            $create_restaurant_has_weekly_breakErr = "You must enter a value for create_restaurant_has_weekly_break"
+          }
+          if (empty($_POST["create_restaurant_weekly_break_date"])) {
+            $create_restaurant_weekly_break_dateErr = "You must enter a value for create_restaurant_weekly_break_date"
+          }
+          if (empty($_POST["create_restaurant_create_date"])) {
+            $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date"
+          }
+          if (empty($_POST["create_restaurant_last_update"])) {
+            $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update"
+          }
+          if (empty($_POST["create_restaurant_is_active"])) {
+            $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active"
+          }
+        }
+        weekday_open_time: <input type="text" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_open_timeErr ?></font><br>
+        weekday_end_time: <input type="text" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_end_timeErr ?></font><br>
+        weekend_open_time: <input type="text" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
+        weekend_end_time: <input type="text" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
+        has_weekly_break: <input type="checkbox" id="create_restaurant_has_weekly_break" name="create_restaurant_has_weekly_break" value="<?php echo $create_restaurant_has_weekly_break ?>">
+        <font color="red"><?php echo $create_restaurant_has_weekly_breakErr ?></font><br>
+        weekly_break_date: <input type="text" id="create_restaurant_weekly_break_date" name="create_restaurant_weekly_break_date" value="<?php echo $create_restaurant_weekly_break_date ?>">
+        <font color="red"><?php echo $create_restaurant_weekly_break_dateErr ?></font><br>
+        create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_restaurant_last_update" name="create_restaurant_last_update" value="<?php echo $create_restaurant_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_last_updateErr ?></font><br>
+        is_active: <input type="checkbox" id="create_restaurant_is_active" name="create_restaurant_is_active" value="<?php echo $create_restaurant_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br>
+        <input type="submit" name="submit_form_create_restaurant" value="Submit">
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_create_serves"] )){ }
         elseif ( isset($_POST["submit_form_create_person"] )){ }
@@ -312,6 +359,24 @@
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        weekday_open_time: <input type="text" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_open_timeErr ?></font><br>
+        weekday_end_time: <input type="text" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_end_timeErr ?></font><br>
+        weekend_open_time: <input type="text" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
+        weekend_end_time: <input type="text" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
+        has_weekly_break: <input type="checkbox" id="create_restaurant_has_weekly_break" name="create_restaurant_has_weekly_break" value="<?php echo $create_restaurant_has_weekly_break ?>">
+        <font color="red"><?php echo $create_restaurant_has_weekly_breakErr ?></font><br>
+        weekly_break_date: <input type="text" id="create_restaurant_weekly_break_date" name="create_restaurant_weekly_break_date" value="<?php echo $create_restaurant_weekly_break_date ?>">
+        <font color="red"><?php echo $create_restaurant_weekly_break_dateErr ?></font><br>
+        create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_restaurant_last_update" name="create_restaurant_last_update" value="<?php echo $create_restaurant_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_last_updateErr ?></font><br>
+        is_active: <input type="checkbox" id="create_restaurant_is_active" name="create_restaurant_is_active" value="<?php echo $create_restaurant_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_restaurant" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_div')">Clear Output</button>
@@ -345,6 +410,22 @@
     <div id="create_person" class="tabcontent">
       <h3>create_person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        person_id: <input type="number" id="create_person_person_id" name="create_person_person_id" value="<?php echo $create_person_person_id ?>">
+          <font color="red"><?php echo $create_person_person_idErr ?></font><br>
+        fullname: <input type="text" id="create_person_fullname" name="create_person_fullname" value="<?php echo $create_person_fullname ?>">
+          <font color="red"><?php echo $create_person_fullnameErr ?></font><br>
+        email: <input type="text" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
+          <font color="red"><?php echo $create_person_emailErr ?></font><br>
+        username: <input type="text" id="create_person_username" name="create_person_username" value="<?php echo $create_person_username ?>">
+          <font color="red"><?php echo $create_person_usernameErr ?></font><br>
+        password: <input type="text" id="create_person_password" name="create_person_password" value="<?php echo $create_person_password ?>">
+          <font color="red"><?php echo $create_person_passwordErr ?></font><br>
+        create_date: <input type="date" id="create_person_create_date" name="create_person_create_date" value="<?php echo $create_person_create_date ?>">
+          <font color="red"><?php echo $create_person_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_person_last_update" name="create_person_last_update" value="<?php echo $create_person_last_update ?>">
+          <font color="red"><?php echo $create_person_last_updateErr ?></font><br>
+        is_activate: <input type="checkbox" id="create_person_is_activate" name="create_person_is_activate" value="<?php echo $create_person_is_activate ?>">
+        <font color="red"><?php echo $create_person_is_activateErr ?></font><br>
         <input type="submit" name="submit_form_create_person" value="Submit">
       </form>
       <button onclick="clearElement('create_person_div')">Clear Output</button>
@@ -356,6 +437,12 @@
     <div id="create_works_at" class="tabcontent">
       <h3>create_works_at</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        works_for: <input type="number" id="create_works_at_works_for" name="create_works_at_works_for" value="<?php echo $create_works_at_works_for ?>">
+        <font color="red"><?php echo $create_works_at_works_forErr ?></font><br>
+        employed: <input type="number" id="create_works_at_employed" name="create_works_at_employed" value="<?php echo $create_works_at_employed ?>">
+        <font color="red"><?php echo $create_works_at_employedErr ?></font><br>
+        employee_type: <input type="text" id="create_works_at_employee_type" name="create_works_at_employee_type" value="<?php echo $create_works_at_employee_type ?>">
+        <font color="red"><?php echo $create_works_at_employee_typeErr ?></font><br>
         <input type="submit" name="submit_form_create_works_at" value="Submit">
       </form>
       <button onclick="clearElement('create_works_at_div')">Clear Output</button>
