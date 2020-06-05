@@ -107,8 +107,8 @@
       $create_restaurant_review_review_id = $create_restaurant_review_reviewed_by = $create_restaurant_review_reviewed_restaurant= $create_restaurant_review_review_star = $create_restaurant_review_review_content = $create_restaurant_review_create_date= $create_restaurant_review_last_update = $create_restaurant_review_is_active=
       $create_restaurant_review_review_idErr = $create_restaurant_review_reviewed_byErr = $create_restaurant_review_reviewed_restaurantErr = $create_restaurant_review_review_starErr = $create_restaurant_review_review_contentErr = $create_restaurant_review_create_dateErr= $create_restaurant_review_last_updateErr = $create_restaurant_review_is_activeErr="";
       $create_review_followup_open = $create_review_followup_out = 
-      $create_review_followup_followup_id= $create_review_followup_followup_up_by = $create_review_followup_for_review= $create_review_followup_followup_content =$create_review_followup_create_date =$create_review_followup_last_date = $create_review_followup_is_active=
-      $create_review_followup_followup_idErr= $create_review_followup_followup_up_byErr = $create_review_followup_for_reviewErr= $create_review_followup_followup_contentErr =$create_review_followup_create_dateErr =$create_review_followup_last_dateErr = $create_review_followup_is_activeErr=""; 
+      $create_review_followup_followup_id= $create_review_followup_followup_up_by = $create_review_followup_for_review= $create_review_followup_followup_content =$create_review_followup_create_date =$create_review_followup_last_update = $create_review_followup_is_active=
+      $create_review_followup_followup_idErr= $create_review_followup_followup_up_byErr = $create_review_followup_for_reviewErr= $create_review_followup_followup_contentErr =$create_review_followup_create_dateErr =$create_review_followup_last_updateErr = $create_review_followup_is_activeErr=""; 
       $create_restaurant_discussion_open = $create_restaurant_discussion_out = 
       $create_restaurant_discussion_discussion_id=$create_restaurant_discussion_discussed_by=$create_restaurant_discussion_discussed_restaurant = $create_restaurant_discussion_discussion_content = $create_restaurant_discussion_create_date =$create_restaurant_discussion_last_update= $create_restaurant_discussion_is_active =
       $create_restaurant_discussion_discussion_idErr=$create_restaurant_discussion_discussed_byErr=$create_restaurant_discussion_discussed_restaurantErr = $create_restaurant_discussion_discussion_contentErr = $create_restaurant_discussion_create_dateErr =$create_restaurant_discussion_last_updateErr= $create_restaurant_discussion_is_activeErr ="";
@@ -264,10 +264,216 @@
         elseif ( isset($_POST["submit_form_create_serves"] )){ }
         elseif ( isset($_POST["submit_form_create_person"] )){ }
         elseif ( isset($_POST["submit_form_create_works_at"] )){ }
-        elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ }
-        elseif ( isset($_POST["submit_form_create_review_followup"] )){ }
-        elseif ( isset($_POST["submit_form_create_restaurant_discussion"] )){ }
-        elseif ( isset($_POST["submit_form_create_discussion_reply"] )){ }
+        elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ 
+          $create_restaurant_review_open = "is_open";
+
+          if (empty($_POST["create_restaurant_review_review_id"])) {
+            $create_restaurant_review_review_idErr = "You must enter a value for create_restaurant_review_review_id";
+          }else{
+            $create_restaurant_review_review_id = test_input($_POST["create_restaurant_review_review_id"]);
+          }
+          if (empty($_POST["create_restaurant_review_reviewed_by"])) {
+            $create_restaurant_review_reviewed_byErr = "You must enter a value for create_restaurant_review_reviewed_by";
+          }else{
+            $create_restaurant_review_reviewed_by = test_input($_POST["create_restaurant_review_reviewed_by"]);
+          }
+          if (empty($_POST["create_restaurant_review_reviewed_restaurant"])) {
+            $create_restaurant_review_reviewed_restaurantErr = "You must enter a value for create_restaurant_review_reviewed_restaurant";
+          }else{
+            $create_restaurant_review_reviewed_restaurant = test_input($_POST["create_restaurant_review_reviewed_restaurant"]);
+          }
+          if (empty($_POST["create_restaurant_review_review_star"])) {
+            $create_restaurant_review_review_starErr = "You must enter a value for create_restaurant_review_review_star";
+          }else{
+            $create_restaurant_review_review_star = test_input($_POST["create_restaurant_review_review_star"]);
+          }
+          if (empty($_POST["create_restaurant_review_review_content"])) {
+            $create_restaurant_review_review_contentErr = "You must enter a value for create_restaurant_review_review_content";
+          }else{
+            $create_restaurant_review_review_content = test_input($_POST["create_restaurant_review_review_content"]);
+          }
+          //if (empty($_POST["create_restaurant_review_create_date"])) {
+          //   $create_restaurant_review_review_create_dateErr = "You must enter a value for create_restaurant_review_review_create_date";
+          // }else{
+          //   $create_restaurant_review_create_date = test_input($_POST["create_restaurant_review_create_date"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_last_update"])) {
+          //   $create_restaurant_review_last_updateErr = "You must enter a value for create_restaurant_review_last_update";
+          // }else{
+          //   $create_restaurant_review_last_update = test_input($_POST["create_restaurant_review_last_update"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_is_active"])) {
+          //   $create_restaurant_review_is_activeErr = "You must enter a value for create_restaurant_review_is_active";
+          // }
+          // else{
+          //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
+          // }
+     
+          if( $create_restaurant_review_review_idErr === "" && $create_restaurant_review_reviewed_byErr === "" && $create_restaurant_review_reviewed_restaurantErr === ""  && $create_restaurant_review_review_starErr === ""
+          && $create_restaurant_review_review_contentErr === "" ) {
+            $sql = "INSERT INTO restaurant_review (review_id, reviewed_by, reviewed_restaurant, review_star, review_content, create_date, last_update, is_active) VALUES
+             (" . $create_restaurant_review_review_id . ", " . $create_restaurant_review_reviewed_by . ", " . $create_restaurant_review_reviewed_restaurant . ", 
+              " . $create_restaurant_review_review_star . ", \"" . $create_restaurant_review_review_content . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_restaurant_review_out = "Success";
+          }
+        }
+        elseif ( isset($_POST["submit_form_create_review_followup"] )){ 
+          $create_review_followup_open = "is_open";
+
+          if (empty($_POST["create_review_followup_followup_id"])) {
+            $create_review_followup_followup_idErr = "You must enter a value for create_review_followup_followup_id";
+          }else{
+            $create_review_followup_followup_id = test_input($_POST["create_review_followup_followup_id"]);
+          }
+          if (empty($_POST["create_review_followup_followup_up_by"])) {
+            $create_review_followup_followup_up_byErr = "You must enter a value for create_review_followup_followup_up_by";
+          }else{
+            $create_review_followup_followup_up_by = test_input($_POST["create_review_followup_followup_up_by"]);
+          }
+          if (empty($_POST["create_review_followup_for_review"])) {
+            $create_review_followup_for_reviewErr = "You must enter a value for create_review_followup_for_review";
+          }else{
+            $create_review_followup_for_review = test_input($_POST["create_review_followup_for_review"]);
+          }
+          if (empty($_POST["create_review_followup_followup_content"])) {
+            $create_review_followup_followup_contentErr = "You must enter a value for create_review_followup_followup_content";
+          }else{
+            $create_review_followup_followup_content = test_input($_POST["create_review_followup_followup_content"]);
+          }
+         
+          //if (empty($_POST["create_restaurant_review_create_date"])) {
+          //   $create_restaurant_review_review_create_dateErr = "You must enter a value for create_restaurant_review_review_create_date";
+          // }else{
+          //   $create_restaurant_review_create_date = test_input($_POST["create_restaurant_review_create_date"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_last_update"])) {
+          //   $create_restaurant_review_last_updateErr = "You must enter a value for create_restaurant_review_last_update";
+          // }else{
+          //   $create_restaurant_review_last_update = test_input($_POST["create_restaurant_review_last_update"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_is_active"])) {
+          //   $create_restaurant_review_is_activeErr = "You must enter a value for create_restaurant_review_is_active";
+          // }
+          // else{
+          //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
+          // }
+     
+          if( $create_review_followup_followup_idErr === "" && $create_review_followup_followup_up_byErr === "" && $create_review_followup_for_reviewErr === ""
+          && $create_review_followup_followup_contentErr === "" ) {
+            $sql = "INSERT INTO review_followup (followup_id, followed_up_by, for_review, review_content, create_date, last_update, is_active) VALUES
+             (" . $create_review_followup_followup_id . ", " . $create_review_followup_followup_up_by . ", " . $create_review_followup_for_review . ", 
+             \"" . $create_review_followup_followup_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_restaurant_review_out = "Success";
+          }
+
+        }
+        elseif ( isset($_POST["submit_form_create_restaurant_discussion"] )){ 
+          $create_restaurant_discussion_open = "is_open";
+
+          if (empty($_POST["create_restaurant_discussion_discussion_id"])) {
+            $create_restaurant_discussion_discussion_idErr = "You must enter a value for create_restaurant_discussion_discussion_id";
+          }else{
+            $create_restaurant_discussion_discussion_id = test_input($_POST["create_restaurant_discussion_discussion_id"]);
+          }
+          if (empty($_POST["create_restaurant_discussion_discussed_by"])) {
+            $create_restaurant_discussion_discussed_byErr = "You must enter a value for create_restaurant_discussion_discussed_by";
+          }else{
+            $create_restaurant_discussion_discussed_by = test_input($_POST["create_restaurant_discussion_discussed_by"]);
+          }
+          if (empty($_POST["create_restaurant_discussion_discussed_restaurant"])) {
+            $create_restaurant_discussion_discussed_restaurantErr = "You must enter a value for create_restaurant_discussion_discussed_restaurant";
+          }else{
+            $create_restaurant_discussion_discussed_restaurant = test_input($_POST["create_restaurant_discussion_discussed_restaurant"]);
+          }
+          if (empty($_POST["create_restaurant_discussion_discussion_content"])) {
+            $create_restaurant_discussion_discussion_contentErr = "You must enter a value for create_restaurant_discussion_discussion_content";
+          }else{
+            $create_restaurant_discussion_discussion_content = test_input($_POST["create_restaurant_discussion_discussion_content"]);
+          }
+         
+          //if (empty($_POST["create_restaurant_review_create_date"])) {
+          //   $create_restaurant_review_review_create_dateErr = "You must enter a value for create_restaurant_review_review_create_date";
+          // }else{
+          //   $create_restaurant_review_create_date = test_input($_POST["create_restaurant_review_create_date"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_last_update"])) {
+          //   $create_restaurant_review_last_updateErr = "You must enter a value for create_restaurant_review_last_update";
+          // }else{
+          //   $create_restaurant_review_last_update = test_input($_POST["create_restaurant_review_last_update"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_is_active"])) {
+          //   $create_restaurant_review_is_activeErr = "You must enter a value for create_restaurant_review_is_active";
+          // }
+          // else{
+          //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
+          // }
+     
+          if( $create_restaurant_discussion_idErr === "" && $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
+          && $create_restaurant_discussion_discussion_contentErr === "" ) {
+            $sql = "INSERT INTO restaurant_discussion (discussion_id, discuessed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
+             (" . $create_restaurant_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
+             \"" . $create_restaurant_discussion_discussion_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_restaurant_discussion_out = "Success";
+          }
+
+
+
+        }
+        elseif ( isset($_POST["submit_form_create_discussion_reply"] )){ 
+          $create_discussion_reply_open = "is_open";
+
+          if (empty($_POST["create_discussion_reply_reply_id"])) {
+            $create_discussion_reply_reply_idErr = "You must enter a value for create_discussion_reply_reply_id";
+          }else{
+            $create_discussion_reply_reply_id = test_input($_POST["create_discussion_reply_reply_id"]);
+          }
+          if (empty($_POST["create_discussion_reply_replied_by"])) {
+            $create_discussion_reply_replied_byErr = "You must enter a value for create_discussion_reply_replied_by";
+          }else{
+            $create_discussion_reply_replied_by = test_input($_POST["create_discussion_reply_replied_by"]);
+          }
+          if (empty($_POST["create_discussion_reply_for_discussion"])) {
+            $create_discussion_reply_for_discussionErr = "You must enter a value for create_discussion_reply_for_discussion";
+          }else{
+            $create_discussion_reply_for_discussion = test_input($_POST["create_discussion_reply_for_discussion"]);
+          }
+          if (empty($_POST["create_discussion_reply_reply_content"])) {
+            $create_discussion_reply_reply_contentErr = "You must enter a value for create_discussion_reply_reply_content";
+          }else{
+            $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]);
+          }
+         
+          //if (empty($_POST["create_restaurant_review_create_date"])) {
+          //   $create_restaurant_review_review_create_dateErr = "You must enter a value for create_restaurant_review_review_create_date";
+          // }else{
+          //   $create_restaurant_review_create_date = test_input($_POST["create_restaurant_review_create_date"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_last_update"])) {
+          //   $create_restaurant_review_last_updateErr = "You must enter a value for create_restaurant_review_last_update";
+          // }else{
+          //   $create_restaurant_review_last_update = test_input($_POST["create_restaurant_review_last_update"]);
+          // }
+          // if (empty($_POST["create_restaurant_review_is_active"])) {
+          //   $create_restaurant_review_is_activeErr = "You must enter a value for create_restaurant_review_is_active";
+          // }
+          // else{
+          //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
+          // }
+     
+          if( $create_discussion_reply_reply_idErr === "" && $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
+          && $create_discussion_reply_reply_contentErr === "" ) {
+            $sql = "INSERT INTO discussion_reply (reply_id, replied_by, for_discussion, reply_content, create_date, last_update, is_active) VALUES
+             (" . $create_restaurant_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
+             \"" . $create_restaurant_discussion_discussion_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_restaurant_discussion_out = "Success";
+          }
+
+
+        }
 
         elseif ( isset($_POST["submit_form_read_location"] )){ }
         elseif ( isset($_POST["submit_form_read_business"] )){ }
@@ -518,13 +724,13 @@
         <font color="red"><?php echo $create_restaurant_review_reviewed_restaurantErr ?></font><br>
         review_star: <input type="number" id="create_restaurant_review_review_star" name="create_restaurant_review_review_star" value="<?php echo $create_restaurant_review_review_star ?>">
         <font color="red"><?php echo $create_restaurant_review_review_starErr ?></font><br>
-        review_content: <input type="number" id="create_restaurant_review_review_content" name="create_restaurant_review_review_content" value="<?php echo $create_restaurant_review_review_content ?>">
+        review_content: <input type="text" id="create_restaurant_review_review_content" name="create_restaurant_review_review_content" value="<?php echo $create_restaurant_review_review_content ?>">
         <font color="red"><?php echo $create_restaurant_review_review_contentErr ?></font><br>
-        create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
+        <!-- create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
         <font color="red"><?php echo $create_restaurant_review_create_date ?></font><br>
         last_update: <input type="date" id="create_restaurant_review_last_update" name="create_restaurant_review_last_update" value="<?php echo $create_restaurant_review_last_update ?>">
-        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br>
-        is_active: <input type="boolean" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br> -->
+        is_active: <input type="checkbox" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
         <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_restaurant_review" value="Submit">
       </form>
@@ -538,22 +744,20 @@
       <h3>create_review_followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
 
-      followup_id: <input type="number" id="create_restaurant_review_review_id" name="create_restaurant_review_review_id" value="<?php echo $create_restaurant_review_review_id ?>">
-        <font color="red"><?php echo $create_restaurant_review_review_idErr ?></font><br>
-        followup_up_by: <input type="number" id="create_restaurant_review_reviewed_by" name="create_restaurant_review_reviewed_by" value="<?php echo $create_restaurant_review_reviewed_by ?>">
-        <font color="red"><?php echo $create_restaurant_review_reviewed_byErr ?></font><br>
-        reviewed_restaurant: <input type="number" id="create_restaurant_review_reviewed_restaurant" name="create_restaurant_review_reviewed_restaurant" value="<?php echo $create_restaurant_review_reviewed_restaurant ?>">
-        <font color="red"><?php echo $create_restaurant_review_reviewed_restaurantErr ?></font><br>
-        review_star: <input type="number" id="create_restaurant_review_review_star" name="create_restaurant_review_review_star" value="<?php echo $create_restaurant_review_review_star ?>">
-        <font color="red"><?php echo $create_restaurant_review_review_starErr ?></font><br>
-        review_content: <input type="number" id="create_restaurant_review_review_content" name="create_restaurant_review_review_content" value="<?php echo $create_restaurant_review_review_content ?>">
-        <font color="red"><?php echo $create_restaurant_review_review_contentErr ?></font><br>
-        create_date: <input type="date" id="create_restaurant_review_create_date" name="create_restaurant_review_create_date" value="<?php echo $create_restaurant_review_create_date ?>">
-        <font color="red"><?php echo $create_restaurant_review_create_date ?></font><br>
-        last_update: <input type="date" id="create_restaurant_review_last_update" name="create_restaurant_review_last_update" value="<?php echo $create_restaurant_review_last_update ?>">
-        <font color="red"><?php echo $create_restaurant_review_last_updateErr ?></font><br>
-        is_active: <input type="boolean" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
-        <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>
+       followup_id: <input type="number" id="create_review_followup_followup_id" name="create_review_followup_followup_id" value="<?php echo $create_review_followup_followup_id ?>">
+        <font color="red"><?php echo $create_review_followup_followup_idErr ?></font><br>
+        followup_up_by: <input type="number" id="create_review_followup_followup_up_by" name="create_review_followup_followup_up_by" value="<?php echo $create_review_followup_followup_up_by ?>">
+        <font color="red"><?php echo $create_review_followup_followup_up_byErr ?></font><br>
+        for_review: <input type="number" id="create_review_followup_for_review" name="create_review_followup_for_review" value="<?php echo $create_review_followup_for_review ?>">
+        <font color="red"><?php echo $create_review_followup_for_reviewErr ?></font><br>
+        followup_content: <input type="text" id="create_review_followup_followup_content" name="create_review_followup_followup_content" value="<?php echo $create_review_followup_followup_content ?>">
+        <font color="red"><?php echo $create_review_followup_followup_contentErr ?></font><br>
+        <!-- create_date: <input type="date" id="create_review_followup_create_date" name="create_review_followup_create_date" value="<?php echo $create_review_followup_create_date ?>">
+        <font color="red"><?php echo $create_review_followup_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_review_followup_last_update" name="create_review_followup_last_update" value="<?php echo $create_review_followup_last_update ?>">
+        <font color="red"><?php echo $create_review_followup_last_updateErr ?></font><br> -->
+        is_active: <input type="checkbox" id="create_review_followup_is_active" name="create_review_followup_is_active" value="<?php echo $create_review_followup_is_active ?>">
+        <font color="red"><?php echo $create_review_followup_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_review_followup" value="Submit">
       </form>
       <button onclick="clearElement('create_review_followup_div')">Clear Output</button>
@@ -565,6 +769,20 @@
     <div id="create_restaurant_discussion" class="tabcontent">
       <h3> create_restaurant_discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      discussion_id: <input type="number" id="create_restaurant_discussion_discussion_id" name="create_restaurant_discussion_discussion_id" value="<?php echo $create_restaurant_discussion_discussion_id ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_discussion_idErr ?></font><br>
+        discussed_by: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_discussed_byErr ?></font><br>
+        discussed_restaurant: <input type="number" id="create_restaurant_discussion_discussed_restaurant" name="create_restaurant_discussion_discussed_restaurant" value="<?php echo $create_restaurant_discussion_discussed_restaurant ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_discussed_restaurantErr ?></font><br>
+        discussion_content: <input type="text" id="create_restaurant_discussion_discussion_content" name="create_restaurant_discussion_discussion_content" value="<?php echo $create_restaurant_discussion_discussion_content ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_discussion_contentErr ?></font><br>
+        <!-- create_date: <input type="date" id="create_restaurant_discussion_create_date" name="create_restaurant_discussion_create_date" value="<?php echo $create_restaurant_discussion_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_restaurant_discussion_last_update" name="create_restaurant_discussion_last_update" value="<?php echo $create_restaurant_discussion_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_last_updateErr ?></font><br> -->
+        is_active: <input type="checkbox" id="create_restaurant_discussion_is_active" name="create_restaurant_discussion_is_active" value="<?php echo $create_restaurant_discussion_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_is_active ?></font><br>
         <input type="submit" name="submit_form_create_restaurant_discussion" value="Submit">
       </form>
       <button onclick="clearElement('create_restaurant_discussion_div')">Clear Output</button>
@@ -576,6 +794,20 @@
     <div id="create_discussion_reply" class="tabcontent">
       <h3>create_discussion_reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        reply_id: <input type="number" id="create_discussion_reply_reply_id" name="create_discussion_reply_reply_id" value="<?php echo $create_discussion_reply_reply_id ?>">
+        <font color="red"><?php echo $create_discussion_reply_reply_idErr ?></font><br>
+        replied_by: <input type="number" id="create_discussion_reply_replied_by" name="create_discussion_reply_replied_by" value="<?php echo $create_discussion_reply_replied_by ?>">
+        <font color="red"><?php echo $create_discussion_reply_replied_byErr ?></font><br>
+        for_discussion: <input type="number" id="create_discussion_reply_for_discussion" name="create_discussion_reply_for_discussion" value="<?php echo $create_discussion_reply_for_discussion ?>">
+        <font color="red"><?php echo $create_discussion_reply_for_discussionErr ?></font><br>
+        reply_content: <input type="text" id="create_discussion_reply_reply_content" name="create_discussion_reply_reply_content" value="<?php echo $create_discussion_reply_reply_content ?>">
+        <font color="red"><?php echo $create_discussion_reply_reply_contentErr ?></font><br>
+        <!-- create_date: <input type="date" id="create_discussion_reply_create_date" name="create_discussion_reply_create_date" value="<?php echo $create_discussion_reply_create_date ?>">
+        <font color="red"><?php echo $create_discussion_reply_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_discussion_reply_last_update" name="create_discussion_reply_last_update" value="<?php echo $create_discussion_reply_last_update ?>">
+        <font color="red"><?php echo $create_discussion_reply_last_updateErr ?></font><br> -->
+        is_active: <input type="checkbox" id="create_discussion_reply_is_active" name="create_discussion_reply_is_active" value="<?php echo $create_discussion_reply_is_active ?>">
+        <font color="red"><?php echo $create_discussion_reply_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_discussion_reply" value="Submit">
       </form>
       <button onclick="clearElement('create_discussion_reply_div')">Clear Output</button>
