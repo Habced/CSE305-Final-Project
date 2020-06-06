@@ -155,7 +155,8 @@
       $update_business_open = $update_business_out = "";
       $update_restaurant_open = $update_restaurant_out = $update_restaurantErr = "";
       $update_restaurant_restaurant_id = $update_restaurant_weekday_open_time = $update_restaurant_weekday_end_time = $update_restaurant_weekend_open_time = $update_restaurant_weekend_end_time
-      = $update_restaurant_weekly_break_date = $update_restaurant_update_date = $update_restaurant_last_update = $update_restaurant_is_active = "";
+      = $update_restaurant_weekly_break_date = $update_restaurant_update_date = $update_restaurant_last_update = "";
+      $update_restaurant_is_active = 0;
       $update_restaurant_restaurant_idErr = $update_restaurant_weekday_open_timeErr = $update_restaurant_weekday_end_timeErr = $update_restaurant_weekend_open_timeErr = $update_restaurant_weekend_end_timeErr
       = $update_restaurant_has_weekly_breakErr = $update_restaurant_weekly_break_dateErr = $update_restaurant_update_dateErr = $update_restaurant_last_updateErr = $update_restaurant_is_activeErr = "";
 
@@ -163,7 +164,7 @@
       $update_cuisine_id = $update_cuisine_cuisine_type = $update_cuisine_cuisine_info = "";
       $update_cuisine_idErr = $update_cuisine_cuisine_typeErr = $update_cuisine_cuisine_infoErr = "";
       $update_serves_open = $update_serves_out = "";
-      $update_person_open = $update_person_out = "";
+      $update_person_open = $update_person_out = $update_personErr = "";
       $update_person_person_id = $update_person_fullname = $update_person_email = $update_person_username = $update_person_password = $update_person_update_date
       = $update_person_last_update = $update_person_is_active = "";
       $update_person_person_idErr = $update_person_fullnameErr = $update_person_emailErr = $update_person_usernameErr = $update_person_passwordErr = $update_person_update_dateErr
@@ -888,11 +889,12 @@
         elseif ( isset($_POST["submit_form_update_location"] )){ }
         elseif ( isset($_POST["submit_form_update_business"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
+          /* #region  submit_for_update_restaurant */
           $update_restaurant_open = "is_open";
-          $sql = "UPDATE restaurant SET "
+          $sql = "UPDATE restaurant SET ";
           
           if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
-          && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"]) && ){
+          && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
             $update_restaurantErr = "You must enter at least one of these * :";
             $update_restaurant_weekday_open_timeErr = "*";
             $update_restaurant_weekday_end_timeErr = "*";
@@ -903,46 +905,47 @@
             if (!empty($_POST["update_restaurant_weekday_open_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_open_time with a value:" .$_POST["update_restaurant_weekday_open_time"];
             $update_restaurant_weekday_open_time = test_input($_POST["update_restaurant_weekday_open_time"]);
-            $sql = $sql . ", weekday_open_time=\"" . $update_restaurant_weekday_open_time . "\" ";
+            $sql = $sql . " weekday_open_time=\"" . $update_restaurant_weekday_open_time . "\",";
           } if (!empty($_POST["update_restaurant_weekday_end_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_end_time with a value:" .$_POST["update_restaurant_weekday_end_time"];
             $update_restaurant_weekday_end_time = test_input($_POST["update_restaurant_weekday_end_time"]);
-            $sql = $sql . ", weekday_end_time=\"" . $update_restaurant_weekday_end_time . "\" ";
+            $sql = $sql . " weekday_end_time=\"" . $update_restaurant_weekday_end_time . "\",";
           } if (!empty($_POST["update_restaurant_weekend_open_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_open_time with a value:" .$_POST["update_restaurant_weekend_open_time"];
             $update_restaurant_weekend_open_time = test_input($_POST["update_restaurant_weekend_open_time"]);
-            $sql = $sql . ", weekend_open_time=\"" . $update_restaurant_weekend_open_time . "\" ";
+            $sql = $sql . " weekend_open_time=\"" . $update_restaurant_weekend_open_time . "\",";
           } if (!empty($_POST["update_restaurant_weekend_end_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_end_time with a value:" .$_POST["update_restaurant_weekend_end_time"];
             $update_restaurant_weekend_end_time = test_input($_POST["update_restaurant_weekend_end_time"]);
-            $sql = $sql . ", weekend_end_time=\"" . $update_restaurant_weekend_end_time . "\" ";
+            $sql = $sql . " weekend_end_time=\"" . $update_restaurant_weekend_end_time . "\",";
           } if (!empty($_POST["update_restaurant_weekly_break_date"])){
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekly_break_date with a value:" .$_POST["update_restaurant_weekly_break_date"];
             $update_restaurant_weekly_break_date = test_input($_POST["update_restaurant_weekly_break_date"]);
-            $sql = $sql . ", weekly_break_date=\"" . $update_restaurant_weekly_break_date . "\" ";
+            $sql = $sql . " weekly_break_date=\"" . $update_restaurant_weekly_break_date . "\",";
             }
           }
-          if ($_POST["update_restaurant_is_active"] == "on"){
+          if (!empty($_POST["update_restaurant_is_active"])){
             $update_restaurant_is_active = 1;
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
-            $sql = $sql . ", is_active=" . $update_restaurant_is_active;
+            $sql = $sql . " is_active=" . $update_restaurant_is_active . ",";
           } else {
-            $update_restaurant_is_active = 0
+            $update_restaurant_is_active = 0;
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
-            $sql = $sql . ", is_active=" . $update_restaurant_is_active;
+            $sql = $sql . " is_active=" . $update_restaurant_is_active . ",";
           }
-          
+          $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+          // $sql = chop($sql, ",");
           if (empty($_POST["update_restaurant_restaurant_id"])) {
             $update_restaurant_restaurant_idErr = "You must enter a value for update_restaurant_restaurant_id";
           } else {
             $update_restaurant_restaurant_id = $_POST["update_restaurant_restaurant_id"];
-            $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_is_active . ";";
+            $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_restaurant_id . ";";
           }
           if ($update_restaurantErr === "" && $update_restaurant_restaurant_idErr === ""){
-            $sql = ltrim()
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $update_restaurant_out = "Success";
+            echo $sql;
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_update_cuisine"] )){ 
           
@@ -978,6 +981,42 @@
         elseif ( isset($_POST["submit_form_update_serves"] )){ }
         elseif ( isset($_POST["submit_form_update_person"] )){ 
           $update_person_open = "is_open";
+          
+          if (empty($_POST["update_person_fullname"]) && empty($_POST["update_person_email"]) && empty($_POST["update_person_username"]) 
+          && empty($_POST["update_person_password"] && empty($_POST["update_person_is_active"])) {
+            $update_personErr = "You must enter at least one of these * :";
+            $update_person_fullnameErr = "*";
+            $update_person_emailErr = "*";
+            $update_person_usernameErr = "*";
+            $update_person_passwordErr = "*";
+            $update_person_is_activeErr = "*";
+          } else {
+            if (!empty($_POST["update_person_fullname"])){
+            $update_person_fullname = test_input($_POST["update_person_fullname"]);
+          } if (!empty($_POST["update_person_email"])) {
+            $update_person_email = test_input($_POST["update_person_email"]);
+          } if (empty($_POST["update_person_username"])){
+            $update_person_username = test_input($_POST["update_person_username"]);
+          } if (!empty($_POST["update_person_password"])) {
+            $update_person_password = htmlspecialchars(stripslashes($_POST["update_person_password"]));
+          } if (!empty($_POST["update_person_is_active"])) {
+            $update_person_is_active = test_input($_POST["update_person_is_active"]);
+            } 
+          }
+          if (empty($_POST["update_person_person_id"])) {
+            $update_person_person_idErr = "You must enter a value for update_person_person_id";
+          } else {
+            $update_person_person_id = $_POST["update_person_person_id"];
+          }
+
+          if ($update_person_person_idErr === "" && $update_person_fullnameErr === "" &&  $update_person_emailErr === "" &&  $update_person_usernameErr === "" &&  
+          $update_person_passwordErr === "" && $update_person_is_activeErr === "") {
+            $sql = "INSERT INTO person (person_id, fullname, email, username, password, update_date, last_update, is_active) 
+            VALUES (" . $update_person_person_id . ", \"" . $update_person_fullname . "\", \"" . $update_person_email . "\", \"" . $update_person_username . "\", \"" 
+            . $update_person_password . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_person_out = "Success";
+          }
         }
         elseif ( isset($_POST["submit_form_update_works_at"] )){ 
           $update_works_at_open = "is_open";
@@ -1632,6 +1671,7 @@
         <?php echo read_restaurant(); ?>
       </div> 
       <br>
+      <font color="red"><?php echo $update_restaurantErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         restaurant_id: <input type="number" id="update_restaurant_restaurant_id" name="update_restaurant_restaurant_id" value="<?php echo $update_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $update_restaurant_restaurant_idErr ?></font><br>
@@ -1653,9 +1693,7 @@
         <input type="radio" id="update_restaurant_weekly_break_date_Sun" name="update_restaurant_weekly_break_date" value="Sun"><label for="update_restaurant_weekly_break_date_Sun">Sun</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Weekend" name="update_restaurant_weekly_break_date" value="Weekend"><label for="update_restaurant_weekly_break_date_Weekend">Weekend</label>
         <font color="red"><?php echo $update_restaurant_weekly_break_dateErr ?></font><br>
-        last_update: <input type="date" id="update_restaurant_last_update" name="update_restaurant_last_update" value="<?php echo $update_restaurant_last_update ?>">
-        <font color="red"><?php echo $update_restaurant_last_updateErr ?></font><br>
-        is_active: <input type="checkbox" id="update_restaurant_is_active" name="update_restaurant_is_active" value="<?php echo $update_restaurant_is_active ?>">
+        is_active: <input type="checkbox" id="update_restaurant_is_active" name="update_restaurant_is_active">
         <font color="red"><?php echo $update_restaurant_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_restaurant" value="Submit">
         <button type="reset" onclick="clearElement('update_restaurant_div')" value="Reset">Clear Output</button>
@@ -1719,11 +1757,9 @@
           <font color="red"><?php echo $update_person_usernameErr ?></font><br>
         password: <input type="password" id="update_person_password" name="update_person_password" value="<?php echo $update_person_password ?>">
           <font color="red"><?php echo $update_person_passwordErr ?></font><br>
-        <!-- update_date: <input type="date" id="update_person_update_date" name="update_person_update_date" value="<?php echo $update_person_update_date ?>">
-          <font color="red"><?php echo $update_person_update_dateErr ?></font><br>
         last_update: <input type="date" id="update_person_last_update" name="update_person_last_update" value="<?php echo $update_person_last_update ?>">
-          <font color="red"><?php echo $update_person_last_updateErr ?></font><br> -->
-        <!-- is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active" value="<?php echo $update_person_is_active ?>"> -->
+          <font color="red"><?php echo $update_person_last_updateErr ?></font><br>
+        is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active" value="<?php echo $update_person_is_active ?>">
         <font color="red"><?php echo $update_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_person" value="Submit">
         <button type="reset" onclick="clearElement('update_person_div')" value="Reset">Clear Output</button>
