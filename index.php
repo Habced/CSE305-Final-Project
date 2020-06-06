@@ -193,6 +193,9 @@
       $delete_location_bldgMgmtNoErr = "";
 
       $delete_business_open = $delete_business_out = "";
+      $delete_business_business_id = "";
+      $delete_business_business_idErr = "";
+
       $delete_restaurant_open = $delete_restaurant_out = "";
       $delete_cuisine_open = $delete_cuisine_out = "";
       $delete_serves_open = $delete_serves_out = "";
@@ -889,10 +892,9 @@
         elseif ( isset($_POST["submit_form_update_business"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
           $update_restaurant_open = "is_open";
-          $sql = "UPDATE restaurant SET "
+          $sql = "UPDATE restaurant SET ";
           
-          if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
-          && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"]) && ){
+          if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"]) && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"]) ){
             $update_restaurantErr = "You must enter at least one of these * :";
             $update_restaurant_weekday_open_timeErr = "*";
             $update_restaurant_weekday_end_timeErr = "*";
@@ -927,7 +929,7 @@
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
             $sql = $sql . "is_active=" . $update_restaurant_is_active;
           } else {
-            $update_restaurant_is_active = 0
+            $update_restaurant_is_active = 0;
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
             $sql = $sql . "is_active=" . $update_restaurant_is_active;
           }
@@ -1005,7 +1007,22 @@
           }
           /* #endregion */ 
         }
-        elseif ( isset($_POST["submit_form_delete_business"] )){ }
+        elseif ( isset($_POST["submit_form_delete_business"] )){ 
+          /* #region submit_form_delete_business */
+          $delete_business_open = "is_open";
+    
+          if (empty($_POST["delete_business_business_id"])) { 
+            $delete_business_business_idErr = "You must enter a Building Management Number.";
+          } else {
+            $delete_business_business_id = test_input($_POST["delete_business_business_id"]);
+          }
+          if ($delete_business_business_idErr === ""){
+            $sql = "DELETE FROM business WHERE business_id = " . $delete_business_business_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_location_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_restaurant"] )){ }
         elseif ( isset($_POST["submit_form_delete_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_delete_serves"] )){ }
@@ -1813,7 +1830,10 @@
       /* #region Delete Tab Content */
     -->
     <div id="delete_location" class="tabcontent">
-      <h3>Delete Locatoin</h3>
+      <!-- 
+        /* #region Delete Location */
+      -->
+      <h3>Delete Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
       
         Building Management No.: 
@@ -1826,14 +1846,20 @@
       <div id="delete_location_div">
         <?php echo $delete_location_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_business" class="tabcontent">
       <h3>Delete Business</h3>
+      <!-- 
+        /* #region Delete Business */
+      -->
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         Business ID: 
-        <input type="number" id="delete_location_bldgMgmtNo" name="delete_location_bldgMgmtNo" value="<?php echo $delete_location_bldgMgmtNo ?>">
-        <font color="red"><?php echo $delete_location_bldgMgmtNoErr ?></font><br>
+        <input type="number" id="delete_business_business_id" name="delete_business_business_id" value="<?php echo $delete_business_business_id ?>">
+        <font color="red"><?php echo $delete_business_business_idErr ?></font><br>
         
         <input type="submit" name="submit_form_delete_business" value="Delete">
       </form>
@@ -1841,6 +1867,9 @@
       <div id="delete_business_div">
         <?php echo $delete_business_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_restaurant" class="tabcontent">
