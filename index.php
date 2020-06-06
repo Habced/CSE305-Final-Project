@@ -946,7 +946,7 @@
           $update_restaurant_open = "is_open";
           $sql = "UPDATE restaurant SET ";
           
-          if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
+          if (!empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
           && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
             $update_restaurantErr ="Notice: Only is_active is updated";
             // $update_restaurant_weekday_open_timeErr = "*";
@@ -991,11 +991,11 @@
           if (empty($_POST["update_restaurant_restaurant_id"])) {
             $update_restaurant_restaurant_idErr = "You must enter a value for update_restaurant_restaurant_id";
           } else {
-            $update_restaurant_out = $update_restaurant_out . "<br>For a row whose restaurant_id value is:" . $_POST["update_restaurant_id"];
+            $update_restaurant_out = $update_restaurant_out . "<br>For a row whose restaurant_id value is:" . $_POST["update_restaurant_restaurant_id"];
             $update_restaurant_restaurant_id = $_POST["update_restaurant_restaurant_id"];
             $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_restaurant_id . ";";
           }
-          if ($update_restaurantErr === "" && $update_restaurant_restaurant_idErr === ""){
+          if ( $update_restaurant_restaurant_idErr === ""){
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           }
           /* #endregion */
@@ -1036,7 +1036,7 @@
           $update_person_open = "is_open";
           $sql = "UPDATE person SET ";
 
-          if (empty($_POST["update_person_fullname"]) && empty($_POST["update_person_email"]) && empty($_POST["update_person_username"]) 
+          if (!empty($_POST["update_person_person_id"]) && empty($_POST["update_person_fullname"]) && empty($_POST["update_person_email"]) && empty($_POST["update_person_username"]) 
           && empty($_POST["update_person_password"]) && empty($_POST["update_person_is_active"])) {
             $update_personErr = "Notice: Only is_active is updated";
             // $update_person_fullnameErr = "*";
@@ -1081,7 +1081,7 @@
             $update_person_person_id = $_POST["update_person_person_id"];
             $sql = $sql . " WHERE person_id=" . $update_person_person_id . ";";
           }
-          if ($update_personErr === "" && $update_person_person_idErr === "") {
+          if ($update_person_person_idErr === "") {
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           }
           /* #endregion */
@@ -1910,6 +1910,7 @@
         <?php echo read_person(); ?>
       </div> 
       <br>
+      <font color="red"><?php echo $update_personErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         person_id: <input type="number" id="update_person_person_id" name="update_person_person_id" value="<?php echo $update_person_person_id ?>">
           <font color="red"><?php echo $update_person_person_idErr ?></font><br>
