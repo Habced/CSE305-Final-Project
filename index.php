@@ -1166,7 +1166,7 @@
              // $update_person_passwordErr = "*";
              // $update_person_is_activeErr = "*";
            } else {
-           } if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
+            if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
              $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review reviewed by:" .$_POST["update_restaurant_review_reviewed_by"];
              $update_restaurant_review_reviewed_by = test_input($_POST["update_restaurant_review_reviewed_by"]);
              $sql = $sql . " reviewed_by=\"" . $update_restaurant_review_reviewed_by . "\",";
