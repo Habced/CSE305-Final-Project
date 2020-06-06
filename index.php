@@ -703,8 +703,34 @@
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_restaurant"] )){ }
-        elseif ( isset($_POST["submit_form_read_cuisine"] )){ }
-        elseif ( isset($_POST["submit_form_read_serves"] )){ }
+        elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
+          /* #region submit_form_read_cuisine */
+          $read_cuisine_open = "is_open";
+          $sql = "SELECT * FROM cuisine";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_cuisine_out = "<table><thead><tr><td>PK: Cuisine ID</td><td>Cuisine Type</td><td>Cuisine Info</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_cuisine_out = $read_cuisine_out . "<tr><td>" . $row['cuisine_id'] . "</td>";
+            $read_cuisine_out = $read_cuisine_out . "<td>" . $row['cuisine_type'] . "</td>";
+            $read_cuisine_out = $read_cuisine_out . "<td>" . $row['cuisine_info'] . "</td></tr>";
+          }
+          $read_cuisine_out = $read_cuisine_out . "</tbody></table>";
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_read_serves"] )){ 
+          /* #region submit_form_read_serves */
+          $read_serves_open = "is_open";
+          $sql = "SELECT * FROM cuisine";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_serves_out = "<table><thead><tr><td>PK: Business ID</td><td>PK: Cuisine Id</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_serves_out = $read_serves_out . "<tr><td>" . $row['served_at'] . "</td>";
+            $read_serves_out = $read_serves_out . "<td>" . $row['serving'] . "</td></tr>";
+          }
+          $read_serves_out = $read_serves_out . "</tbody></table>";
+          /* #endregion */
+
+        }
         elseif ( isset($_POST["submit_form_read_person"] )){ }
         elseif ( isset($_POST["submit_form_read_works_at"] )){ }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){ }
@@ -1233,7 +1259,7 @@
     <div id="read_cuisine" class="tabcontent">
       <h3>read_cuisine</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_read_cuisine" value="Submit">
+        <input type="submit" name="submit_form_read_cuisine" value="Read">
       </form>
       <button onclick="clearElement('read_cuisine_div')">Clear Output</button>
       <div id="read_cuisine_div">
@@ -1244,7 +1270,7 @@
     <div id="read_serves" class="tabcontent">
       <h3>read_serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_read_serves" value="Submit">
+        <input type="submit" name="submit_form_read_serves" value="Read">
       </form>
       <button onclick="clearElement('read_serves_div')">Clear Output</button>
       <div id="read_serves_div">
