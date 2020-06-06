@@ -360,7 +360,58 @@
         /* #endregion */
       }
 
+      
+      function read_review_followup() {
+        /* #region  read_restaurant_review */
+        global $conn;
+        $sql = "SELECT * FROM review_followup;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_restaurant_followup_out = "";
+        while( $row = mysqli_fetch_array($query)) {
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<tr><td>" . $row['followup_id'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['followed_up_by'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['for_review'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['followup_content'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['create_date'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['last_update'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['is_active'] . "</td></tr>";
+        }
+        if (empty($read_restaurant_followup_out)){
+          $read_restaurant_followup_out = "No result";
+        } else {
+          $read_restaurant_followup_out = "<table><thead>"
+        . "<tr><th>followup_id</th><th>followed_up_by</th><th>for_review</th><th>followup_content</th>"
+        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_followup_out . "</table>";
+        }
+        return $read_restaurant_followup_out;
+        /* #endregion */
+      }
 
+
+      function read_restaurant_discussion(){
+        global $conn;
+        $sql = "SELECT * FROM restaurant_discussion;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_restaurant_discussion_out = "";
+        while( $row = mysqli_fetch_array($query)) {
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<tr><td>" . $row['discussion_id'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussed_by'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussed_restaurant'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussion_content'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['create_date'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['last_update'] . "</td>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['is_active'] . "</td></tr>";
+        }
+        if (empty($read_restaurant_discussion_out)){
+          $read_restaurant_discussion_out = "No result";
+        } else {
+          $read_restaurant_discussion_out = "<table><thead>"
+        . "<tr><th>discussion_id</th><th>discussed_by</th><th>discussed_restaurant</th><th>discussion_content</th>"
+        . "<th>create_date</th><th>discussed_by</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_discussion_out . "</table>";
+        }
+        return $read_restaurant_discussion_out;
+        /* #endregion */
+      }
 
       // Hand multiple submits in a single file
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
@@ -1158,7 +1209,7 @@
         }
         elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ 
 
-           /* #region  submit_form_update_person */
+           /* #region  submit_form_update_restaurant_review */
            $update_restaurant_review_open = "is_open";
            $sql = "UPDATE restaurant_review SET ";
  
@@ -1215,8 +1266,119 @@
 
 
         }
-        elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
-        elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
+        elseif ( isset($_POST["submit_form_update_review_followup"] )){ 
+          
+
+               /* #region  submit_form_update_review_followup */
+          $update_review_followup_open = "is_open";
+          $sql = "UPDATE review_followup SET ";
+
+          if (!empty($_POST["update_review_followup_followup_id"]) && empty($_POST["update_review_followup_followed_up_by"]) && empty($_POST["update_review_followup_followup_for_review"]) && empty($_POST["update_review_followup_followup_content"]) && empty($_POST["update_person_is_active"])) {
+            $update_restaurant_review_followupErr = "Notice: Only is_active is updated";
+            // $update_person_fullnameErr = "*";
+            // $update_person_emailErr = "*";
+            // $update_person_usernameErr = "*";
+            // $update_person_passwordErr = "*";
+            // $update_person_is_activeErr = "*";
+          } else {
+            if (!empty($_POST["update_review_followup_followed_up_by"])){
+            $update_review_followup_out = $update_review_followup_out . "<br>Updated followup followed up by:" .$_POST["update_review_followup_followed_up_by"];
+            $update_review_followup_followed_up_by = test_input($_POST["update_review_followup_followed_up_by"]);
+            $sql = $sql . " followed_up_by=\"" . $update_review_followup_followed_up_by . "\",";
+          } if (!empty($_POST["update_review_followup_followup_for_review"])) {
+            $update_review_followup_out = $update_review_followup_out . "<br>Updated for_review with a value:" .$_POST["update_review_followup_followup_for_review"];
+            $update_review_followup_followup_for_review = test_input($_POST["update_review_followup_followup_for_review"]);
+            $sql = $sql . " for_review=\"" . $update_review_followup_followup_for_review . "\",";
+          } if (!empty($_POST["update_review_followup_followup_content"])){
+            $update_review_followup_out = $update_review_followup_out . "<br>Updated followup content with a value:" .$_POST["update_review_followup_followup_content"];
+            $update_review_followup_followup_content = test_input($_POST["update_review_followup_followup_content"]);
+            $sql = $sql . " followup_content=\"" . $update_review_followup_followup_content . "\",";
+          }  
+
+          } if (!empty($_POST["update_review_followup_is_active"])) {
+            $update_review_followup_is_active = 1;
+            $update_review_followup_out = $update_review_followup_out . "<br>Updated is_active with a value:" . $update_review_followup_is_active;
+            $sql = $sql . " is_active=" . $update_review_followup_is_active . ",";
+          } else {
+            $update_review_followup_is_active = 0;
+            $update_review_followup_out = $update_review_followup_out . "<br>Updated is_active with a value:" .$update_review_followup_is_active;
+            $sql = $sql . " is_active=" . $update_review_followup_is_active . ",";
+          }
+          $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+
+          if (empty($_POST["update_review_followup_followup_id"])) {
+            $update_review_followup_followup_idErr = "You must enter a value for update_review_followup_followup_id";
+          } else {
+            $update_review_followup_out = $update_review_followup_out . "<br>For a row whose followup_id value is:" . $_POST["update_review_followup_followup_id"];
+            $update_review_followup_followup_id = $_POST["update_review_followup_followup_id"];
+            $sql = $sql . " WHERE followup_id=" . $update_review_followup_followup_id . ";";
+          }
+          if ($update_review_followup_followup_idErr === "") {
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          }
+          /* #endregion */
+
+
+ 
+          
+        }
+        elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){
+
+ 
+      /* #region  submit_form_update_review_followup */
+      $update_restaurant_discussion_open = "is_open";
+      $sql = "UPDATE restaurant_discussion SET ";
+
+      if (!empty($_POST["update_restaurant_discussion_discussion_id"]) && empty($_POST["update_restaurant_discussion_discussed_by"]) && empty($_POST["update_restaurant_discussin_discussed_restaurant"]) && empty($_POST["update_restaurant_discussion_discussion_content"]) && empty($_POST["update_person_is_active"])) {
+        $update_restaurant_discussionErr = "Notice: Only is_active is updated";
+        // $update_person_fullnameErr = "*";
+        // $update_person_emailErr = "*";
+        // $update_person_usernameErr = "*";
+        // $update_person_passwordErr = "*";
+        // $update_person_is_activeErr = "*";
+      } else {
+        if (!empty($_POST["update_restaurant_discussion_discussed_by"])){
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>Updated restaurant discussion discussed by:" .$_POST["update_restaurant_discussion_discussed_by"];
+        $update_restaurant_discussion_discussed_by = test_input($_POST["update_restaurant_discussion_discussed_by"]);
+        $sql = $sql . " discussed_by=\"" . $update_restaurant_discussion_discussed_by . "\",";
+      } if (!empty($_POST["update_restaurant_discussin_discussed_restaurant"])) {
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>Updated discussed restaurant with:" .$_POST["update_restaurant_discussin_discussed_restaurant"];
+        $update_restaurant_discussin_discussed_restaurant = test_input($_POST["update_restaurant_discussin_discussed_restaurant"]);
+        $sql = $sql . " dicussed_restaurant=\"" . $update_restaurant_discussin_discussed_restaurant . "\",";
+      } if (!empty($_POST["update_restaurant_discussion_discussion_content"])){
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>Updated discussion content with a value:" .$_POST["update_restaurant_discussion_discussion_content"];
+        $update_restaurant_discussion_discussion_content = test_input($_POST["update_restaurant_discussion_discussion_content"]);
+        $sql = $sql . " discussion_content=\"" . $update_restaurant_discussion_discussion_content . "\",";
+      }  
+
+      } if (!empty($_POST["update_restaurant_discussion_is_active"])) {
+        $update_restaurant_discussion_is_active = 1;
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>Updated is_active with a value:" . $update_restaurant_discussion_is_active;
+        $sql = $sql . " is_active=" . $update_review_followup_is_active . ",";
+      } else {
+        $update_restaurant_discussion_is_active = 0;
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>Updated is_active with a value:" .$update_restaurant_discussion_is_active;
+        $sql = $sql . " is_active=" . $update_restaurant_discussion_is_active . ",";
+      }
+      $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+
+      if (empty($_POST["update_restaurant_discussion_discussion_id"])) {
+        $update_restaurant_discussion_discussion_idErr = "You must enter a value for update_restaurant_discussion_discussion_id";
+      } else {
+        $update_restaurant_discussion_out = $update_restaurant_discussion_out . "<br>For a row whose discussion_id value is:" . $_POST["update_restaurant_discussion_discussion_id"];
+        $update_restaurant_discussion_discussion_id = $_POST["update_restaurant_discussion_discussion_id"];
+        $sql = $sql . " WHERE discussion_id=" . $update_restaurant_discussion_discussion_id . ";";
+      }
+      if ($update_restaurant_discussion_discussion_idErr === "") {
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+      }
+      /* #endregion */
+
+
+
+
+
+         }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
         /* #endregion */
 
@@ -1401,7 +1563,7 @@
       <button class="tablinks" onclick="openPart(event, 'update_serves')" id="<?php echo $update_serves_open; ?>">Update Serves</button>
       <button class="tablinks" onclick="openPart(event, 'update_person')" id="<?php echo $update_person_open; ?>">Update Person</button>
       <button class="tablinks" onclick="openPart(event, 'update_works_at')" id="<?php echo $update_works_at_open; ?>">Update Works At</button>
-      <button class="tablinks" onclick="openPart(event, 'update_restaurant_review')" id="<?php echo $create_restaurant_review_open; ?>">Update Restaurant Review</button>
+      <button class="tablinks" onclick="openPart(event, 'update_restaurant_review')" id="<?php echo $update_restaurant_review_open; ?>">Update Restaurant Review</button>
       <button class="tablinks" onclick="openPart(event, 'update_review_followup')" id="<?php echo $update_review_followup_open; ?>">Update Review Followup</button>
       <button class="tablinks" onclick="openPart(event, 'update_restaurant_discussion')" id="<?php echo $update_restaurant_discussion_open; ?>">Update Restaurant Discussion</button>
       <button class="tablinks" onclick="openPart(event, 'update_discussion_reply')" id="<?php echo $update_discussion_reply_open; ?>">Update Discussion Reply</button>
@@ -2119,25 +2281,64 @@
     </div>
     
     <div id="update_review_followup" class="tabcontent">
-      <h3>update_review_followup</h3>
+    <h3>update_review_followup</h3>
+      <div id="update_person_read_div">
+        <?php echo read_review_followup(); ?>
+      </div> 
+      <br>
+      <font color="red"><?php echo $update_restaurant_review_followupErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        followup_id: <input type="number" id="update_review_followup_followup_id" name="update_review_followup_followup_id" value="<?php echo $update_review_followup_followup_id ?>">
+          <font color="red"><?php echo $update_review_followup_followup_idErr ?></font><br>
+        followed_up_by: <input type="number" id="update_review_followup_followed_up_by" name="update_review_followup_followed_up_by" value="<?php echo $update_review_followup_followed_up_by ?>">
+          <font color="red"><?php echo $update_review_followup_followed_up_byErr ?></font><br>
+        for_review: <input type="number" id="update_review_followup_for_review" name="update_review_followup_for_review" value="<?php echo $update_review_followup_for_review ?>">
+          <font color="red"><?php echo $update_review_followup_for_reviewErr ?></font><br>
+        followup_content: <input type="text" id="update_review_followup_followup_content" name="update_review_followup_followup_content" value="<?php echo $update_review_followup_followup_content ?>">
+          <font color="red"><?php echo $update_review_followup_followup_contentErr ?></font><br>
+        
+        is_active: <input type="checkbox" id="update_review_followup_is_active" name="update_review_followup_is_active">
+        <font color="red"><?php echo $update_review_followup_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_review_followup" value="Submit">
+        <button type="reset" onclick="clearElement('update_review_followup_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_review_followup_div')">Clear Output</button>
-      <div id="update_review_followup_div">
+      <div id="update_review_followup">
         <?php echo $update_review_followup_out; ?>
       </div> 
+      </form>
+ 
     </div>
     
     <div id="update_restaurant_discussion" class="tabcontent">
-      <h3> update_restaurant_discussion </h3>
+    <h3>update_restaurant_discussion</h3>
+      <div id="update_restaurant_discussion_dv">
+        <?php echo read_restaurant_discussion(); ?>
+      </div> 
+      <br>
+      <font color="red"><?php echo $update_restaurant_discussionErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        discussion_id: <input type="number" id="update_restaurant_discussion_discussion_id" name="update_restaurant_discussion_discussion_id" value="<?php echo $update_restaurant_discussion_discussion_id ?>">
+          <font color="red"><?php echo $update_restaurant_discussion_discussion_idErr ?></font><br>
+        discussed_by: <input type="number" id="update_restaurant_discussion_discussed_by" name="update_restaurant_discussion_discussed_by" value="<?php echo $update_restaurant_discussion_discussed_by ?>">
+          <font color="red"><?php echo $update_restaurant_discussion_discussed_byErr ?></font><br>
+        discussed_restaurant: <input type="number" id="update_restaurant_discussion_discussed_restaurant" name="update_restaurant_discussion_discussed_restaurant" value="<?php echo $update_restaurant_discussion_discussed_restaurant ?>">
+          <font color="red"><?php echo $update_restaurant_discussion_discussed_restaurantErr ?></font><br>
+        discussion_content: <input type="text" id="update_restaurant_discussion_discussion_content" name="update_restaurant_discussion_discussion_content" value="<?php echo $update_restaurant_discussion_discussion_content ?>">
+          <font color="red"><?php echo $update_restaurant_discussion_discussion_contentErr ?></font><br>
+        
+        is_active: <input type="checkbox" id="update_restaurant_discussion_is_active" name="update_restaurant_discussion_is_active">
+        <font color="red"><?php echo $update_restaurant_discussion_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_restaurant_discussion" value="Submit">
+        <button type="reset" onclick="clearElement('update_restaurant_discussion_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_restaurant_discussion_div')">Clear Output</button>
-      <div id="update_restaurant_discussion_div">
+      <div id="update_restaurant_discussion">
         <?php echo $update_restaurant_discussion_out; ?>
       </div> 
+      </form>
+      <!-- <button onclick="clearElement('update_restaurant_discussion_div')">Clear Output</button>
+      <div id="update_restaurant_discussion_div">
+        <?php echo $update_restaurant_discussion_out; ?>
+      </div>  -->
     </div>
 
     <div id="update_discussion_reply" class="tabcontent">
