@@ -79,10 +79,15 @@
       // https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_complete
       // define variables and set to empty values
       // $__open = $__out = $__fields = $__fieldsErr = "";
+      
+      /* #region Initializing Create Variables */
       $create_location_open = $create_location_out = ""; 
       $create_location_bldgMgmtNo = $create_location_zip_no = $create_location_jibun_juso = "";
       $create_location_bldgMgmtNoErr = $create_location_zip_noErr = $create_location_jibun_jusoErr = "";
+      
       $create_business_open = $create_business_out = "";
+      $create_business_name = $create_business_located_in = $create_business_addr_detail = "";
+      $create_business_nameErr = $create_business_located_inErr = $create_business_addr_detailErr = "";
 
       $create_restaurant_open = $create_restaurant_out = "";
       $create_restaurant_restaurant_id = $create_restaurant_weekday_open_time = $create_restaurant_weekday_end_time = $create_restaurant_weekend_open_time = $create_restaurant_weekend_end_time
@@ -115,7 +120,9 @@
       $create_discussion_reply_open = $create_discussion_reply_out = 
       $create_discussion_reply_reply_id = $create_discussion_reply_replied_by = $create_discussion_reply_for_discussion = $create_discussion_reply_reply_content =$create_discussion_reply_create_date = $create_discussion_reply_last_update = $create_discussion_reply_is_active =
       $create_discussion_reply_reply_idErr = $create_discussion_reply_replied_byErr = $create_discussion_reply_for_discussionErr = $create_discussion_reply_reply_contentErr =$create_discussion_reply_create_dateErr = $create_discussion_reply_last_updateErr = $create_discussion_reply_is_activeErr ="";
+      /* #endregion */
 
+      /* #region Initializing Read Variables */
       $read_location_open = $read_location_out = "";
       $read_business_open =  $read_business_out = "";
       $read_restaurant_open = $read_restaurant_out = "";
@@ -136,8 +143,9 @@
       $read_discussion_reply_open = $read_discussion_reply_out = 
       $read_discussion_reply_reply_id = $read_discussion_reply_replied_by = $read_discussion_reply_for_discussion = $read_discussion_reply_reply_content =$read_discussion_reply_read_date = $read_discussion_reply_last_update = $read_discussion_reply_is_active =
       $read_discussion_reply_reply_idErr = $read_discussion_reply_replied_byErr = $read_discussion_reply_for_discussionErr = $read_discussion_reply_reply_contentErr =$read_discussion_reply_read_dateErr = $read_discussion_reply_last_updateErr = $read_discussion_reply_is_activeErr ="";
+      /* #endregion */
 
-
+      /* #region Initializing Update Variables */
       $update_location_open = $update_location_out = "";
       $update_business_open = $update_business_out = "";
       $update_restaurant_open = $update_restaurant_out = "";
@@ -158,8 +166,9 @@
       $update_discussion_reply_open = $update_discussion_reply_out = 
       $update_discussion_reply_reply_id = $update_discussion_reply_replied_by = $update_discussion_reply_for_discussion = $update_discussion_reply_reply_content =$update_discussion_reply_update_date = $update_discussion_reply_last_update = $update_discussion_reply_is_active =
       $update_discussion_reply_reply_idErr = $update_discussion_reply_replied_byErr = $update_discussion_reply_for_discussionErr = $update_discussion_reply_reply_contentErr =$update_discussion_reply_update_dateErr = $update_discussion_reply_last_updateErr = $update_discussion_reply_is_activeErr ="";
+      /* #endregion */
 
-
+      /* #region Initializing Delete Variables */
       $delete_location_open = $delete_location_out = "";
       $delete_business_open = $delete_business_out = "";
       $delete_restaurant_open = $delete_restaurant_out = "";
@@ -180,7 +189,7 @@
       $delete_discussion_reply_open = $delete_discussion_reply_out = 
       $delete_discussion_reply_reply_id = $delete_discussion_reply_replied_by = $delete_discussion_reply_for_discussion = $delete_discussion_reply_reply_content =$delete_discussion_reply_delete_date = $delete_discussion_reply_last_update = $delete_discussion_reply_is_active =
       $delete_discussion_reply_reply_idErr = $delete_discussion_reply_replied_byErr = $delete_discussion_reply_for_discussionErr = $delete_discussion_reply_reply_contentErr =$delete_discussion_reply_delete_dateErr = $delete_discussion_reply_last_updateErr = $delete_discussion_reply_is_activeErr ="";
-
+      /* #endregion */
 
       // // 
       // $create_location_open = "is_open";
@@ -201,9 +210,11 @@
       //     $create_location_out = $create_location_out . ""; // eg </tbody></table>
 
 
+      // Hand multiple submits in a single file
+      //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Hand multiple submits in a single file
-        //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
+
+          /* #region submit_form_create_location */
         if ( isset($_POST["submit_form_create_location"] )){ 
           $create_location_open = "is_open";
           if (empty($_POST["create_location_bldgMgmtNo"])) { 
@@ -229,7 +240,34 @@
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_location_out = "Success";
           }
+          /* #endregion */
         }
+        elseif ( isset($_POST["submit_form_create_business"] )){ 
+          /* #region submit_form_create_business */
+          $create_business_open = "is_open";
+          if (empty($_POST["create_business_name"])) { 
+            $create_business_nameErr = "You must enter a value for Name"; 
+          } else {
+            $create_business_name = test_input($_POST["create_business_name"]);
+          }
+          if (empty($_POST["create_business_located_in"])) { 
+            $create_business_located_inErr = "You must enter a value for location"; 
+          } else {
+            $create_business_located_in = test_input($_POST["create_business_located_in"]);
+          }
+          if (empty($_POST["create_business_addr_detail"])) {
+            $create_business_addr_detailErr = "You must enter address details"; 
+          } else {
+            $create_business_addr_detail = test_input($_POST["create_business_addr_detail"]);
+          }
+          if( $create_business_nameErr === "" && $create_business_located_inErr === "" && $create_business_addr_detailErr === "" ) {
+            $sql = "INSERT INTO business (name, located_in, addr_detail, create_date, last_update, is_active) VALUES (\"" . $create_business_name . "\", " . $create_business_located_in . ", \"" . $create_business_addr_detail . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_business_out = "Success";
+          }
+          /* #endregion */
+        }
+<<<<<<< HEAD
         
         elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
@@ -239,6 +277,10 @@
           } else {
             $create_restaurant_restaurant_id = test_input($_POST["create_restaurant_restaurant_id"]);
           }
+=======
+        elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
+          /* #region submit_form_create_restaurant */
+>>>>>>> 7e1d05d3cc14fd1e2ec2f9256be1c9ccecd3c2ee
           if (empty($_POST["create_restaurant_weekday_open_time"])) {
             $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time";
           } else {
@@ -297,7 +339,25 @@
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_out = "Success";
           }
+          /* #endregion */
         }
+        elseif ( isset($_POST["submit_form_create_cuisine"] )){ 
+          /* #region submit_form_create_cuisine */
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_create_serves"] )){ 
+          /* #region submit_form_create_serves */
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_create_person"] )){ 
+          /* #region submit_form_create_person */
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_create_works_at"] )){ 
+          /* #region submit_form_create_works_at */
+          /* #endregion */
+        }
+<<<<<<< HEAD
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_create_serves"] )){ }
         elseif ( isset($_POST["submit_form_create_person"] )){ 
@@ -375,9 +435,11 @@
             $create_person_out = "Success";
           }
         }
+=======
+>>>>>>> 7e1d05d3cc14fd1e2ec2f9256be1c9ccecd3c2ee
         elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ 
+          /* #region submit_form_create_restaurant_review */
           $create_restaurant_review_open = "is_open";
-
           if (empty($_POST["create_restaurant_review_review_id"])) {
             $create_restaurant_review_review_idErr = "You must enter a value for create_restaurant_review_review_id";
           }else{
@@ -428,8 +490,10 @@
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_review_out = "Success";
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_review_followup"] )){ 
+          /* #region submit_form_create_review_followup */
           $create_review_followup_open = "is_open";
 
           if (empty($_POST["create_review_followup_followup_id"])) {
@@ -479,8 +543,10 @@
             $create_restaurant_review_out = "Success";
           }
 
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_restaurant_discussion"] )){ 
+          /* #region submit_form_create_restaurant_discussion */
           $create_restaurant_discussion_open = "is_open";
 
           if (empty($_POST["create_restaurant_discussion_discussion_id"])) {
@@ -530,10 +596,11 @@
             $create_restaurant_discussion_out = "Success";
           }
 
-
+          /* #endregion */
 
         }
         elseif ( isset($_POST["submit_form_create_discussion_reply"] )){ 
+          /* #region submit_form_create_discussion_reply */
           $create_discussion_reply_open = "is_open";
 
           if (empty($_POST["create_discussion_reply_reply_id"])) {
@@ -583,6 +650,7 @@
             $create_restaurant_discussion_out = "Success";
           }
 
+          /* #endregion */
 
         }
 
@@ -621,16 +689,7 @@
         elseif ( isset($_POST["submit_form_delete_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_delete_discussion_reply"] )){ }
-        // <div id="create_business" class="tabcontent"></div>
-        // <div id="create_restaurant" class="tabcontent"></div>    
-        // <div id="create_cuisine" class="tabcontent"></div>
-        // <div id="create_serves" class="tabcontent"></div>
-        // <div id="create_person" class="tabcontent"></div>
-        // <div id="create_works_at" class="tabcontent"></div>
-        // <div id="create_restaurant_review" class="tabcontent"></div>
-        // <div id="create_review_followup" class="tabcontent"></div>
-        // <div id="create_restaurant_discussion" class="tabcontent"></div>
-        // <div id="create_discussion_reply" class="tabcontent"></div>
+        
       }
     ?>
 
@@ -639,7 +698,12 @@
       Daekyung (Tim) Kim - 110887867 - daekyung.kim@stonybrooke.du<br>
       Haseung Lee - 110983860 - haseung.lee@stonybrook.edu
     </h5>
+
     <!-- Tab links -->
+    
+    <!-- 
+      /* #region Create Tabs */
+    --> 
     <div class="tab"><!-- CREATE -->
       <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
@@ -653,6 +717,13 @@
       <button class="tablinks" onclick="openPart(event, 'create_restaurant_discussion')" id="<?php echo $create_restaurant_discussion_open; ?>">Create Restaurant Discussion</button>
       <button class="tablinks" onclick="openPart(event, 'create_discussion_reply')" id="<?php echo $create_discussion_reply_open; ?>">Create Discussion Reply</button>
     </div>
+    <!-- 
+      /* #endregion */
+    -->
+    
+    <!-- 
+      /* #region Read Tabs */
+    --> 
     <div class="tab"><!-- READ -->
       <button class="tablinks" onclick="openPart(event, 'read_location')" id="<?php echo $read_location_open; ?>">Read Location</button>
       <button class="tablinks" onclick="openPart(event, 'read_business')" id="<?php echo $read_business_open; ?>">Read Business</button>
@@ -666,6 +737,13 @@
       <button class="tablinks" onclick="openPart(event, 'read_restaurant_discussion')" id="<?php echo $read_restaurant_discussion_open; ?>">Read Restaurant Discussion</button>
       <button class="tablinks" onclick="openPart(event, 'read_discussion_reply')" id="<?php echo $read_discussion_reply_open; ?>">Read Discussion Reply</button>
     </div>
+    <!-- 
+      /* #endregion */
+    -->
+    
+    <!-- 
+      /* #region Update Tabs */
+    --> 
     <div class="tab"><!-- UPDATE -->
       <button class="tablinks" onclick="openPart(event, 'update_location')" id="<?php echo $update_location_open; ?>">Update Location</button>
       <button class="tablinks" onclick="openPart(event, 'update_business')" id="<?php echo $update_business_open; ?>">Update Business</button>
@@ -680,6 +758,13 @@
       <button class="tablinks" onclick="openPart(event, 'update_discussion_reply')" id="<?php echo $update_discussion_reply_open; ?>">Update Discussion Reply</button>
       <br>
     </div>
+    <!-- 
+      /* #endregion */
+    -->
+    
+    <!-- 
+      /* #region Delete Tabs */
+    --> 
     <div class="tab"><!-- DELETE -->
       <button class="tablinks" onclick="openPart(event, 'delete_location')" id="<?php echo $delete_location_open; ?>">Delete Location</button>
       <button class="tablinks" onclick="openPart(event, 'delete_business')" id="<?php echo $delete_business_open; ?>">Delete Business</button>
@@ -694,40 +779,83 @@
       <button class="tablinks" onclick="openPart(event, 'delete_discussion_reply')" id="<?php echo $delete_discussion_reply_open; ?>">Delete Discussion Reply</button>
       <br>
     </div>
-
+    <!-- 
+      /* #endregion */
+    -->
     <!-- ----------- Tab content ----------- -->
 
     
     <!-- ############################################### ######################## ############################################### -->
     <!-- ############################################### Create Forms Tab Content ############################################### -->
     <!-- ############################################### ######################## ############################################### -->
+
+    <!-- 
+      /* #region Create Tab Content */
+    -->
+    <!-- 
+      /* #region create_location */
+    -->
     <div id="create_location" class="tabcontent">
-      <h3>Location</h3>
+
+      <h3>Create Location</h3>
+    
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
+        
+        Building Management No.: 
+        <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
         <font color="red"><?php echo $create_location_bldgMgmtNoErr ?></font><br>
-        zip_no: <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
+        
+        Zip No.: 
+        <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
         <font color="red"><?php echo $create_location_zip_noErr ?></font><br>
-        jibun_juso: <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
+        
+        Jibun Juso: 
+        <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
         <font color="red"><?php echo $create_location_jibun_jusoErr ?></font><br>
+
         <input type="submit" name="submit_form_create_location" value="Submit">
       </form>
+      
       <button onclick="clearElement('create_location_div')">Clear Output</button>
       <div id="create_location_div">
         <?php echo $create_location_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
 
+    <!-- 
+      /* #region create_location */
+    -->
     <div id="create_business" class="tabcontent">
-      <h3>create_business</h3>
+
+      <h3>Create Business</h3>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+    
+        Business Name: 
+        <input type="text" id="create_business_name" name="create_business_name" value="<?php echo $create_business_name ?>">
+        <font color="red"><?php echo $create_business_nameErr ?></font><br>
+
+        Located In (FK: Location's Building Management Number): 
+        <input type="number" id="create_business_located_in" name="create_business_located_in" value="<?php echo $create_business_located_in ?>">
+        <font color="red"><?php echo $create_business_located_inErr ?></font><br>
+    
+        Address Detail: <input type="text" id="create_business_addr_detail" name="create_business_addr_detail" value="<?php echo $create_business_addr_detail ?>">
+        <font color="red"><?php echo $create_business_addr_detailErr ?></font><br>
+       
         <input type="submit" name="submit_form_create_business" value="Submit">
       </form>
+      
       <button onclick="clearElement('create_business_div')">Clear Output</button>
       <div id="create_business_div">
         <?php echo $create_business_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
@@ -929,10 +1057,18 @@
       </div> 
     </div>
 
+    <!-- 
+      /* #endregion */
+    -->
+
     <!-- ############################################### ###################### ############################################### -->
     <!-- ############################################### Read Forms Tab Content ############################################### -->
     <!-- ############################################### ###################### ############################################### -->
     
+    
+    <!-- 
+      /* #region Read Tab Content */
+    -->
     <div id="read_location" class="tabcontent">
       <h3>read_location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1054,11 +1190,17 @@
       </div> 
     </div>
 
+    <!-- 
+      /* #endregion */
+    -->
 
     <!-- ############################################### ######################## ############################################### -->
     <!-- ############################################### Update Forms Tab Content ############################################### -->
     <!-- ############################################### ######################## ############################################### -->
 
+    <!-- 
+      /* #region Update Tab Content */
+    -->
     <div id="update_location" class="tabcontent">
       <h3>update_location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1180,9 +1322,19 @@
       </div> 
     </div>
 
+    <!-- 
+      /* #endregion */
+    -->
+
+
     <!-- ############################################### ######################## ############################################### -->
     <!-- ############################################### Delete Forms Tab Content ############################################### -->
     <!-- ############################################### ######################## ############################################### -->
+
+    
+    <!-- 
+      /* #region Delete Tab Content */
+    -->
     <div id="delete_location" class="tabcontent">
       <h3>delete_location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1303,6 +1455,11 @@
         <?php echo $delete_discussion_reply_out; ?>
       </div> 
     </div>
+
+    <!-- 
+      /* #endregion */
+    -->
+
 
     <script>
       function openPart(evt, part) {
