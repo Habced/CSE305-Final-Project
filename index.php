@@ -105,9 +105,9 @@
 
       $create_person_open = $create_person_out = "";
       $create_person_person_id = $create_person_fullname = $create_person_email = $create_person_username = $create_person_password = $create_person_create_date
-      = $create_person_last_update = $create_person_is_activate = "";
+      = $create_person_last_update = $create_person_is_active = "";
       $create_person_person_idErr = $create_person_fullnameErr = $create_person_emailErr = $create_person_usernameErr = $create_person_passwordErr = $create_person_create_dateErr
-      = $create_person_last_updateErr = $create_person_is_activateErr = "";
+      = $create_person_last_updateErr = $create_person_is_activeErr = "";
 
       $create_works_at_open = $create_works_at_out = "";
       $create_works_at_works_for = $create_works_at_employed = $create_works_at_employee_type = "";
@@ -216,7 +216,7 @@
 
       function read_restaurant() {
         /* #region  read_restaurant */
-        global $conn, $read_restaurant_out;
+        global $conn;
         $sql = "SELECT * FROM restaurant;";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
@@ -237,14 +237,13 @@
           $read_restaurant_out = "<table><thead>"
         . "<tr><th>restaurant_id</th><th>weekday_open_time</th><th>weekday_end_time</th><th>weekend_open_time</th><th>weekend_end_time</th>"
         . "<th>weekly_break_date</th><th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
-        
         }
-        // return $read_restaurant_out;
+        return $read_restaurant_out;
         /* #endregion */
       }
       function read_person() {
         /* #region read_person */
-        global $conn, $read_person_out;
+        global $conn;
         $sql = "SELECT * FROM person;";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_person_out = ""; // eg<table><thead><tr><td>a_field1</td></tr></thead><tbody>
@@ -256,7 +255,7 @@
           $read_person_out = $read_person_out . "<td>" . $row['password'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['create_date'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['last_update'] . "</td>";
-          $read_person_out = $read_person_out . "<td>" . $row['is_activate'] . "</td></tr>";
+          $read_person_out = $read_person_out . "<td>" . $row['is_active'] . "</td></tr>";
         }
         if (empty($read_person_out)){
           $read_person_out = "No result";
@@ -265,11 +264,12 @@
         . "<tr><th>person_id</th><th>fullname</th><th>email</th><th>username</th><th>password</th>"
         . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_person_out . "</table>";
         }
+        return $read_person_out;
         /* #endregion */
       }
       function read_works_at() {
         /* #region  read_works_at */
-        global $conn, $read_works_at_out;
+        global $conn;
         $sql = "SELECT * FROM works_at;";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_works_at_out = "";
@@ -284,6 +284,7 @@
           $read_works_at_out = "<table><thead>"
           . "<tr><th>works_for</th><th>employed</th><th>employee_type</th></tr>" . $read_works_at_out . "</table>";
         }
+        return $read_works_at_out;
         /* #endregion */
       }
       // Hand multiple submits in a single file
@@ -482,16 +483,16 @@
           // } else {
           //   $create_person_last_update = test_input($_POST["create_person_last_update"]);
           // }
-          // if (empty($_POST["create_person_is_activate"])) {
-          //   $create_person_is_activateErr = "You must enter a value for create_person_is_activate";
+          // if (empty($_POST["create_person_is_active"])) {
+          //   $create_person_is_activeErr = "You must enter a value for create_person_is_active";
           // } else {
-          //   $create_person_is_activate = test_input($_POST["create_person_is_activate"]);
+          //   $create_person_is_active = test_input($_POST["create_person_is_active"]);
           // }
           if ($create_person_person_idErr === "" && $create_person_fullnameErr === "" &&  $create_person_emailErr === "" &&  $create_person_usernameErr === "" &&  
-          $create_person_passwordErr === "" && $create_person_is_activateErr === "") {
-            $sql = "INSERT INTO person (person_id, fullname, email, username, password, create_date, last_update, is_activate) 
+          $create_person_passwordErr === "" && $create_person_is_activeErr === "") {
+            $sql = "INSERT INTO person (person_id, fullname, email, username, password, create_date, last_update, is_active) 
             VALUES (" . $create_person_person_id . ", \"" . $create_person_fullname . "\", \"" . $create_person_email . "\", \"" . $create_person_username . "\", \"" 
-            . $create_person_password . "\", " . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
+            . $create_person_password . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_person_out = "Success";
           }
@@ -776,7 +777,7 @@
         elseif ( isset($_POST["submit_form_read_restaurant"] )){
           /* #region  submit_from_read_restaurant */
           $read_restaurant_open = "is_open"; 
-          read_restaurant();
+          $read_restaurant_out = read_restaurant();
         }
           /* #endregion */
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
@@ -809,13 +810,13 @@
         elseif ( isset($_POST["submit_form_read_person"] )){
           /* #region  submit_from_read_person */
           $read_person_open = "is_open";
-          read_person();
+          $read_person_out = read_person();
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_works_at"] )){
           /* #region  submit_form_read_works_at */
           $read_works_at_open = "is_open";
-          read_works_at();
+          $read_works_at_out = read_works_at();
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){ }
@@ -825,11 +826,19 @@
         
         elseif ( isset($_POST["submit_form_update_location"] )){ }
         elseif ( isset($_POST["submit_form_update_business"] )){ }
-        elseif ( isset($_POST["submit_form_update_restaurant"] )){ }
+        elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
+          $update_restaurant_open = "is_open";
+        
+        }
         elseif ( isset($_POST["submit_form_update_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_update_serves"] )){ }
-        elseif ( isset($_POST["submit_form_update_person"] )){ }
-        elseif ( isset($_POST["submit_form_update_works_at"] )){ }
+        elseif ( isset($_POST["submit_form_update_person"] )){ 
+          $update_person_open = "is_open";
+        }
+        elseif ( isset($_POST["submit_form_update_works_at"] )){ 
+          $update_works_at_open = "is_open";
+
+        }
         elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
@@ -1133,8 +1142,8 @@
           <font color="red"><?php echo $create_person_create_dateErr ?></font><br>
         last_update: <input type="date" id="create_person_last_update" name="create_person_last_update" value="<?php echo $create_person_last_update ?>">
           <font color="red"><?php echo $create_person_last_updateErr ?></font><br> -->
-        <!-- is_activate: <input type="checkbox" id="create_person_is_activate" name="create_person_is_activate" value="<?php echo $create_person_is_activate ?>"> -->
-        <font color="red"><?php echo $create_person_is_activateErr ?></font><br>
+        <!-- is_active: <input type="checkbox" id="create_person_is_active" name="create_person_is_active" value="<?php echo $create_person_is_active ?>"> -->
+        <font color="red"><?php echo $create_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_person" value="Submit">
       </form>
       <button onclick="clearElement('create_person_div')">Clear Output</button>
@@ -1470,7 +1479,7 @@
       </form>
       <button onclick="clearElement('update_restaurant_div')">Clear Output</button>
       <div id="update_restaurant_div">
-        <?php echo $update_restaurant_out; ?>
+        <?php $update_restaurant_out = $update_restaurant_out . read_restaurant(); echo $update_restaurant_out; ?>
       </div> 
     </div>
 
@@ -1503,7 +1512,7 @@
       </form>
       <button onclick="clearElement('update_person_div')">Clear Output</button>
       <div id="update_person_div">
-        <?php echo $update_person_out; ?>
+        <?php $update_person_out = $update_person_out . read_person(); echo $update_person_out; ?>
       </div> 
     </div>
     
@@ -1514,7 +1523,7 @@
       </form>
       <button onclick="clearElement('update_works_at_div')">Clear Output</button>
       <div id="update_works_at_div">
-        <?php echo $update_works_at_out; ?>
+        <?php $update_works_at_out = $update_works_at_out . read_works_at(); echo $update_works_at_out; ?>
       </div> 
     </div>
     
