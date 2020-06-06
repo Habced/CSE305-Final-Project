@@ -406,11 +406,11 @@
           // } else {
           //   $create_person_create_date = test_input($_POST["create_person_create_date"]);
           // }
-          if (empty($_POST["create_person_last_update"])) {
-            $create_person_last_updateErr = "You must enter a value for create_person_last_update";
-          } else {
-            $create_person_last_update = test_input($_POST["create_person_last_update"]);
-          }
+          // if (empty($_POST["create_person_last_update"])) {
+          //   $create_person_last_updateErr = "You must enter a value for create_person_last_update";
+          // } else {
+          //   $create_person_last_update = test_input($_POST["create_person_last_update"]);
+          // }
           // if (empty($_POST["create_person_is_activate"])) {
           //   $create_person_is_activateErr = "You must enter a value for create_person_is_activate";
           // } else {
