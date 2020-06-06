@@ -155,6 +155,8 @@
       $update_business_open = $update_business_out = "";
       $update_restaurant_open = $update_restaurant_out = "";
       $update_cuisine_open = $update_cuisine_out = "";
+      $update_cuisine_id = $update_cuisine_cuisine_type = $update_cuisine_cuisine_info = "";
+      $update_cuisine_idErr = $update_cuisine_cuisine_typeErr = $update_cuisine_cuisine_infoErr = "";
       $update_serves_open = $update_serves_out = "";
       $update_person_open = $update_person_out = "";
       $update_works_at_open = $update_works_at_out = "";
@@ -807,7 +809,36 @@
         elseif ( isset($_POST["submit_form_update_location"] )){ }
         elseif ( isset($_POST["submit_form_update_business"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ }
-        elseif ( isset($_POST["submit_form_update_cuisine"] )){ }
+        elseif ( isset($_POST["submit_form_update_cuisine"] )){ 
+          
+          /* #region submit_form_create_cuisine */
+          $update_cuisine_open = "is_open";
+          if (empty($_POST["update_cuisine_id"])) { 
+            $update_cuisine_id = "You must enter a cuisine id";
+          } else {
+            $update_cuisine_id = test_input($_POST["update_cuisine_id"]);
+          }
+          if (empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ){
+            $update_cuisine_cuisine_typeErr = "You must enter either cuisine type or cuisine info to update"; 
+            $update_cuisine_cuisine_infoErr = "You must enter either cuisine type or cuisine info to update"; 
+          } else {
+            if (empty($_POST["update_cuisine_cuisine_type"]) && !empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_info = test_input($_POST["update_cuisine_cuisine_info"]);
+              $sql = "UPDATE cuisine SET cuisine_info = \"" . $update_cuisine_cuisine_info . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            } elseif (!empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_type = test_input($_POST["update_cuisine_cuisine_type"]);
+              $sql = "UPDATE cuisine SET cuisine_type = \"" . $update_cuisine_cuisine_type . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            } elseif (!empty($_POST["update_cuisine_cuisine_type"]) && !empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_info = test_input($_POST["update_cuisine_cuisine_info"]);
+              $update_cuisine_cuisine_type = test_input($_POST["update_cuisine_cuisine_type"]);
+              $sql = "UPDATE cuisine SET cuisine_type = \"" . $update_cuisine_cuisine_type . "\",  cuisine_info = \"" . $update_cuisine_cuisine_info . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            }
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_cuisine_out = "Success";
+          }
+          // if( $update_cuisine_cuisine_typeErr === "" && $update_cuisine_cuisine_infoErr === "" ) { }
+          /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_update_serves"] )){ }
         elseif ( isset($_POST["submit_form_update_person"] )){ }
         elseif ( isset($_POST["submit_form_update_works_at"] )){ }
@@ -1456,10 +1487,25 @@
     </div>
 
     <div id="update_cuisine" class="tabcontent">
-      <h3>update_cuisine</h3>
+      <h3>Update Cuisine</h3>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_update_cuisine" value="Submit">
+
+        *Cuisine ID: 
+        <input type="number" id="update_cuisine_id" name="update_cuisine_id" value="<?php echo $update_cuisine_id ?>">
+        <font color="red"><?php echo $update_cuisine_idErr ?></font><br>
+
+        Cuisine Type (Optional): 
+        <input type="text" id="update_cuisine_cuisine_type" name="update_cuisine_cuisine_type" value="<?php echo $update_cuisine_cuisine_type ?>">
+        <font color="red"><?php echo $update_cuisine_cuisine_typeErr ?></font><br>
+
+        Cuisine Information (Optional): 
+        <input type="text" id="update_cuisine_cuisine_info" name="update_cuisine_cuisine_info" value="<?php echo $update_cuisine_cuisine_info ?>">
+        <font color="red"><?php echo $update_cuisine_cuisine_infoErr ?></font><br>
+
+        <input type="submit" name="submit_form_update_cuisine" value="Update">
       </form>
+
       <button onclick="clearElement('update_cuisine_div')">Clear Output</button>
       <div id="update_cuisine_div">
         <?php echo $update_cuisine_out; ?>
