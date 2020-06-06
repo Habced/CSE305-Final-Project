@@ -152,7 +152,13 @@
 
       /* #region Initializing Update Variables */
       $update_location_open = $update_location_out = "";
+      $update_location_bldgMgmtNo = $update_location_zip_no = $update_location_jibun_juso = "";
+      $update_location_bldgMgmtNoErr = $update_location_zip_noErr = $update_location_jibun_jusoErr = "";
+
       $update_business_open = $update_business_out = "";
+      $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
+      $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = "";
+      
       $update_restaurant_open = $update_restaurant_out = $update_restaurantErr = "";
       $update_restaurant_restaurant_id = $update_restaurant_weekday_open_time = $update_restaurant_weekday_end_time = $update_restaurant_weekend_open_time = $update_restaurant_weekend_end_time
       = $update_restaurant_weekly_break_date = $update_restaurant_update_date = $update_restaurant_last_update = "";
@@ -163,7 +169,9 @@
       $update_cuisine_open = $update_cuisine_out = "";
       $update_cuisine_id = $update_cuisine_cuisine_type = $update_cuisine_cuisine_info = "";
       $update_cuisine_idErr = $update_cuisine_cuisine_typeErr = $update_cuisine_cuisine_infoErr = "";
+      
       $update_serves_open = $update_serves_out = "";
+      
       $update_person_open = $update_person_out = $update_personErr = "";
       $update_person_person_id = $update_person_fullname = $update_person_email = $update_person_username = $update_person_password = $update_person_update_date
       = $update_person_last_update = $update_person_is_active = "";
@@ -319,6 +327,7 @@
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        /* #region SUBMIT FORM CREATE */
         if ( isset($_POST["submit_form_create_location"] )){ 
           /* #region submit_form_create_location */
           $create_location_open = "is_open";
@@ -405,21 +414,7 @@
           }else {
             $create_restaurant_weekly_break_date = test_input($_POST["create_restaurant_weekly_break_date"]);
           }
-          // if (empty($_POST["create_restaurant_create_date"])) {
-          //   $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
-          // } else {
-          //   $create_restaurant_create_date = test_input($_POST["create_restaurant_create_date"]);
-          // }
-          // if (empty($_POST["create_restaurant_last_update"])) {
-          //   $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
-          // } else {
-          //   $create_restaurant_last_update = test_input($_POST["create_restaurant_last_update"]);
-          // }
-          // if (empty($_POST["create_restaurant_is_active"])) {
-          //   $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
-          // } else {
-          //   $create_restaurant_is_active = test_input($_POST["create_restaurant_is_active"]);
-          // }
+ 
           if ($create_restaurant_weekday_open_timeErr === "" && $create_restaurant_weekday_end_timeErr === "" && $create_restaurant_weekend_open_timeErr === "" &&
           $create_restaurant_weekend_end_timeErr === "" && $create_restaurant_has_weekly_breakErr === "" && $create_restaurant_weekly_break_dateErr === "" && 
           $create_restaurant_create_dateErr === "" && $create_restaurant_last_updateErr === "" && $create_restaurant_is_activeErr == "" && $create_restaurant_restaurant_idErr === ""){
@@ -703,7 +698,7 @@
           if (empty($_POST["create_discussion_reply_reply_content"])) {
             $create_discussion_reply_reply_contentErr = "You must enter a value for create_discussion_reply_reply_content";
           }else{
-            $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]);
+            $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]); 
           }
          
           if( $create_discussion_reply_reply_idErr === "" && $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
@@ -719,8 +714,9 @@
 
           /* #endregion */
         }
+        /* #endregion */
 
-
+        /* #region SUBMIT FORM READ */
         elseif ( isset($_POST["submit_form_read_location"] )){ 
           /* #region submit_form_read_location */
           $read_location_open = "is_open";
@@ -779,7 +775,7 @@
         elseif ( isset($_POST["submit_form_read_serves"] )){ 
           /* #region submit_form_read_serves */
           $read_serves_open = "is_open";
-          $sql = "SELECT * FROM cuisine";
+          $sql = "SELECT * FROM serves";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           $read_serves_out = "<table><thead><tr><td>PK: Business ID</td><td>PK: Cuisine Id</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
@@ -895,9 +891,56 @@
           }
           /* #endregion */
         }
+        /* #endregion*/
         
-        elseif ( isset($_POST["submit_form_update_location"] )){ }
-        elseif ( isset($_POST["submit_form_update_business"] )){ }
+        /* #region SUBMIT FORM UPDATE */
+        elseif ( isset($_POST["submit_form_update_location"] )){
+          /* #region  submit_for_update_restaurant */ 
+
+          $update_location_open = "is_open";
+          if (empty($_POST["update_location_bldgMgmtNo"])) { 
+            $update_location_bldgMgmtNoErr = "You must enter a Building Management No.";
+          } else {
+            $update_location_bldgMgmtNo = test_input($_POST["update_location_bldgMgmtNo"]);
+          }
+          if (empty($_POST["update_location_zip_no"]) && empty($_POST["update_location_jibun_juso"]) ) { 
+            $update_location_zip_noErr = "All update values cannot be empty";
+            $update_location_jibun_jusoErr = "All update values cannot be empty";
+          } else {
+            $isFirst = 1;
+            $sql = "UPDATE location SET ";
+            if (!empty($_POST["update_location_zip_no"])) { 
+              if( $isFirst != 1 ) {
+                $sql = $sql . ", ";
+              } else {
+                $isFirst = 0;
+              }
+              $update_location_zip_no = test_input($_POST["update_location_zip_no"]);
+              $sql = $sql . "zip_no = " . $update_location_zip_no;
+            }
+            if (!empty($_POST["update_location_jibun_juso"])) { 
+              if( $isFirst != 1 ) {
+                $sql = $sql . ", ";
+              } else {
+                $isFirst = 0;
+              }
+              $update_location_jibun_juso = test_input($_POST["update_location_jibun_juso"]);
+              $sql = $sql . "jibun_juso = " . $update_location_jibun_juso;
+            }
+            $sql = $sql . ", last_update = \"" . date("Y-m-d h:i:s") . "\" WHERE bldgMgmtNo = " . $update_location_bldgMgmtNo;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_location_out = "Success";
+          }
+
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_update_business"] )){ 
+          /* #region  submit_for_update_restaurant */
+      // $update_business_open = $update_business_out = "";
+      // $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
+      // $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = "";
+          /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
           /* #region  submit_for_update_restaurant */
           $update_restaurant_open = "is_open";
@@ -966,7 +1009,6 @@
           } else {
             $update_cuisine_id = test_input($_POST["update_cuisine_id"]);
           }
-          if ($update_cuisine_idErr == "")
           if (empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ){
             $update_cuisine_cuisine_typeErr = "You must enter either cuisine type or cuisine info to update"; 
             $update_cuisine_cuisine_infoErr = "You must enter either cuisine type or cuisine info to update"; 
@@ -1045,6 +1087,7 @@
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_update_works_at"] )){ 
+          /* #region  submit_form_update_works_at */
           $update_works_at_open = "is_open";
           $sql = "UPDATE works_at SET ";
           if (empty($_POST["update_works_at_employee_type"])) {
@@ -1072,12 +1115,15 @@
           if ($update_works_at_works_forErr === "" && $update_works_at_employedErr === "" && $update_works_at_employee_typeErr === "") {
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
+        /* #endregion */
 
+        /* #region SUBMIT FORM DELETE */
         elseif ( isset($_POST["submit_form_delete_location"] )){ 
           /* #region submit_form_delete_location */
           $delete_location_open = "is_open";
@@ -1152,7 +1198,7 @@
         elseif ( isset($_POST["submit_form_delete_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_delete_discussion_reply"] )){ }
-        
+        /* #endregion */
       }
     ?>
 
@@ -1743,8 +1789,24 @@
       /* #region Update Tab Content */
     -->
     <div id="update_location" class="tabcontent">
-      <h3>update_location</h3>
+      <h3>Update Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      <!-- $update_location_open = $update_location_out = "";
+      $update_location_bldgMgmtNo = $update_location_zip_no = $update_location_jibun_juso = "";
+      $update_location_bldgMgmtNoErr = $update_location_zip_noErr = $update_location_jibun_jusoErr = ""; -->
+
+        *Building Mangament No: 
+        <input type="number" id="update_location_bldgMgmtNo" name="update_location_bldgMgmtNo" value="<?php echo $update_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $update_location_bldgMgmtNoErr ?></font><br>
+
+        Zip No. (Optional): 
+        <input type="text" id="update_location_zip_no" name="update_location_zip_no" value="<?php echo $update_location_zip_no ?>">
+        <font color="red"><?php echo $update_location_zip_noErr ?></font><br>
+
+        Jibun Juso (Optional): 
+        <input type="text" id="update_location_jibun_juso" name="update_location_jibun_juso" value="<?php echo $update_location_jibun_juso ?>">
+        <font color="red"><?php echo $update_location_jibun_jusoErr ?></font><br>
+
         <input type="submit" name="submit_form_update_location" value="Submit">
       </form>
       <button onclick="clearElement('update_location_div')">Clear Output</button>
@@ -1754,7 +1816,10 @@
     </div>
     
     <div id="update_business" class="tabcontent">
-      <h3>update_business</h3>
+      <h3>Update Business</h3>
+      <!-- $update_business_open = $update_business_out = "";
+      $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
+      $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = ""; -->
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_update_business" value="Submit">
       </form>
