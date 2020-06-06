@@ -153,11 +153,26 @@
       /* #region Initializing Update Variables */
       $update_location_open = $update_location_out = "";
       $update_business_open = $update_business_out = "";
-      $update_restaurant_open = $update_restaurant_out = "";
+      $update_restaurant_open = $update_restaurant_out = $update_restaurantErr = "";
+      $update_restaurant_restaurant_id = $update_restaurant_weekday_open_time = $update_restaurant_weekday_end_time = $update_restaurant_weekend_open_time = $update_restaurant_weekend_end_time
+      = $update_restaurant_weekly_break_date = $update_restaurant_update_date = $update_restaurant_last_update = "";
+      $update_restaurant_is_active = 0;
+      $update_restaurant_restaurant_idErr = $update_restaurant_weekday_open_timeErr = $update_restaurant_weekday_end_timeErr = $update_restaurant_weekend_open_timeErr = $update_restaurant_weekend_end_timeErr
+      = $update_restaurant_has_weekly_breakErr = $update_restaurant_weekly_break_dateErr = $update_restaurant_update_dateErr = $update_restaurant_last_updateErr = $update_restaurant_is_activeErr = "";
+
       $update_cuisine_open = $update_cuisine_out = "";
+      $update_cuisine_id = $update_cuisine_cuisine_type = $update_cuisine_cuisine_info = "";
+      $update_cuisine_idErr = $update_cuisine_cuisine_typeErr = $update_cuisine_cuisine_infoErr = "";
       $update_serves_open = $update_serves_out = "";
-      $update_person_open = $update_person_out = "";
+      $update_person_open = $update_person_out = $update_personErr = "";
+      $update_person_person_id = $update_person_fullname = $update_person_email = $update_person_username = $update_person_password = $update_person_update_date
+      = $update_person_last_update = $update_person_is_active = "";
+      $update_person_person_idErr = $update_person_fullnameErr = $update_person_emailErr = $update_person_usernameErr = $update_person_passwordErr = $update_person_update_dateErr
+      = $update_person_last_updateErr = $update_person_is_activeErr = "";
+
       $update_works_at_open = $update_works_at_out = "";
+      $update_works_at_works_for = $update_works_at_employed = $update_works_at_employee_type = "";
+      $update_works_at_works_forErr = $update_works_at_employedErr = $update_works_at_employee_typeErr = "";
   
       $update_restaurant_review_open = $update_restaurant_review_out = 
       $update_restaurant_review_review_id = $update_restaurant_review_reviewed_by = $update_restaurant_review_reviewed_restaurant= $update_restaurant_review_review_star = $update_restaurant_review_review_content = $update_restaurant_review_update_date= $update_restaurant_review_last_update = $update_restaurant_review_is_active=
@@ -175,10 +190,23 @@
 
       /* #region Initializing Delete Variables */
       $delete_location_open = $delete_location_out = "";
+      $delete_location_bldgMgmtNo = "";
+      $delete_location_bldgMgmtNoErr = "";
+
       $delete_business_open = $delete_business_out = "";
+      $delete_business_business_id = "";
+      $delete_business_business_idErr = "";
+
       $delete_restaurant_open = $delete_restaurant_out = "";
+
       $delete_cuisine_open = $delete_cuisine_out = "";
+      $delete_cuisine_cuisine_id = "";
+      $delete_cuisine_cuisine_idErr = "";
+
       $delete_serves_open = $delete_serves_out = "";
+      $delete_serves_served_at = $delete_serves_serving = "";
+      $delete_serves_served_atErr = $delete_serves_servingErr = "";
+
       $delete_person_open = $delete_person_out = "";
       $delete_works_at_open = $delete_works_at_out = "";
 
@@ -291,8 +319,8 @@
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-          /* #region submit_form_create_location */
         if ( isset($_POST["submit_form_create_location"] )){ 
+          /* #region submit_form_create_location */
           $create_location_open = "is_open";
           if (empty($_POST["create_location_bldgMgmtNo"])) { 
             $create_location_bldgMgmtNoErr = "You must enter a value for bldgMgmtNo"; 
@@ -506,7 +534,7 @@
             $sql = "INSERT INTO works_at (works_for, employed, employee_type) 
             VALUES (" . $create_works_at_works_for . ", " . $create_works_at_employed . ", \"" . $create_works_at_employee_type . "\")";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $create_person_out = "Success";
+            $create_works_at_out = "Success";
           }
           /* #endregion */
         }
@@ -677,7 +705,8 @@
 
           /* #endregion */
         }
-        
+
+
         elseif ( isset($_POST["submit_form_read_location"] )){ 
           /* #region submit_form_read_location */
           $read_location_open = "is_open";
@@ -759,7 +788,7 @@
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){
-         /* #region  submit_form_read_restaurant_review */
+          /* #region  submit_form_read_restaurant_review */
           $read_restaurant_review_open = "is_open"; 
           $sql = "SELECT * FROM restaurant_review;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -781,9 +810,9 @@
             . "<tr><th>Review ID</th><th>Reviewed By</th><th>Reviewed Restaurant</th><th>Review Star</th><th>Review Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_restaurant_review_out . "</table>";
           }
          /* #endregion */
-         }
+        }
         elseif ( isset($_POST["submit_form_read_review_followup"] )){
-         /* #region  submit_form_read_review_followup */
+          /* #region  submit_form_read_review_followup */
           $read_review_followup_open = "is_open";  
           $sql = "SELECT * FROM review_followup;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -804,9 +833,9 @@
             . "<tr><th>Followup ID</th><th>Followed Up By</th><th>For Review</th><th>Followup Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_review_followup_out . "</table>";
           }
          /* #endregion */
-         }
+        }
         elseif ( isset($_POST["submit_form_read_restaurant_discussion"] )){
-       /* #region  submit_form_read_restaurant_discussion */
+          /* #region  submit_form_read_restaurant_discussion */
           $read_restaurant_discussion_open= "is_open";  
           $sql = "SELECT * FROM restaurant_discussion;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -829,40 +858,161 @@
        /* #endregion */
          }
         elseif ( isset($_POST["submit_form_read_discussion_reply"] )){
-             /* #region  submit_form_read_discussion_reply */
-             
-             $read_discussion_reply_open= "is_open";  
-             $sql = "SELECT * FROM discussion_reply;";
-             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-             $read_discussion_reply_out = "";
-             while( $row = mysqli_fetch_array($query)) {
-               $read_discussion_reply_out = $read_discussion_reply_out . "<tr><td>" . $row['reply_id'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['replied_by'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['for_discussion'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['reply_content'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['create_date'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td></tr>";
-             }
-             if (empty($read_discussion_reply_out)){
-               $read_discussion_reply_out = "No result";
-             } else {
-               $read_discussion_reply_out = "<table><thead>"
-               . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_discussion_reply_out . "</table>";
-             }
+          /* #region  submit_form_read_discussion_reply */
+          
+          $read_discussion_reply_open= "is_open";  
+          $sql = "SELECT * FROM discussion_reply;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_discussion_reply_out = "";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_discussion_reply_out = $read_discussion_reply_out . "<tr><td>" . $row['reply_id'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['replied_by'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['for_discussion'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['reply_content'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['create_date'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+          if (empty($read_discussion_reply_out)){
+            $read_discussion_reply_out = "No result";
+          } else {
+            $read_discussion_reply_out = "<table><thead>"
+            . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_discussion_reply_out . "</table>";
+          }
           /* #endregion */
         }
         
         elseif ( isset($_POST["submit_form_update_location"] )){ }
         elseif ( isset($_POST["submit_form_update_business"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
+          /* #region  submit_for_update_restaurant */
           $update_restaurant_open = "is_open";
-        
+          $sql = "UPDATE restaurant SET ";
+          
+          if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
+          && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
+            $update_restaurantErr = "You must enter at least one of these * :";
+            $update_restaurant_weekday_open_timeErr = "*";
+            $update_restaurant_weekday_end_timeErr = "*";
+            $update_restaurant_weekend_open_timeErr = "*";
+            $update_restaurant_weekend_end_timeErr = "*";
+            $update_restaurant_weekly_break_dateErr = "*";
+          } else {
+            if (!empty($_POST["update_restaurant_weekday_open_time"])) {
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_open_time with a value:" .$_POST["update_restaurant_weekday_open_time"];
+            $update_restaurant_weekday_open_time = test_input($_POST["update_restaurant_weekday_open_time"]);
+            $sql = $sql . " weekday_open_time=\"" . $update_restaurant_weekday_open_time . "\",";
+          } if (!empty($_POST["update_restaurant_weekday_end_time"])) {
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_end_time with a value:" .$_POST["update_restaurant_weekday_end_time"];
+            $update_restaurant_weekday_end_time = test_input($_POST["update_restaurant_weekday_end_time"]);
+            $sql = $sql . " weekday_end_time=\"" . $update_restaurant_weekday_end_time . "\",";
+          } if (!empty($_POST["update_restaurant_weekend_open_time"])) {
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_open_time with a value:" .$_POST["update_restaurant_weekend_open_time"];
+            $update_restaurant_weekend_open_time = test_input($_POST["update_restaurant_weekend_open_time"]);
+            $sql = $sql . " weekend_open_time=\"" . $update_restaurant_weekend_open_time . "\",";
+          } if (!empty($_POST["update_restaurant_weekend_end_time"])) {
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_end_time with a value:" .$_POST["update_restaurant_weekend_end_time"];
+            $update_restaurant_weekend_end_time = test_input($_POST["update_restaurant_weekend_end_time"]);
+            $sql = $sql . " weekend_end_time=\"" . $update_restaurant_weekend_end_time . "\",";
+          } if (!empty($_POST["update_restaurant_weekly_break_date"])){
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated weekly_break_date with a value:" .$_POST["update_restaurant_weekly_break_date"];
+            $update_restaurant_weekly_break_date = test_input($_POST["update_restaurant_weekly_break_date"]);
+            $sql = $sql . " weekly_break_date=\"" . $update_restaurant_weekly_break_date . "\",";
+            }
+          }
+          if (!empty($_POST["update_restaurant_is_active"])){
+            $update_restaurant_is_active = 1;
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
+            $sql = $sql . " is_active=" . $update_restaurant_is_active . ",";
+          } else {
+            $update_restaurant_is_active = 0;
+            $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
+            $sql = $sql . " is_active=" . $update_restaurant_is_active . ",";
+          }
+          $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+          // $sql = chop($sql, ",");
+          if (empty($_POST["update_restaurant_restaurant_id"])) {
+            $update_restaurant_restaurant_idErr = "You must enter a value for update_restaurant_restaurant_id";
+          } else {
+            $update_restaurant_restaurant_id = $_POST["update_restaurant_restaurant_id"];
+            $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_restaurant_id . ";";
+          }
+          if ($update_restaurantErr === "" && $update_restaurant_restaurant_idErr === ""){
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            echo $sql;
+          }
+          /* #endregion */
         }
-        elseif ( isset($_POST["submit_form_update_cuisine"] )){ }
+        elseif ( isset($_POST["submit_form_update_cuisine"] )){ 
+          
+          /* #region submit_form_update_cuisine */
+          $update_cuisine_open = "is_open";
+          if (empty($_POST["update_cuisine_id"])) { 
+            $update_cuisine_idErr = "You must enter a cuisine id";
+          } else {
+            $update_cuisine_id = test_input($_POST["update_cuisine_id"]);
+          }
+          if ($update_cuisine_idErr == "")
+          if (empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ){
+            $update_cuisine_cuisine_typeErr = "You must enter either cuisine type or cuisine info to update"; 
+            $update_cuisine_cuisine_infoErr = "You must enter either cuisine type or cuisine info to update"; 
+          } else {
+            if (empty($_POST["update_cuisine_cuisine_type"]) && !empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_info = test_input($_POST["update_cuisine_cuisine_info"]);
+              $sql = "UPDATE cuisine SET cuisine_info = \"" . $update_cuisine_cuisine_info . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            } elseif (!empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_type = test_input($_POST["update_cuisine_cuisine_type"]);
+              $sql = "UPDATE cuisine SET cuisine_type = \"" . $update_cuisine_cuisine_type . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            } elseif (!empty($_POST["update_cuisine_cuisine_type"]) && !empty($_POST["update_cuisine_cuisine_info"]) ) {
+              $update_cuisine_cuisine_info = test_input($_POST["update_cuisine_cuisine_info"]);
+              $update_cuisine_cuisine_type = test_input($_POST["update_cuisine_cuisine_type"]);
+              $sql = "UPDATE cuisine SET cuisine_type = \"" . $update_cuisine_cuisine_type . "\",  cuisine_info = \"" . $update_cuisine_cuisine_info . "\" WHERE cuisine_id = " . $update_cuisine_id;
+            }
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_cuisine_out = "Success";
+          }
+          // if( $update_cuisine_cuisine_typeErr === "" && $update_cuisine_cuisine_infoErr === "" ) { }
+          /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_update_serves"] )){ }
         elseif ( isset($_POST["submit_form_update_person"] )){ 
           $update_person_open = "is_open";
+          
+          if (empty($_POST["update_person_fullname"]) && empty($_POST["update_person_email"]) && empty($_POST["update_person_username"]) 
+          && empty($_POST["update_person_password"] && empty($_POST["update_person_is_active"])) {
+            $update_personErr = "You must enter at least one of these * :";
+            $update_person_fullnameErr = "*";
+            $update_person_emailErr = "*";
+            $update_person_usernameErr = "*";
+            $update_person_passwordErr = "*";
+            $update_person_is_activeErr = "*";
+          } else {
+            if (!empty($_POST["update_person_fullname"])){
+            $update_person_fullname = test_input($_POST["update_person_fullname"]);
+          } if (!empty($_POST["update_person_email"])) {
+            $update_person_email = test_input($_POST["update_person_email"]);
+          } if (empty($_POST["update_person_username"])){
+            $update_person_username = test_input($_POST["update_person_username"]);
+          } if (!empty($_POST["update_person_password"])) {
+            $update_person_password = htmlspecialchars(stripslashes($_POST["update_person_password"]));
+          } if (!empty($_POST["update_person_is_active"])) {
+            $update_person_is_active = test_input($_POST["update_person_is_active"]);
+            } 
+          }
+          if (empty($_POST["update_person_person_id"])) {
+            $update_person_person_idErr = "You must enter a value for update_person_person_id";
+          } else {
+            $update_person_person_id = $_POST["update_person_person_id"];
+          }
+
+          if ($update_person_person_idErr === "" && $update_person_fullnameErr === "" &&  $update_person_emailErr === "" &&  $update_person_usernameErr === "" &&  
+          $update_person_passwordErr === "" && $update_person_is_activeErr === "") {
+            $sql = "INSERT INTO person (person_id, fullname, email, username, password, update_date, last_update, is_active) 
+            VALUES (" . $update_person_person_id . ", \"" . $update_person_fullname . "\", \"" . $update_person_email . "\", \"" . $update_person_username . "\", \"" 
+            . $update_person_password . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_person_out = "Success";
+          }
         }
         elseif ( isset($_POST["submit_form_update_works_at"] )){ 
           $update_works_at_open = "is_open";
@@ -873,11 +1023,74 @@
         elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
 
-        elseif ( isset($_POST["submit_form_delete_location"] )){ }
-        elseif ( isset($_POST["submit_form_delete_business"] )){ }
+        elseif ( isset($_POST["submit_form_delete_location"] )){ 
+          /* #region submit_form_delete_location */
+          $delete_location_open = "is_open";
+    
+          if (empty($_POST["delete_location_bldgMgmtNo"])) { 
+            $delete_location_bldgMgmtNoErr = "You must enter a Building Management Number.";
+          } else {
+            $delete_location_bldgMgmtNo = test_input($_POST["delete_location_bldgMgmtNo"]);
+          }
+          if ($delete_location_bldgMgmtNoErr === ""){
+            $sql = "DELETE FROM location WHERE bldgMgmtNo = " . $delete_location_bldgMgmtNo;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_location_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
+        elseif ( isset($_POST["submit_form_delete_business"] )){ 
+          /* #region submit_form_delete_business */
+          $delete_business_open = "is_open";
+    
+          if (empty($_POST["delete_business_business_id"])) { 
+            $delete_business_business_idErr = "You must enter a Business ID.";
+          } else {
+            $delete_business_business_id = test_input($_POST["delete_business_business_id"]);
+          }
+          if ($delete_business_business_idErr === ""){
+            $sql = "DELETE FROM business WHERE business_id = " . $delete_business_business_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_business_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_restaurant"] )){ }
-        elseif ( isset($_POST["submit_form_delete_cuisine"] )){ }
-        elseif ( isset($_POST["submit_form_delete_serves"] )){ }
+        elseif ( isset($_POST["submit_form_delete_cuisine"] )){ 
+          /* #region submit_form_delete_cuisine */
+          $delete_cuisine_open = "is_open";
+          if (empty($_POST["delete_cuisine_cuisine_id"])) { 
+            $delete_cuisine_cuisine_idErr = "You must enter a Cuisine ID.";
+          } else {
+            $delete_cuisine_cuisine_id = test_input($_POST["delete_cuisine_cuisine_id"]);
+          }
+          if ($delete_cuisine_cuisine_idErr === ""){
+            $sql = "DELETE FROM cuisine WHERE cuisine_id = " . $delete_cuisine_cuisine_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_cuisine_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
+        elseif ( isset($_POST["submit_form_delete_serves"] )){ 
+          /* #region submit_form_delete_cuisine */
+          $delete_serves_open = "is_open";
+          if (empty($_POST["delete_serves_served_at"])) { 
+            $delete_serves_served_atErr = "You must enter a Business ID.";
+          } else {
+            $delete_serves_served_at = test_input($_POST["delete_serves_served_at"]);
+          }
+          if (empty($_POST["delete_serves_serving"])) { 
+            $delete_serves_servingErr = "You must enter a Cuisine ID";
+          } else {
+            $delete_serves_serving = test_input($_POST["delete_serves_serving"]);
+          }
+          if ($delete_serves_served_atErr === "" && $delete_serves_servingErr === ""){
+            $sql = "DELETE FROM serves WHERE served_at = " . $delete_serves_served_at . ", serving = " . $delete_serves_serving;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_serves_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_person"] )){ }
         elseif ( isset($_POST["submit_form_delete_works_at"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant_review"] )){ }
@@ -1085,8 +1298,8 @@
         is_active: <input type="checkbox" id="create_restaurant_is_active" name="create_restaurant_is_active" value="<?php echo $create_restaurant_is_active ?>">
         <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_restaurant" value="Submit">
+        <button type="reset" onclick="clearElement('create_restaurant_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_restaurant_div')">Clear Output</button>
       <div id="create_restaurant_div">
         <?php echo $create_restaurant_out; ?>
       </div> 
@@ -1174,8 +1387,8 @@
         <!-- is_active: <input type="checkbox" id="create_person_is_active" name="create_person_is_active" value="<?php echo $create_person_is_active ?>"> -->
         <font color="red"><?php echo $create_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_create_person" value="Submit">
+        <button type="reset" onclick="clearElement('create_person_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_person_div')">Clear Output</button>
       <div id="create_person_div">
         <?php echo $create_person_out; ?>
       </div> 
@@ -1189,7 +1402,7 @@
     -->
     <div id="create_works_at" class="tabcontent">
       <h3>create_works_at</h3>
-      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      <form method="post" id="create_works_at_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         works_for: <input type="number" id="create_works_at_works_for" name="create_works_at_works_for" value="<?php echo $create_works_at_works_for ?>">
         <font color="red"><?php echo $create_works_at_works_forErr ?></font><br>
         employed: <input type="number" id="create_works_at_employed" name="create_works_at_employed" value="<?php echo $create_works_at_employed ?>">
@@ -1197,8 +1410,8 @@
         employee_type: <input type="text" id="create_works_at_employee_type" name="create_works_at_employee_type" value="<?php echo $create_works_at_employee_type ?>">
         <font color="red"><?php echo $create_works_at_employee_typeErr ?></font><br>
         <input type="submit" name="submit_form_create_works_at" value="Submit">
+        <button type="reset" onclick="clearElement('create_works_at_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_works_at_div')">Clear Output</button>
       <div id="create_works_at_div">
         <?php echo $create_works_at_out; ?>
       </div> 
@@ -1365,7 +1578,7 @@
     </div>
     
     <div id="read_restaurant" class="tabcontent">
-      <h3>read_restaurant</h3>
+      <h3>Read Restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant" value="Submit">
       </form>
@@ -1376,7 +1589,7 @@
     </div>
 
     <div id="read_cuisine" class="tabcontent">
-      <h3>read_cuisine</h3>
+      <h3>Read Cuisine</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_cuisine" value="Read">
       </form>
@@ -1387,7 +1600,7 @@
     </div>
 
     <div id="read_serves" class="tabcontent">
-      <h3>read_serves</h3>
+      <h3>Read Serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_serves" value="Read">
       </form>
@@ -1398,7 +1611,7 @@
     </div>
 
     <div id="read_person" class="tabcontent">
-      <h3>read_person</h3>
+      <h3>Read Person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_person" value="Submit">
       </form>
@@ -1409,7 +1622,7 @@
     </div>
     
     <div id="read_works_at" class="tabcontent">
-      <h3>read_works_at</h3>
+      <h3>Read Works At</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_works_at" value="Submit">
       </form>
@@ -1420,7 +1633,7 @@
     </div>
     
     <div id="read_restaurant_review" class="tabcontent">
-      <h3>read_restaurant_review</h3>
+      <h3>Read Restaurant Review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant_review" value="Submit">
       </form>
@@ -1431,7 +1644,7 @@
     </div>
     
     <div id="read_review_followup" class="tabcontent">
-      <h3>read_review_followup</h3>
+      <h3>Read Review Followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_review_followup" value="Submit">
       </form>
@@ -1442,7 +1655,7 @@
     </div>
     
     <div id="read_restaurant_discussion" class="tabcontent">
-      <h3> read_restaurant_discussion </h3>
+      <h3> Read Restaurant Discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant_discussion" value="Submit">
       </form>
@@ -1453,7 +1666,7 @@
     </div>
 
     <div id="read_discussion_reply" class="tabcontent">
-      <h3>read_discussion_reply</h3>
+      <h3>Read Discussion Reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_discussion_reply" value="Submit">
       </form>
@@ -1495,23 +1708,65 @@
         <?php echo $update_business_out; ?>
       </div> 
     </div>
-    
+
     <div id="update_restaurant" class="tabcontent">
       <h3>update_restaurant</h3>
+      <div id="update_restaurant_read_div">
+        <?php echo read_restaurant(); ?>
+      </div> 
+      <br>
+      <font color="red"><?php echo $update_restaurantErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        restaurant_id: <input type="number" id="update_restaurant_restaurant_id" name="update_restaurant_restaurant_id" value="<?php echo $update_restaurant_restaurant_id ?>">
+        <font color="red"><?php echo $update_restaurant_restaurant_idErr ?></font><br>
+        weekday_open_time: <input type="time" id="update_restaurant_weekday_open_time" name="update_restaurant_weekday_open_time" value="<?php echo $update_restaurant_weekday_open_time ?>">
+        <font color="red"><?php echo $update_restaurant_weekday_open_timeErr ?></font><br>
+        weekday_end_time: <input type="time" id="update_restaurant_weekday_end_time" name="update_restaurant_weekday_end_time" value="<?php echo $update_restaurant_weekday_end_time ?>">
+        <font color="red"><?php echo $update_restaurant_weekday_end_timeErr ?></font><br>
+        weekend_open_time: <input type="time" id="update_restaurant_weekend_open_time" name="update_restaurant_weekend_open_time" value="<?php echo $update_restaurant_weekend_open_time ?>">
+        <font color="red"><?php echo $update_restaurant_weekend_open_timeErr ?></font><br>
+        weekend_end_time: <input type="time" id="update_restaurant_weekend_end_time" name="update_restaurant_weekend_end_time" value="<?php echo $update_restaurant_weekend_end_time ?>">
+        <font color="red"><?php echo $update_restaurant_weekend_end_timeErr ?></font><br>
+        weekly_break_date: <input type="radio" id="update_restaurant_weekly_break_date_None" name="update_restaurant_weekly_break_date" value="None"><label for="update_restaurant_weekly_break_date_None">None</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Mon" name="update_restaurant_weekly_break_date" value="Mon"><label for="update_restaurant_weekly_break_date_Mon">Mon</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Tue" name="update_restaurant_weekly_break_date" value="Tue"><label for="update_restaurant_weekly_break_date_Tue">Tue</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Wed" name="update_restaurant_weekly_break_date" value="Wed"><label for="update_restaurant_weekly_break_date_Wed">Wed</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Thu" name="update_restaurant_weekly_break_date" value="Thu"><label for="update_restaurant_weekly_break_date_Thu">Thu</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Fri" name="update_restaurant_weekly_break_date" value="Fri"><label for="update_restaurant_weekly_break_date_Fri">Fri</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Sat" name="update_restaurant_weekly_break_date" value="Sat"><label for="update_restaurant_weekly_break_date_Sat">Sat</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Sun" name="update_restaurant_weekly_break_date" value="Sun"><label for="update_restaurant_weekly_break_date_Sun">Sun</label>
+        <input type="radio" id="update_restaurant_weekly_break_date_Weekend" name="update_restaurant_weekly_break_date" value="Weekend"><label for="update_restaurant_weekly_break_date_Weekend">Weekend</label>
+        <font color="red"><?php echo $update_restaurant_weekly_break_dateErr ?></font><br>
+        is_active: <input type="checkbox" id="update_restaurant_is_active" name="update_restaurant_is_active">
+        <font color="red"><?php echo $update_restaurant_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_restaurant" value="Submit">
+        <button type="reset" onclick="clearElement('update_restaurant_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_restaurant_div')">Clear Output</button>
       <div id="update_restaurant_div">
-        <?php $update_restaurant_out = $update_restaurant_out . read_restaurant(); echo $update_restaurant_out; ?>
+        <?php echo $update_restaurant_out; ?>
       </div> 
     </div>
 
     <div id="update_cuisine" class="tabcontent">
-      <h3>update_cuisine</h3>
+      <h3>Update Cuisine</h3>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_update_cuisine" value="Submit">
+
+        *Cuisine ID: 
+        <input type="number" id="update_cuisine_id" name="update_cuisine_id" value="<?php echo $update_cuisine_id ?>">
+        <font color="red"><?php echo $update_cuisine_idErr ?></font><br>
+
+        Cuisine Type (Optional): 
+        <input type="text" id="update_cuisine_cuisine_type" name="update_cuisine_cuisine_type" value="<?php echo $update_cuisine_cuisine_type ?>">
+        <font color="red"><?php echo $update_cuisine_cuisine_typeErr ?></font><br>
+
+        Cuisine Information (Optional): 
+        <input type="text" id="update_cuisine_cuisine_info" name="update_cuisine_cuisine_info" value="<?php echo $update_cuisine_cuisine_info ?>">
+        <font color="red"><?php echo $update_cuisine_cuisine_infoErr ?></font><br>
+
+        <input type="submit" name="submit_form_update_cuisine" value="Update">
       </form>
+
       <button onclick="clearElement('update_cuisine_div')">Clear Output</button>
       <div id="update_cuisine_div">
         <?php echo $update_cuisine_out; ?>
@@ -1531,23 +1786,51 @@
 
     <div id="update_person" class="tabcontent">
       <h3>update_person</h3>
+      <div id="update_person_read_div">
+        <?php echo read_person(); ?>
+      </div> 
+      <br>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        person_id: <input type="number" id="update_person_person_id" name="update_person_person_id" value="<?php echo $update_person_person_id ?>">
+          <font color="red"><?php echo $update_person_person_idErr ?></font><br>
+        fullname: <input type="text" id="update_person_fullname" name="update_person_fullname" value="<?php echo $update_person_fullname ?>">
+          <font color="red"><?php echo $update_person_fullnameErr ?></font><br>
+        email: <input type="email" id="update_person_email" name="update_person_email" value="<?php echo $update_person_email ?>">
+          <font color="red"><?php echo $update_person_emailErr ?></font><br>
+        username: <input type="text" id="update_person_username" name="update_person_username" value="<?php echo $update_person_username ?>">
+          <font color="red"><?php echo $update_person_usernameErr ?></font><br>
+        password: <input type="password" id="update_person_password" name="update_person_password" value="<?php echo $update_person_password ?>">
+          <font color="red"><?php echo $update_person_passwordErr ?></font><br>
+        last_update: <input type="date" id="update_person_last_update" name="update_person_last_update" value="<?php echo $update_person_last_update ?>">
+          <font color="red"><?php echo $update_person_last_updateErr ?></font><br>
+        is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active" value="<?php echo $update_person_is_active ?>">
+        <font color="red"><?php echo $update_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_person" value="Submit">
+        <button type="reset" onclick="clearElement('update_person_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_person_div')">Clear Output</button>
       <div id="update_person_div">
-        <?php $update_person_out = $update_person_out . read_person(); echo $update_person_out; ?>
+        <?php echo $update_person_out; ?>
       </div> 
     </div>
     
     <div id="update_works_at" class="tabcontent">
       <h3>update_works_at</h3>
+      <div id="update_works_at_read_div">
+        <?php echo read_works_at(); ?>
+      </div> 
+      <br>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        works_for: <input type="number" id="update_works_at_works_for" name="update_works_at_works_for" value="<?php echo $update_works_at_works_for ?>">
+        <font color="red"><?php echo $update_works_at_works_forErr ?></font><br>
+        employed: <input type="number" id="update_works_at_employed" name="update_works_at_employed" value="<?php echo $update_works_at_employed ?>">
+        <font color="red"><?php echo $update_works_at_employedErr ?></font><br>
+        employee_type: <input type="text" id="update_works_at_employee_type" name="update_works_at_employee_type" value="<?php echo $update_works_at_employee_type ?>">
+        <font color="red"><?php echo $update_works_at_employee_typeErr ?></font><br>
         <input type="submit" name="submit_form_update_works_at" value="Submit">
+        <button type="reset" onclick="clearElement('update_works_at_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_works_at_div')">Clear Output</button>
       <div id="update_works_at_div">
-        <?php $update_works_at_out = $update_works_at_out . read_works_at(); echo $update_works_at_out; ?>
+        <?php echo $update_works_at_out; ?>
       </div> 
     </div>
     
@@ -1609,25 +1892,46 @@
       /* #region Delete Tab Content */
     -->
     <div id="delete_location" class="tabcontent">
-      <h3>delete_location</h3>
+      <!-- 
+        /* #region Delete Location */
+      -->
+      <h3>Delete Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_location" value="Submit">
+      
+        Building Management No.: 
+        <input type="number" id="delete_location_bldgMgmtNo" name="delete_location_bldgMgmtNo" value="<?php echo $delete_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $delete_location_bldgMgmtNoErr ?></font><br>
+        
+        <input type="submit" name="submit_form_delete_location" value="Delete">
       </form>
       <button onclick="clearElement('delete_location_div')">Clear Output</button>
       <div id="delete_location_div">
         <?php echo $delete_location_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_business" class="tabcontent">
-      <h3>delete_business</h3>
+      <h3>Delete Business</h3>
+      <!-- 
+        /* #region Delete Business */
+      -->
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_business" value="Submit">
+        Business ID: 
+        <input type="number" id="delete_business_business_id" name="delete_business_business_id" value="<?php echo $delete_business_business_id ?>">
+        <font color="red"><?php echo $delete_business_business_idErr ?></font><br>
+        
+        <input type="submit" name="submit_form_delete_business" value="Delete">
       </form>
       <button onclick="clearElement('delete_business_div')">Clear Output</button>
       <div id="delete_business_div">
         <?php echo $delete_business_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_restaurant" class="tabcontent">
@@ -1642,8 +1946,13 @@
     </div>
 
     <div id="delete_cuisine" class="tabcontent">
-      <h3>delete_cuisine</h3>
+      <h3>Delete Cuisine</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      
+        Cuisine ID: 
+        <input type="number" id="delete_cuisine_cuisine_id" name="delete_cuisine_cuisine_id" value="<?php echo $delete_cuisine_cuisine_id ?>">
+        <font color="red"><?php echo $delete_cuisine_cuisine_idErr ?></font><br>
+
         <input type="submit" name="submit_form_delete_cuisine" value="Submit">
       </form>
       <button onclick="clearElement('delete_cuisine_div')">Clear Output</button>
