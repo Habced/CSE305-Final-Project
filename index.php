@@ -194,9 +194,19 @@
       $delete_location_bldgMgmtNoErr = "";
 
       $delete_business_open = $delete_business_out = "";
+      $delete_business_business_id = "";
+      $delete_business_business_idErr = "";
+
       $delete_restaurant_open = $delete_restaurant_out = "";
+
       $delete_cuisine_open = $delete_cuisine_out = "";
+      $delete_cuisine_cuisine_id = "";
+      $delete_cuisine_cuisine_idErr = "";
+
       $delete_serves_open = $delete_serves_out = "";
+      $delete_serves_served_at = $delete_serves_serving = "";
+      $delete_serves_served_atErr = $delete_serves_servingErr = "";
+
       $delete_person_open = $delete_person_out = "";
       $delete_works_at_open = $delete_works_at_out = "";
 
@@ -1043,10 +1053,58 @@
           }
           /* #endregion */ 
         }
-        elseif ( isset($_POST["submit_form_delete_business"] )){ }
+        elseif ( isset($_POST["submit_form_delete_business"] )){ 
+          /* #region submit_form_delete_business */
+          $delete_business_open = "is_open";
+    
+          if (empty($_POST["delete_business_business_id"])) { 
+            $delete_business_business_idErr = "You must enter a Business ID.";
+          } else {
+            $delete_business_business_id = test_input($_POST["delete_business_business_id"]);
+          }
+          if ($delete_business_business_idErr === ""){
+            $sql = "DELETE FROM business WHERE business_id = " . $delete_business_business_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_business_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_restaurant"] )){ }
-        elseif ( isset($_POST["submit_form_delete_cuisine"] )){ }
-        elseif ( isset($_POST["submit_form_delete_serves"] )){ }
+        elseif ( isset($_POST["submit_form_delete_cuisine"] )){ 
+          /* #region submit_form_delete_cuisine */
+          $delete_cuisine_open = "is_open";
+          if (empty($_POST["delete_cuisine_cuisine_id"])) { 
+            $delete_cuisine_cuisine_idErr = "You must enter a Cuisine ID.";
+          } else {
+            $delete_cuisine_cuisine_id = test_input($_POST["delete_cuisine_cuisine_id"]);
+          }
+          if ($delete_cuisine_cuisine_idErr === ""){
+            $sql = "DELETE FROM cuisine WHERE cuisine_id = " . $delete_cuisine_cuisine_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_cuisine_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
+        elseif ( isset($_POST["submit_form_delete_serves"] )){ 
+          /* #region submit_form_delete_cuisine */
+          $delete_serves_open = "is_open";
+          if (empty($_POST["delete_serves_served_at"])) { 
+            $delete_serves_served_atErr = "You must enter a Business ID.";
+          } else {
+            $delete_serves_served_at = test_input($_POST["delete_serves_served_at"]);
+          }
+          if (empty($_POST["delete_serves_serving"])) { 
+            $delete_serves_servingErr = "You must enter a Cuisine ID";
+          } else {
+            $delete_serves_serving = test_input($_POST["delete_serves_serving"]);
+          }
+          if ($delete_serves_served_atErr === "" && $delete_serves_servingErr === ""){
+            $sql = "DELETE FROM serves WHERE served_at = " . $delete_serves_served_at . ", serving = " . $delete_serves_serving;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_serves_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_person"] )){ }
         elseif ( isset($_POST["submit_form_delete_works_at"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant_review"] )){ }
@@ -1534,7 +1592,7 @@
     </div>
     
     <div id="read_restaurant" class="tabcontent">
-      <h3>read_restaurant</h3>
+      <h3>Read Restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant" value="Submit">
       </form>
@@ -1545,7 +1603,7 @@
     </div>
 
     <div id="read_cuisine" class="tabcontent">
-      <h3>read_cuisine</h3>
+      <h3>Read Cuisine</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_cuisine" value="Read">
       </form>
@@ -1556,7 +1614,7 @@
     </div>
 
     <div id="read_serves" class="tabcontent">
-      <h3>read_serves</h3>
+      <h3>Read Serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_serves" value="Read">
       </form>
@@ -1567,7 +1625,7 @@
     </div>
 
     <div id="read_person" class="tabcontent">
-      <h3>read_person</h3>
+      <h3>Read Person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_person" value="Submit">
       </form>
@@ -1578,7 +1636,7 @@
     </div>
     
     <div id="read_works_at" class="tabcontent">
-      <h3>read_works_at</h3>
+      <h3>Read Works At</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_works_at" value="Submit">
       </form>
@@ -1589,7 +1647,7 @@
     </div>
     
     <div id="read_restaurant_review" class="tabcontent">
-      <h3>read_restaurant_review</h3>
+      <h3>Read Restaurant Review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant_review" value="Submit">
       </form>
@@ -1600,7 +1658,7 @@
     </div>
     
     <div id="read_review_followup" class="tabcontent">
-      <h3>read_review_followup</h3>
+      <h3>Read Review Followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_review_followup" value="Submit">
       </form>
@@ -1611,7 +1669,7 @@
     </div>
     
     <div id="read_restaurant_discussion" class="tabcontent">
-      <h3> read_restaurant_discussion </h3>
+      <h3> Read Restaurant Discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_restaurant_discussion" value="Submit">
       </form>
@@ -1622,7 +1680,7 @@
     </div>
 
     <div id="read_discussion_reply" class="tabcontent">
-      <h3>read_discussion_reply</h3>
+      <h3>Read Discussion Reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_read_discussion_reply" value="Submit">
       </form>
@@ -1848,7 +1906,10 @@
       /* #region Delete Tab Content */
     -->
     <div id="delete_location" class="tabcontent">
-      <h3>Delete Locatoin</h3>
+      <!-- 
+        /* #region Delete Location */
+      -->
+      <h3>Delete Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
       
         Building Management No.: 
@@ -1861,14 +1922,20 @@
       <div id="delete_location_div">
         <?php echo $delete_location_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_business" class="tabcontent">
       <h3>Delete Business</h3>
+      <!-- 
+        /* #region Delete Business */
+      -->
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         Business ID: 
-        <input type="number" id="delete_location_bldgMgmtNo" name="delete_location_bldgMgmtNo" value="<?php echo $delete_location_bldgMgmtNo ?>">
-        <font color="red"><?php echo $delete_location_bldgMgmtNoErr ?></font><br>
+        <input type="number" id="delete_business_business_id" name="delete_business_business_id" value="<?php echo $delete_business_business_id ?>">
+        <font color="red"><?php echo $delete_business_business_idErr ?></font><br>
         
         <input type="submit" name="submit_form_delete_business" value="Delete">
       </form>
@@ -1876,6 +1943,9 @@
       <div id="delete_business_div">
         <?php echo $delete_business_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+      -->
     </div>
     
     <div id="delete_restaurant" class="tabcontent">
@@ -1890,8 +1960,13 @@
     </div>
 
     <div id="delete_cuisine" class="tabcontent">
-      <h3>delete_cuisine</h3>
+      <h3>Delete Cuisine</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      
+        Cuisine ID: 
+        <input type="number" id="delete_cuisine_cuisine_id" name="delete_cuisine_cuisine_id" value="<?php echo $delete_cuisine_cuisine_id ?>">
+        <font color="red"><?php echo $delete_cuisine_cuisine_idErr ?></font><br>
+
         <input type="submit" name="submit_form_delete_cuisine" value="Submit">
       </form>
       <button onclick="clearElement('delete_cuisine_div')">Clear Output</button>
