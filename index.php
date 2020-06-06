@@ -804,17 +804,17 @@
         elseif ( isset($_POST["submit_form_read_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_read_discussion_reply"] )){ }
         
-        elseif ( isset($_POST["update_form_create_location"] )){ }
-        elseif ( isset($_POST["update_form_create_business"] )){ }
-        elseif ( isset($_POST["update_form_create_restaurant"] )){ }
-        elseif ( isset($_POST["update_form_create_cuisine"] )){ }
-        elseif ( isset($_POST["update_form_create_serves"] )){ }
-        elseif ( isset($_POST["update_form_create_person"] )){ }
-        elseif ( isset($_POST["update_form_create_works_at"] )){ }
-        elseif ( isset($_POST["update_form_create_restaurant_review"] )){ }
-        elseif ( isset($_POST["update_form_create_review_followup"] )){ }
-        elseif ( isset($_POST["update_form_create_restaurant_discussion"] )){ }
-        elseif ( isset($_POST["update_form_create_discussion_reply"] )){ }
+        elseif ( isset($_POST["submit_form_update_location"] )){ }
+        elseif ( isset($_POST["submit_form_update_business"] )){ }
+        elseif ( isset($_POST["submit_form_update_restaurant"] )){ }
+        elseif ( isset($_POST["submit_form_update_cuisine"] )){ }
+        elseif ( isset($_POST["submit_form_update_serves"] )){ }
+        elseif ( isset($_POST["submit_form_update_person"] )){ }
+        elseif ( isset($_POST["submit_form_update_works_at"] )){ }
+        elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ }
+        elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
+        elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
+        elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
 
         elseif ( isset($_POST["submit_form_delete_location"] )){ }
         elseif ( isset($_POST["submit_form_delete_business"] )){ }
