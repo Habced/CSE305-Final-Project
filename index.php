@@ -608,7 +608,7 @@
           }  
           if( $create_review_followup_followup_idErr === "" && $create_review_followup_followed_up_byErr === "" && $create_review_followup_for_reviewErr === ""
           && $create_review_followup_followup_contentErr === "" ) {
-            $sql = "INSERT INTO review_followup (followup_id, followed_up_by, for_review, review_content, create_date, last_update, is_active) VALUES
+            $sql = "INSERT INTO review_followup (followup_id, followed_up_by, for_review, followup_content, create_date, last_update, is_active) VALUES
              (" . $create_review_followup_followup_id . ", " . $create_review_followup_followed_up_by . ", " . $create_review_followup_for_review . ", 
              \"" . $create_review_followup_followup_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -644,8 +644,8 @@
           
           if( $create_restaurant_discussion_discussion_idErr === "" && $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
           && $create_restaurant_discussion_discussion_contentErr === "" ) {
-            $sql = "INSERT INTO restaurant_discussion (discussion_id, discuessed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
-             (" . $create_restaurant_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
+            $sql = "INSERT INTO restaurant_discussion (discussion_id, discussed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
+             (" . $create_restaurant_discussion_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
              \"" . $create_restaurant_discussion_discussion_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_discussion_out = "Success";
@@ -678,31 +678,16 @@
             $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]);
           }
          
-          //if (empty($_POST["create_restaurant_review_create_date"])) {
-          //   $create_restaurant_review_review_create_dateErr = "You must enter a value for create_restaurant_review_review_create_date";
-          // }else{
-          //   $create_restaurant_review_create_date = test_input($_POST["create_restaurant_review_create_date"]);
-          // }
-          // if (empty($_POST["create_restaurant_review_last_update"])) {
-          //   $create_restaurant_review_last_updateErr = "You must enter a value for create_restaurant_review_last_update";
-          // }else{
-          //   $create_restaurant_review_last_update = test_input($_POST["create_restaurant_review_last_update"]);
-          // }
-          // if (empty($_POST["create_restaurant_review_is_active"])) {
-          //   $create_restaurant_review_is_activeErr = "You must enter a value for create_restaurant_review_is_active";
-          // }
-          // else{
-          //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
-          // }
-     
           if( $create_discussion_reply_reply_idErr === "" && $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
           && $create_discussion_reply_reply_contentErr === "" ) {
             $sql = "INSERT INTO discussion_reply (reply_id, replied_by, for_discussion, reply_content, create_date, last_update, is_active) VALUES
-             (" . $create_restaurant_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
-             \"" . $create_restaurant_discussion_discussion_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+             (" . $create_discussion_reply_reply_id . ", " . $create_discussion_reply_replied_by . ", " . $create_discussion_reply_for_discussion . ", 
+             \"" . $create_discussion_reply_reply_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $create_restaurant_discussion_out = "Success";
+            $create_discussion_reply_out = "Success";
           }
+
+ 
 
           /* #endregion */
         }
@@ -849,10 +834,10 @@
             $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['last_update'] . "</td>";
             $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['is_active'] . "</td></tr>";
           }
-          if (empty($read_review_followup_out)){
-            $read_review_followup_out = "No result";
+          if (empty($read_restaurant_discussion_out)){
+            $read_restaurant_discussion_out = "No result";
           } else {
-            $read_review_followup_out = "<table><thead>"
+            $read_restaurant_discussion_out = "<table><thead>"
             . "<tr><th>Discussion ID</th><th>Dicussed By</th><th>Discussed Restaurant</th><th>Discussion Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_restaurant_discussion_out . "</table>";
           }
        /* #endregion */
