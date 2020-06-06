@@ -278,7 +278,7 @@
           if (empty($_POST["create_restaurant_restaurant_id"])){
             $create_restaurant_restaurant_idErr = "You must enter a value for create_restaurant_restaurant_id";
           } else {
-            $create_restaurant_restaurant_id = test_input($_POST["create_restaurant_restaurant_id"]);
+            $create_restaurant_restaurant_id = $_POST["create_restaurant_restaurant_id"];
           }
           if (empty($_POST["create_restaurant_weekday_open_time"])) {
             $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time";
@@ -303,7 +303,7 @@
           if (empty($_POST["create_restaurant_weekly_break_date"])){
             $create_restaurant_weekly_break_dateErr = "You must select a weekly_break_date"; 
           }else {
-            $create_restaurant_weekly_break_date = $_POST["create_restaurant_weekly_break_date"];
+            $create_restaurant_weekly_break_date = test_input($_POST["create_restaurant_weekly_break_date"]);
           }
           // if (empty($_POST["create_restaurant_create_date"])) {
           //   $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
@@ -323,9 +323,9 @@
           if ($create_restaurant_weekday_open_timeErr === "" && $create_restaurant_weekday_end_timeErr === "" && $create_restaurant_weekend_open_timeErr === "" &&
           $create_restaurant_weekend_end_timeErr === "" && $create_restaurant_has_weekly_breakErr === "" && $create_restaurant_weekly_break_dateErr === "" && 
           $create_restaurant_create_dateErr === "" && $create_restaurant_last_updateErr === "" && $create_restaurant_is_activeErr == "" && $create_restaurant_restaurant_idErr === ""){
-            $sql = "INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, has_weekly_break, weekly_break_date, create_date, last_update, is_active) 
+            $sql = "INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, create_date, last_update, is_active) 
             VALUES (" . $create_restaurant_restaurant_id . ", \"" . $create_restaurant_weekday_open_time . "\", \"" . $create_restaurant_weekday_end_time . "\", \"" 
-            . $create_restaurant_weekend_open_time . "\", \"" . $create_restaurant_has_weekly_break . "\", \"" . $create_restaurant_weekly_break_date . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " . 1 . ")";
+            . $create_restaurant_weekend_open_time . "\", \"" . $create_restaurant_weekend_end_time . "\", \"" . $create_restaurant_weekly_break_date . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " . 1 . ")";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_out = "Success";
           }
@@ -379,7 +379,7 @@
           if (empty($_POST["create_person_person_id"])) {
             $create_person_person_idErr = "You must enter a value for create_person_person_id";
           } else {
-            $create_person_person_id = test_input($_POST["create_person_person_id"]);
+            $create_person_person_id = $_POST["create_person_person_id"];
           }
           if (empty($_POST["create_person_fullname"])) {
             $create_person_fullnameErr = "You must enter a value for create_person_fullname";
@@ -399,7 +399,7 @@
           if (empty($_POST["create_person_password"])) {
             $create_person_passwordErr = "You must enter a value for create_person_password";
           } else {
-            $create_person_password = test_input($_POST["create_person_password"]);
+            $create_person_password = htmlspecialchars(stripslashes($_POST["create_person_password"]));
           }
           // if (empty($_POST["create_person_create_date"])) {
           //   $create_person_create_dateErr = "You must enter a value for create_person_create_date";
@@ -432,12 +432,12 @@
           if (empty($_POST["create_works_at_works_for"])) {
             $create_works_at_works_forErr = "You must enter a value for create_works_at_works_for";
           } else {
-            $create_works_at_works_for = test_input($_POST["create_works_at_works_for"]);
+            $create_works_at_works_for = $_POST["create_works_at_works_for"];
           }
           if (empty($_POST["create_works_at_employed"])) {
             $create_works_at_employedErr = "You must enter a value for create_works_at_employed";
           } else {
-            $create_works_at_employed = test_input($_POST["create_works_at_employed"]);
+            $create_works_at_employed = $_POST["create_works_at_employed"];
           }
           if (empty($_POST["create_works_at_employee_type"])) {
             $create_works_at_employee_typeErr = "You must enter a value for create_works_at_employee_type";
@@ -666,7 +666,7 @@
 
           /* #endregion */
         }
-
+        
         elseif ( isset($_POST["submit_form_read_location"] )){ 
           /* #region submit_form_read_location */
           $read_location_open = "is_open";
@@ -702,7 +702,32 @@
           $read_business_out = $read_business_out . "</tbody></table>";
           /* #endregion */
         }
-        elseif ( isset($_POST["submit_form_read_restaurant"] )){ }
+        elseif ( isset($_POST["submit_form_read_restaurant"] )){
+          /* #region  submit_from_read_restaurant */
+          $read_restaurant_open = "is_open"; 
+          $sql = "SELECT * FROM restaurant;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_restaurant_out = "";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_restaurant_out = $read_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_open_time'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_end_time'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_open_time'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_end_time'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekly_break_date'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['create_date'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['last_update'] . "</td>";
+            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+          if (empty($read_restaurant_out)){
+            $read_restaurant_out = "No result";
+          } else {
+            $read_restaurant_out = "<table><thead>"
+          . "<tr><th>restaurant_id</th><th>weekday_open_time</th><th>weekday_end_time</th><th>weekend_open_time</th><th>weekend_end_time</th>"
+          . "<th>weekly_break_date</th><th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
+          }
+        }
+          /* #endregion */
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
           /* #region submit_form_read_cuisine */
           $read_cuisine_open = "is_open";
@@ -729,10 +754,51 @@
           }
           $read_serves_out = $read_serves_out . "</tbody></table>";
           /* #endregion */
-
         }
-        elseif ( isset($_POST["submit_form_read_person"] )){ }
-        elseif ( isset($_POST["submit_form_read_works_at"] )){ }
+        elseif ( isset($_POST["submit_form_read_person"] )){
+          /* #region  submit_from_read_person */
+          $read_person_open = "is_open"; 
+          $sql = "SELECT * FROM person;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_person_out = ""; // eg<table><thead><tr><td>a_field1</td></tr></thead><tbody>
+          while( $row = mysqli_fetch_array($query)) {
+            $read_person_out = $read_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['fullname'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['email'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['username'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['password'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['create_date'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['last_update'] . "</td>";
+            $read_person_out = $read_person_out . "<td>" . $row['is_activate'] . "</td></tr>";
+          }
+          if (empty($read_person_out)){
+            $read_person_out = "No result";
+          } else {
+            $read_person_out = "<table><thead>"
+          . "<tr><th>person_id</th><th>fullname</th><th>email</th><th>username</th><th>password</th>"
+          . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_person_out . "</table>";
+          }
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_read_works_at"] )){
+          /* #region  submit_form_read_works_at */
+          $read_works_at_open = "is_open"; 
+          $sql = "SELECT * FROM works_at;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_works_at_out = "";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_works_at_out = $read_works_at_out . "<tr><td>" . $row['works_for'] . "</td>";
+            $read_works_at_out = $read_works_at_out . "<td>" . $row['employed'] . "</td>";
+            $read_works_at_out = $read_works_at_out . "<td>" . $row['employee_type'] . "</td></tr>";
+          }
+          if (empty($read_works_at_out)){
+            $read_works_at_out = "No result";
+          } else {
+            $read_works_at_out = "<table><thead>"
+            . "<tr><th>works_for</th><th>employed</th><th>employee_type</th></tr>" . $read_works_at_out . "</table>";
+          }
+          /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_read_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_read_restaurant_discussion"] )){ }
@@ -898,7 +964,7 @@
     -->
 
     <!-- 
-      /* #region create_location */
+      /* #region create_business */
     -->
     <div id="create_business" class="tabcontent">
 
@@ -1223,6 +1289,7 @@
     <!-- 
       /* #region Read Tab Content */
     -->
+    
     <div id="read_location" class="tabcontent">
       <h3>Read Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
