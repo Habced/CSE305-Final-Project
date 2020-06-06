@@ -905,12 +905,12 @@
           
           if (empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
           && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
-            $update_restaurantErr = "You must enter at least one of these * :";
-            $update_restaurant_weekday_open_timeErr = "*";
-            $update_restaurant_weekday_end_timeErr = "*";
-            $update_restaurant_weekend_open_timeErr = "*";
-            $update_restaurant_weekend_end_timeErr = "*";
-            $update_restaurant_weekly_break_dateErr = "*";
+            $update_restaurantErr ="Notice: Only is_active is updated";
+            // $update_restaurant_weekday_open_timeErr = "*";
+            // $update_restaurant_weekday_end_timeErr = "*";
+            // $update_restaurant_weekend_open_timeErr = "*";
+            // $update_restaurant_weekend_end_timeErr = "*";
+            // $update_restaurant_weekly_break_dateErr = "*";
           } else {
             if (!empty($_POST["update_restaurant_weekday_open_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_open_time with a value:" .$_POST["update_restaurant_weekday_open_time"];
@@ -948,12 +948,12 @@
           if (empty($_POST["update_restaurant_restaurant_id"])) {
             $update_restaurant_restaurant_idErr = "You must enter a value for update_restaurant_restaurant_id";
           } else {
+            $update_restaurant_out = $update_restaurant_out . "<br>For a row whose restaurant_id value is:" . $_POST["update_restaurant_id"];
             $update_restaurant_restaurant_id = $_POST["update_restaurant_restaurant_id"];
             $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_restaurant_id . ";";
           }
           if ($update_restaurantErr === "" && $update_restaurant_restaurant_idErr === ""){
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            echo $sql;
           }
           /* #endregion */
         }
@@ -990,47 +990,88 @@
         }
         elseif ( isset($_POST["submit_form_update_serves"] )){ }
         elseif ( isset($_POST["submit_form_update_person"] )){ 
+          /* #region  submit_form_update_person */
           $update_person_open = "is_open";
-          
+          $sql = "UPDATE person SET ";
+
           if (empty($_POST["update_person_fullname"]) && empty($_POST["update_person_email"]) && empty($_POST["update_person_username"]) 
-          && empty($_POST["update_person_password"] && empty($_POST["update_person_is_active"])) {
-            $update_personErr = "You must enter at least one of these * :";
-            $update_person_fullnameErr = "*";
-            $update_person_emailErr = "*";
-            $update_person_usernameErr = "*";
-            $update_person_passwordErr = "*";
-            $update_person_is_activeErr = "*";
+          && empty($_POST["update_person_password"]) && empty($_POST["update_person_is_active"])) {
+            $update_personErr = "Notice: Only is_active is updated";
+            // $update_person_fullnameErr = "*";
+            // $update_person_emailErr = "*";
+            // $update_person_usernameErr = "*";
+            // $update_person_passwordErr = "*";
+            // $update_person_is_activeErr = "*";
           } else {
             if (!empty($_POST["update_person_fullname"])){
+            $update_person_out = $update_person_out . "<br>Updated fullname with a value:" .$_POST["update_person_fullname"];
             $update_person_fullname = test_input($_POST["update_person_fullname"]);
+            $sql = $sql . " fullname=\"" . $update_person_fullname . "\",";
           } if (!empty($_POST["update_person_email"])) {
+            $update_person_out = $update_person_out . "<br>Updated email with a value:" .$_POST["update_person_email"];
             $update_person_email = test_input($_POST["update_person_email"]);
-          } if (empty($_POST["update_person_username"])){
+            $sql = $sql . " email=\"" . $update_person_email . "\",";
+          } if (!empty($_POST["update_person_username"])){
+            $update_person_out = $update_person_out . "<br>Updated username with a value:" .$_POST["update_person_username"];
             $update_person_username = test_input($_POST["update_person_username"]);
+            $sql = $sql . " username=\"" . $update_person_username . "\",";
           } if (!empty($_POST["update_person_password"])) {
-            $update_person_password = htmlspecialchars(stripslashes($_POST["update_person_password"]));
-          } if (!empty($_POST["update_person_is_active"])) {
-            $update_person_is_active = test_input($_POST["update_person_is_active"]);
+            $update_person_out = $update_person_out . "<br>Updated password with a value:" .$_POST["update_person_password"];
+            $update_person_password = test_input($_POST["update_person_password"]);
+            $sql = $sql . " password=\"" . $update_person_password . "\",";
             } 
           }
+          if (!empty($_POST["update_person_is_active"])) {
+            $update_person_is_active = 1;
+            $update_person_out = $update_person_out . "<br>Updated is_active with a value:" . $update_person_is_active;
+            $sql = $sql . " is_active=" . $update_person_is_active . ",";
+          } else {
+            $update_person_is_active = 0;
+            $update_person_out = $update_person_out . "<br>Updated is_active with a value:" .$update_person_is_active;
+            $sql = $sql . " is_active=" . $update_person_is_active . ",";
+          }
+          $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+
           if (empty($_POST["update_person_person_id"])) {
             $update_person_person_idErr = "You must enter a value for update_person_person_id";
           } else {
+            $update_person_out = $update_person_out . "<br>For a row whose person_id value is:" . $_POST["update_person_person_id"];
             $update_person_person_id = $_POST["update_person_person_id"];
+            $sql = $sql . " WHERE person_id=" . $update_person_person_id . ";";
           }
-
-          if ($update_person_person_idErr === "" && $update_person_fullnameErr === "" &&  $update_person_emailErr === "" &&  $update_person_usernameErr === "" &&  
-          $update_person_passwordErr === "" && $update_person_is_activeErr === "") {
-            $sql = "INSERT INTO person (person_id, fullname, email, username, password, update_date, last_update, is_active) 
-            VALUES (" . $update_person_person_id . ", \"" . $update_person_fullname . "\", \"" . $update_person_email . "\", \"" . $update_person_username . "\", \"" 
-            . $update_person_password . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
+          if ($update_personErr === "" && $update_person_person_idErr === "") {
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $update_person_out = "Success";
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_update_works_at"] )){ 
           $update_works_at_open = "is_open";
-
+          $sql = "UPDATE works_at SET ";
+          if (empty($_POST["update_works_at_employee_type"])) {
+            $update_works_at_employee_typeErr = "You must enter a value for update_works_at_employee_type";
+          } else {
+            $update_works_at_out = $update_works_at_out . "<br>Updated employee_type with a value:" . $_POST["update_works_at_employee_type"];
+            $update_works_at_employee_type = test_input($_POST["update_works_at_employee_type"]);
+            $sql = $sql . " employee_type=\"" . $update_works_at_employee_type . "\"";
+          }
+          if (empty($_POST["update_works_at_works_for"])) {
+            $update_works_at_works_forErr = "You must enter a value for update_works_at_works_for";
+          } else {
+            $update_works_at_out = $update_works_at_out . "<br>For a row whose works_for value is:" . $_POST["update_works_at_works_for"];
+            $update_works_at_works_for = $_POST["update_works_at_works_for"];
+            $sql = $sql . " WHERE works_for=" . $update_works_at_works_for;
+          }
+          if (empty($_POST["update_works_at_employed"])) {
+            $update_works_at_employedErr = "You must enter a value for update_works_at_employed";
+          } else {
+            $update_works_at_out = $update_works_at_out . "<br>For a row whose employed value is:" . $_POST["update_works_at_employed"];
+            $update_works_at_employed = $_POST["update_works_at_employed"];
+            $sql = $sql . " AND employed=" . $update_works_at_employed . ";";
+          }
+          echo $sql;
+          if ($update_works_at_works_forErr === "" && $update_works_at_employedErr === "" && $update_works_at_employee_typeErr === "") {
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          }
         }
         elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
@@ -1815,9 +1856,7 @@
           <font color="red"><?php echo $update_person_usernameErr ?></font><br>
         password: <input type="password" id="update_person_password" name="update_person_password" value="<?php echo $update_person_password ?>">
           <font color="red"><?php echo $update_person_passwordErr ?></font><br>
-        last_update: <input type="date" id="update_person_last_update" name="update_person_last_update" value="<?php echo $update_person_last_update ?>">
-          <font color="red"><?php echo $update_person_last_updateErr ?></font><br>
-        is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active" value="<?php echo $update_person_is_active ?>">
+        is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active">
         <font color="red"><?php echo $update_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_person" value="Submit">
         <button type="reset" onclick="clearElement('update_person_div')" value="Reset">Clear Output</button>
