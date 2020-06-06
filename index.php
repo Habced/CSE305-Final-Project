@@ -91,7 +91,7 @@
 
       $create_restaurant_open = $create_restaurant_out = "";
       $create_restaurant_restaurant_id = $create_restaurant_weekday_open_time = $create_restaurant_weekday_end_time = $create_restaurant_weekend_open_time = $create_restaurant_weekend_end_time
-      = $create_restaurant_has_weekly_break = $create_restaurant_weekly_break_date = $create_restaurant_create_date = $create_restaurant_last_update = $create_restaurant_is_active = "";
+      = $create_restaurant_weekly_break_date = $create_restaurant_create_date = $create_restaurant_last_update = $create_restaurant_is_active = "";
       $create_restaurant_restaurant_idErr = $create_restaurant_weekday_open_timeErr = $create_restaurant_weekday_end_timeErr = $create_restaurant_weekend_open_timeErr = $create_restaurant_weekend_end_timeErr
       = $create_restaurant_has_weekly_breakErr = $create_restaurant_weekly_break_dateErr = $create_restaurant_create_dateErr = $create_restaurant_last_updateErr = $create_restaurant_is_activeErr = "";
 
@@ -300,30 +300,21 @@
           } else {
             $create_restaurant_weekend_end_time = test_input($_POST["create_restaurant_weekend_end_time"]);
           }
-          if ($_POST["create_restaurant_has_weekly_break"] == "on" && empty($_POST["create_restaurant_weekly_break_date"])){
-            $create_restaurant_has_weekly_breakErr = "You must uncheck the checkbox for create_restaurant_has_weekly_break";
-            $create_restaurant_weekly_break_dateErr = "Or you must enter a value for create_restaurant_weekly_break_date";
-          } else if (empty($_POST["create_restaurant_has_weekly_break"]) && !empty($_POST["create_restaurant_weekly_break_date"])) {
-            $create_restaurant_has_weekly_breakErr = "You must check the checkbox for create_restaurant_has_weekly_break";
-            $create_restaurant_weekly_break_dateErr = "Or you must not enter a value for create_restaurant_weekly_break_date";
-          } elseif ($_POST["create_restaurant_has_weekly_break"] == "on"){
-            $create_restaurnat_has_weekly_break = 1;
-            $create_restaurant_weekly_break_date = $_POST["create_restaurant_weekly_break_date"];
-           
+          if (empty($_POST["create_restaurant_weekly_break_date"])){
+            $create_restaurant_weekly_break_dateErr = "You must select a weekly_break_date"; 
           }else {
-            $create_restaurnat_has_weekly_break = 0;
-            $create_restaurant_weekly_break_date = "None";
+            $create_restaurant_weekly_break_date = $_POST["create_restaurant_weekly_break_date"];
           }
-          if (empty($_POST["create_restaurant_create_date"])) {
-            $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
-          } else {
-            $create_restaurant_create_date = test_input($_POST["create_restaurant_create_date"]);
-          }
-          if (empty($_POST["create_restaurant_last_update"])) {
-            $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
-          } else {
-            $create_restaurant_last_update = test_input($_POST["create_restaurant_last_update"]);
-          }
+          // if (empty($_POST["create_restaurant_create_date"])) {
+          //   $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
+          // } else {
+          //   $create_restaurant_create_date = test_input($_POST["create_restaurant_create_date"]);
+          // }
+          // if (empty($_POST["create_restaurant_last_update"])) {
+          //   $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
+          // } else {
+          //   $create_restaurant_last_update = test_input($_POST["create_restaurant_last_update"]);
+          // }
           // if (empty($_POST["create_restaurant_is_active"])) {
           //   $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
           // } else {
@@ -415,11 +406,11 @@
           // } else {
           //   $create_person_create_date = test_input($_POST["create_person_create_date"]);
           // }
-          if (empty($_POST["create_person_last_update"])) {
-            $create_person_last_updateErr = "You must enter a value for create_person_last_update";
-          } else {
-            $create_person_last_update = test_input($_POST["create_person_last_update"]);
-          }
+          // if (empty($_POST["create_person_last_update"])) {
+          //   $create_person_last_updateErr = "You must enter a value for create_person_last_update";
+          // } else {
+          //   $create_person_last_update = test_input($_POST["create_person_last_update"]);
+          // }
           // if (empty($_POST["create_person_is_activate"])) {
           //   $create_person_is_activateErr = "You must enter a value for create_person_is_activate";
           // } else {
@@ -928,9 +919,15 @@
         <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
         weekend_end_time: <input type="time" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
-        has_weekly_break: <input type="checkbox" id="create_restaurant_has_weekly_break" name="create_restaurant_has_weekly_break" value="<?php echo $create_restaurant_has_weekly_break ?>">
-        <font color="red"><?php echo $create_restaurant_has_weekly_breakErr ?></font><br>
-        weekly_break_date: <input type="text" id="create_restaurant_weekly_break_date" name="create_restaurant_weekly_break_date" value="<?php echo $create_restaurant_weekly_break_date ?>">
+        weekly_break_date: <input type="radio" id="create_restaurant_weekly_break_date_None" name="create_restaurant_weekly_break_date" value="None"><label for="create_restaurant_weekly_break_date_None">None</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Mon" name="create_restaurant_weekly_break_date" value="Mon"><label for="create_restaurant_weekly_break_date_Mon">Mon</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Tue" name="create_restaurant_weekly_break_date" value="Tue"><label for="create_restaurant_weekly_break_date_Tue">Tue</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Wed" name="create_restaurant_weekly_break_date" value="Wed"><label for="create_restaurant_weekly_break_date_Wed">Wed</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Thu" name="create_restaurant_weekly_break_date" value="Thu"><label for="create_restaurant_weekly_break_date_Thu">Thu</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Fri" name="create_restaurant_weekly_break_date" value="Fri"><label for="create_restaurant_weekly_break_date_Fri">Fri</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Sat" name="create_restaurant_weekly_break_date" value="Sat"><label for="create_restaurant_weekly_break_date_Sat">Sat</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Sun" name="create_restaurant_weekly_break_date" value="Sun"><label for="create_restaurant_weekly_break_date_Sun">Sun</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Weekend" name="create_restaurant_weekly_break_date" value="Weekend"><label for="create_restaurant_weekly_break_date_Weekend">Weekend</label>
         <font color="red"><?php echo $create_restaurant_weekly_break_dateErr ?></font><br>
         <!-- create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
         <font color="red"><?php echo $create_restaurant_create_dateErr ?></font><br>
