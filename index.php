@@ -897,44 +897,43 @@
             if (!empty($_POST["update_restaurant_weekday_open_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_open_time with a value:" .$_POST["update_restaurant_weekday_open_time"];
             $update_restaurant_weekday_open_time = test_input($_POST["update_restaurant_weekday_open_time"]);
-            $sql = $sql . "weekday_open_time=\"" . $update_restaurant_weekday_open_time . "\" ";
+            $sql = $sql . ", weekday_open_time=\"" . $update_restaurant_weekday_open_time . "\" ";
           } if (!empty($_POST["update_restaurant_weekday_end_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekday_end_time with a value:" .$_POST["update_restaurant_weekday_end_time"];
             $update_restaurant_weekday_end_time = test_input($_POST["update_restaurant_weekday_end_time"]);
-            $sql = $sql . "weekday_end_time=" . $update_restaurant_weekday_end_time;
+            $sql = $sql . ", weekday_end_time=\"" . $update_restaurant_weekday_end_time . "\" ";
           } if (!empty($_POST["update_restaurant_weekend_open_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_open_time with a value:" .$_POST["update_restaurant_weekend_open_time"];
             $update_restaurant_weekend_open_time = test_input($_POST["update_restaurant_weekend_open_time"]);
-            $sql = $sql . "weekend_open_time=" . $update_restaurant_weekend_open_time;
+            $sql = $sql . ", weekend_open_time=\"" . $update_restaurant_weekend_open_time . "\" ";
           } if (!empty($_POST["update_restaurant_weekend_end_time"])) {
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekend_end_time with a value:" .$_POST["update_restaurant_weekend_end_time"];
             $update_restaurant_weekend_end_time = test_input($_POST["update_restaurant_weekend_end_time"]);
-            $sql = $sql . "weekend_end_time=" . $update_restaurant_weekend_end_time;
+            $sql = $sql . ", weekend_end_time=\"" . $update_restaurant_weekend_end_time . "\" ";
           } if (!empty($_POST["update_restaurant_weekly_break_date"])){
             $update_restaurant_out = $update_restaurant_out . "<br>Updated weekly_break_date with a value:" .$_POST["update_restaurant_weekly_break_date"];
             $update_restaurant_weekly_break_date = test_input($_POST["update_restaurant_weekly_break_date"]);
-            $sql = $sql . "weekly_break_date=" . $update_restaurant_weekly_break_date;
+            $sql = $sql . ", weekly_break_date=\"" . $update_restaurant_weekly_break_date . "\" ";
             }
           }
           if ($_POST["update_restaurant_is_active"] == "on"){
             $update_restaurant_is_active = 1;
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
-            $sql = $sql . "is_active=" . $update_restaurant_is_active;
+            $sql = $sql . ", is_active=" . $update_restaurant_is_active;
           } else {
             $update_restaurant_is_active = 0
             $update_restaurant_out = $update_restaurant_out . "<br>Updated is_active with a value:" . $update_restaurant_is_active;
-            $sql = $sql . "is_active=" . $update_restaurant_is_active;
+            $sql = $sql . ", is_active=" . $update_restaurant_is_active;
           }
           
           if (empty($_POST["update_restaurant_restaurant_id"])) {
             $update_restaurant_restaurant_idErr = "You must enter a value for update_restaurant_restaurant_id";
           } else {
             $update_restaurant_restaurant_id = $_POST["update_restaurant_restaurant_id"];
+            $sql = $sql . " WHERE restaurant_id=" . $update_restaurant_is_active . ";";
           }
           if ($update_restaurantErr === "" && $update_restaurant_restaurant_idErr === ""){
-            $sql = "INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, update_date, last_update, is_active) 
-            VALUES (" . $update_restaurant_restaurant_id . ", \"" . $update_restaurant_weekday_open_time . "\", \"" . $update_restaurant_weekday_end_time . "\", \"" 
-            . $update_restaurant_weekend_open_time . "\", \"" . $update_restaurant_weekend_end_time . "\", \"" . $update_restaurant_weekly_break_date . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " . 1 . ")";
+            $sql = ltrim()
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $update_restaurant_out = "Success";
           }
