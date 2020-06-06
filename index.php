@@ -177,6 +177,9 @@
 
       /* #region Initializing Delete Variables */
       $delete_location_open = $delete_location_out = "";
+      $delete_location_bldgMgmtNo = "";
+      $delete_location_bldgMgmtNoErr = "";
+
       $delete_business_open = $delete_business_out = "";
       $delete_restaurant_open = $delete_restaurant_out = "";
       $delete_cuisine_open = $delete_cuisine_out = "";
@@ -293,8 +296,8 @@
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-          /* #region submit_form_create_location */
         if ( isset($_POST["submit_form_create_location"] )){ 
+          /* #region submit_form_create_location */
           $create_location_open = "is_open";
           if (empty($_POST["create_location_bldgMgmtNo"])) { 
             $create_location_bldgMgmtNoErr = "You must enter a value for bldgMgmtNo"; 
@@ -693,7 +696,8 @@
 
           /* #endregion */
         }
-        
+
+
         elseif ( isset($_POST["submit_form_read_location"] )){ 
           /* #region submit_form_read_location */
           $read_location_open = "is_open";
@@ -775,7 +779,7 @@
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){
-         /* #region  submit_form_read_restaurant_review */
+          /* #region  submit_form_read_restaurant_review */
           $read_restaurant_review_open = "is_open"; 
           $sql = "SELECT * FROM restaurant_review;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -797,9 +801,9 @@
             . "<tr><th>Review ID</th><th>Reviewed By</th><th>Reviewed Restaurant</th><th>Review Star</th><th>Review Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_restaurant_review_out . "</table>";
           }
          /* #endregion */
-         }
+        }
         elseif ( isset($_POST["submit_form_read_review_followup"] )){
-         /* #region  submit_form_read_review_followup */
+          /* #region  submit_form_read_review_followup */
           $read_review_followup_open = "is_open";  
           $sql = "SELECT * FROM review_followup;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -820,9 +824,9 @@
             . "<tr><th>Followup ID</th><th>Followed Up By</th><th>For Review</th><th>Followup Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_review_followup_out . "</table>";
           }
          /* #endregion */
-         }
+        }
         elseif ( isset($_POST["submit_form_read_restaurant_discussion"] )){
-       /* #region  submit_form_read_restaurant_discussion */
+          /* #region  submit_form_read_restaurant_discussion */
           $read_restaurant_discussion_open= "is_open";  
           $sql = "SELECT * FROM restaurant_discussion;";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
@@ -845,27 +849,27 @@
        /* #endregion */
          }
         elseif ( isset($_POST["submit_form_read_discussion_reply"] )){
-             /* #region  submit_form_read_discussion_reply */
-             
-             $read_discussion_reply_open= "is_open";  
-             $sql = "SELECT * FROM discussion_reply;";
-             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-             $read_discussion_reply_out = "";
-             while( $row = mysqli_fetch_array($query)) {
-               $read_discussion_reply_out = $read_discussion_reply_out . "<tr><td>" . $row['reply_id'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['replied_by'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['for_discussion'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['reply_content'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['create_date'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td>";
-               $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td></tr>";
-             }
-             if (empty($read_discussion_reply_out)){
-               $read_discussion_reply_out = "No result";
-             } else {
-               $read_discussion_reply_out = "<table><thead>"
-               . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_discussion_reply_out . "</table>";
-             }
+          /* #region  submit_form_read_discussion_reply */
+          
+          $read_discussion_reply_open= "is_open";  
+          $sql = "SELECT * FROM discussion_reply;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_discussion_reply_out = "";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_discussion_reply_out = $read_discussion_reply_out . "<tr><td>" . $row['reply_id'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['replied_by'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['for_discussion'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['reply_content'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['create_date'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td>";
+            $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+          if (empty($read_discussion_reply_out)){
+            $read_discussion_reply_out = "No result";
+          } else {
+            $read_discussion_reply_out = "<table><thead>"
+            . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr>" . $read_discussion_reply_out . "</table>";
+          }
           /* #endregion */
         }
         
@@ -877,13 +881,14 @@
         }
         elseif ( isset($_POST["submit_form_update_cuisine"] )){ 
           
-          /* #region submit_form_create_cuisine */
+          /* #region submit_form_update_cuisine */
           $update_cuisine_open = "is_open";
           if (empty($_POST["update_cuisine_id"])) { 
-            $update_cuisine_id = "You must enter a cuisine id";
+            $update_cuisine_idErr = "You must enter a cuisine id";
           } else {
             $update_cuisine_id = test_input($_POST["update_cuisine_id"]);
           }
+          if ($update_cuisine_idErr == "")
           if (empty($_POST["update_cuisine_cuisine_type"]) && empty($_POST["update_cuisine_cuisine_info"]) ){
             $update_cuisine_cuisine_typeErr = "You must enter either cuisine type or cuisine info to update"; 
             $update_cuisine_cuisine_infoErr = "You must enter either cuisine type or cuisine info to update"; 
@@ -918,7 +923,22 @@
         elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
 
-        elseif ( isset($_POST["submit_form_delete_location"] )){ }
+        elseif ( isset($_POST["submit_form_delete_location"] )){ 
+          /* #region submit_form_delete_location */
+          $delete_location_open = "is_open";
+    
+          if (empty($_POST["delete_location_bldgMgmtNo"])) { 
+            $delete_location_bldgMgmtNoErr = "You must enter a Building Management Number.";
+          } else {
+            $delete_location_bldgMgmtNo = test_input($_POST["delete_location_bldgMgmtNo"]);
+          }
+          if ($delete_location_bldgMgmtNoErr === ""){
+            $sql = "DELETE FROM location WHERE bldgMgmtNo = " . $delete_location_bldgMgmtNo;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $delete_location_out = "Success"; 
+          }
+          /* #endregion */ 
+        }
         elseif ( isset($_POST["submit_form_delete_business"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant"] )){ }
         elseif ( isset($_POST["submit_form_delete_cuisine"] )){ }
@@ -1669,9 +1689,14 @@
       /* #region Delete Tab Content */
     -->
     <div id="delete_location" class="tabcontent">
-      <h3>delete_location</h3>
+      <h3>Delete Locatoin</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_location" value="Submit">
+      
+        Building Management No.: 
+        <input type="number" id="delete_location_bldgMgmtNo" name="delete_location_bldgMgmtNo" value="<?php echo $delete_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $delete_location_bldgMgmtNoErr ?></font><br>
+        
+        <input type="submit" name="submit_form_delete_location" value="Delete">
       </form>
       <button onclick="clearElement('delete_location_div')">Clear Output</button>
       <div id="delete_location_div">
@@ -1680,9 +1705,13 @@
     </div>
     
     <div id="delete_business" class="tabcontent">
-      <h3>delete_business</h3>
+      <h3>Delete Business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_business" value="Submit">
+        Business ID: 
+        <input type="number" id="delete_location_bldgMgmtNo" name="delete_location_bldgMgmtNo" value="<?php echo $delete_location_bldgMgmtNo ?>">
+        <font color="red"><?php echo $delete_location_bldgMgmtNoErr ?></font><br>
+        
+        <input type="submit" name="submit_form_delete_business" value="Delete">
       </form>
       <button onclick="clearElement('delete_business_div')">Clear Output</button>
       <div id="delete_business_div">
