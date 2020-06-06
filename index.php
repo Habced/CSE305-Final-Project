@@ -267,20 +267,14 @@
           }
           /* #endregion */
         }
-<<<<<<< HEAD
-        
-        elseif ( isset($_POST["submit_form_create_business"] )){ }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
+          /* #region submit_form_create_restaurant */
           $create_restaurant_open = "is_open";
           if (empty($_POST["create_restaurant_restaurant_id"])){
             $create_restaurant_restaurant_idErr = "You must enter a value for create_restaurant_restaurant_id";
           } else {
             $create_restaurant_restaurant_id = test_input($_POST["create_restaurant_restaurant_id"]);
           }
-=======
-        elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
-          /* #region submit_form_create_restaurant */
->>>>>>> 7e1d05d3cc14fd1e2ec2f9256be1c9ccecd3c2ee
           if (empty($_POST["create_restaurant_weekday_open_time"])) {
             $create_restaurant_weekday_open_timeErr = "You must enter a value for create_restaurant_weekday_open_time";
           } else {
@@ -352,15 +346,6 @@
         elseif ( isset($_POST["submit_form_create_person"] )){ 
           /* #region submit_form_create_person */
           /* #endregion */
-        }
-        elseif ( isset($_POST["submit_form_create_works_at"] )){ 
-          /* #region submit_form_create_works_at */
-          /* #endregion */
-        }
-<<<<<<< HEAD
-        elseif ( isset($_POST["submit_form_create_cuisine"] )){ }
-        elseif ( isset($_POST["submit_form_create_serves"] )){ }
-        elseif ( isset($_POST["submit_form_create_person"] )){ 
           $create_person_open = "is_open";
           if (empty($_POST["create_person_person_id"])) {
             $create_person_person_idErr = "You must enter a value for create_person_person_id";
@@ -412,6 +397,8 @@
           }
         }
         elseif ( isset($_POST["submit_form_create_works_at"] )){ 
+          /* #region submit_form_create_works_at */
+          /* #endregion */
           $create_works_at_open = "is_open";
           if (empty($_POST["create_works_at_works_for"])) {
             $create_works_at_works_forErr = "You must enter a value for create_works_at_works_for";
@@ -435,8 +422,6 @@
             $create_person_out = "Success";
           }
         }
-=======
->>>>>>> 7e1d05d3cc14fd1e2ec2f9256be1c9ccecd3c2ee
         elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ 
           /* #region submit_form_create_restaurant_review */
           $create_restaurant_review_open = "is_open";
@@ -587,7 +572,7 @@
           //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
           // }
      
-          if( $create_restaurant_discussion_idErr === "" && $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
+          if( $$create_restaurant_discussion_discussion_idErr === "" && $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
           && $create_restaurant_discussion_discussion_contentErr === "" ) {
             $sql = "INSERT INTO restaurant_discussion (discussion_id, discuessed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
              (" . $create_restaurant_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
