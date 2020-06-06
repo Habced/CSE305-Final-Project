@@ -214,7 +214,78 @@
       //     }
       //     $create_location_out = $create_location_out . ""; // eg </tbody></table>
 
-
+      function read_restaurant() {
+        /* #region  read_restaurant */
+        global $conn, $read_restaurant_out;
+        $sql = "SELECT * FROM restaurant;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_restaurant_out = "";
+        while( $row = mysqli_fetch_array($query)) {
+          $read_restaurant_out = $read_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_open_time'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_end_time'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_open_time'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_end_time'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekly_break_date'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['create_date'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['last_update'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['is_active'] . "</td></tr>";
+        }
+        if (empty($read_restaurant_out)){
+          $read_restaurant_out = "No result";
+        } else {
+          $read_restaurant_out = "<table><thead>"
+        . "<tr><th>restaurant_id</th><th>weekday_open_time</th><th>weekday_end_time</th><th>weekend_open_time</th><th>weekend_end_time</th>"
+        . "<th>weekly_break_date</th><th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
+        
+        }
+        // return $read_restaurant_out;
+        /* #endregion */
+      }
+      function read_person() {
+        /* #region read_person */
+        global $conn, $read_person_out;
+        $sql = "SELECT * FROM person;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_person_out = ""; // eg<table><thead><tr><td>a_field1</td></tr></thead><tbody>
+        while( $row = mysqli_fetch_array($query)) {
+          $read_person_out = $read_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['fullname'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['email'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['username'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['password'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['create_date'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['last_update'] . "</td>";
+          $read_person_out = $read_person_out . "<td>" . $row['is_activate'] . "</td></tr>";
+        }
+        if (empty($read_person_out)){
+          $read_person_out = "No result";
+        } else {
+          $read_person_out = "<table><thead>"
+        . "<tr><th>person_id</th><th>fullname</th><th>email</th><th>username</th><th>password</th>"
+        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_person_out . "</table>";
+        }
+        /* #endregion */
+      }
+      function read_works_at() {
+        /* #region  read_works_at */
+        global $conn, $read_works_at_out;
+        $sql = "SELECT * FROM works_at;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_works_at_out = "";
+        while( $row = mysqli_fetch_array($query)) {
+          $read_works_at_out = $read_works_at_out . "<tr><td>" . $row['works_for'] . "</td>";
+          $read_works_at_out = $read_works_at_out . "<td>" . $row['employed'] . "</td>";
+          $read_works_at_out = $read_works_at_out . "<td>" . $row['employee_type'] . "</td></tr>";
+        }
+        if (empty($read_works_at_out)){
+          $read_works_at_out = "No result";
+        } else {
+          $read_works_at_out = "<table><thead>"
+          . "<tr><th>works_for</th><th>employed</th><th>employee_type</th></tr>" . $read_works_at_out . "</table>";
+        }
+        /* #endregion */
+      }
       // Hand multiple submits in a single file
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -705,27 +776,7 @@
         elseif ( isset($_POST["submit_form_read_restaurant"] )){
           /* #region  submit_from_read_restaurant */
           $read_restaurant_open = "is_open"; 
-          $sql = "SELECT * FROM restaurant;";
-          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $read_restaurant_out = "";
-          while( $row = mysqli_fetch_array($query)) {
-            $read_restaurant_out = $read_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_open_time'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_end_time'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_open_time'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_end_time'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekly_break_date'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['create_date'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['last_update'] . "</td>";
-            $read_restaurant_out = $read_restaurant_out . "<td>" . $row['is_active'] . "</td></tr>";
-          }
-          if (empty($read_restaurant_out)){
-            $read_restaurant_out = "No result";
-          } else {
-            $read_restaurant_out = "<table><thead>"
-          . "<tr><th>restaurant_id</th><th>weekday_open_time</th><th>weekday_end_time</th><th>weekend_open_time</th><th>weekend_end_time</th>"
-          . "<th>weekly_break_date</th><th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
-          }
+          read_restaurant();
         }
           /* #endregion */
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
@@ -757,46 +808,14 @@
         }
         elseif ( isset($_POST["submit_form_read_person"] )){
           /* #region  submit_from_read_person */
-          $read_person_open = "is_open"; 
-          $sql = "SELECT * FROM person;";
-          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $read_person_out = ""; // eg<table><thead><tr><td>a_field1</td></tr></thead><tbody>
-          while( $row = mysqli_fetch_array($query)) {
-            $read_person_out = $read_person_out . "<tr><td>" . $row['person_id'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['fullname'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['email'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['username'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['password'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['create_date'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['last_update'] . "</td>";
-            $read_person_out = $read_person_out . "<td>" . $row['is_activate'] . "</td></tr>";
-          }
-          if (empty($read_person_out)){
-            $read_person_out = "No result";
-          } else {
-            $read_person_out = "<table><thead>"
-          . "<tr><th>person_id</th><th>fullname</th><th>email</th><th>username</th><th>password</th>"
-          . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_person_out . "</table>";
-          }
+          $read_person_open = "is_open";
+          read_person();
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_works_at"] )){
           /* #region  submit_form_read_works_at */
-          $read_works_at_open = "is_open"; 
-          $sql = "SELECT * FROM works_at;";
-          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $read_works_at_out = "";
-          while( $row = mysqli_fetch_array($query)) {
-            $read_works_at_out = $read_works_at_out . "<tr><td>" . $row['works_for'] . "</td>";
-            $read_works_at_out = $read_works_at_out . "<td>" . $row['employed'] . "</td>";
-            $read_works_at_out = $read_works_at_out . "<td>" . $row['employee_type'] . "</td></tr>";
-          }
-          if (empty($read_works_at_out)){
-            $read_works_at_out = "No result";
-          } else {
-            $read_works_at_out = "<table><thead>"
-            . "<tr><th>works_for</th><th>employed</th><th>employee_type</th></tr>" . $read_works_at_out . "</table>";
-          }
+          $read_works_at_open = "is_open";
+          read_works_at();
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_read_restaurant_review"] )){ }
@@ -1319,7 +1338,7 @@
       </form>
       <button onclick="clearElement('read_restaurant_div')">Clear Output</button>
       <div id="read_restaurant_div">
-        <?php echo $read_restaurant_out; ?>
+        <?php echo $read_restaurant_out;?>
       </div> 
     </div>
 
