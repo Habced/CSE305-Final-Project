@@ -244,6 +244,27 @@
         }
         elseif ( isset($_POST["submit_form_create_business"] )){ 
           /* #region submit_form_create_business */
+          $create_business_open = "is_open";
+          if (empty($_POST["create_business_name"])) { 
+            $create_business_nameErr = "You must enter a value for Name"; 
+          } else {
+            $create_business_name = test_input($_POST["create_business_name"]);
+          }
+          if (empty($_POST["create_business_located_in"])) { 
+            $create_business_located_inErr = "You must enter a value for location"; 
+          } else {
+            $create_business_located_in = test_input($_POST["create_business_located_in"]);
+          }
+          if (empty($_POST["create_business_addr_detail"])) {
+            $create_business_addr_detailErr = "You must enter address details"; 
+          } else {
+            $create_business_addr_detail = test_input($_POST["create_business_addr_detail"]);
+          }
+          if( $create_business_nameErr === "" && $create_business_located_inErr === "" && $create_business_addr_detailErr === "" ) {
+            $sql = "INSERT INTO business (name, located_in, addr_detail, create_date, last_update, is_active) VALUES (\"" . $create_business_name . "\", " . $create_business_located_in . ", \"" . $create_business_addr_detail . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_business_out = "Success";
+          }
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_restaurant"] )){ 
@@ -648,33 +669,70 @@
     <!-- 
       /* #region Create Tab Content */
     -->
+    <!-- 
+      /* #region create_location */
+    -->
     <div id="create_location" class="tabcontent">
-      <h3>Location</h3>
+
+      <h3>Create Location</h3>
+    
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        bldgMgmtNo: <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
+        
+        Building Management No.: 
+        <input type="number" id="create_location_bldgMgmtNo" name="create_location_bldgMgmtNo" value="<?php echo $create_location_bldgMgmtNo ?>">
         <font color="red"><?php echo $create_location_bldgMgmtNoErr ?></font><br>
-        zip_no: <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
+        
+        Zip No.: 
+        <input type="text" id="create_location_zip_no" name="create_location_zip_no" value="<?php echo $create_location_zip_no ?>">
         <font color="red"><?php echo $create_location_zip_noErr ?></font><br>
-        jibun_juso: <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
+        
+        Jibun Juso: 
+        <input type="text" id="create_location_jibun_juso" name="create_location_jibun_juso" value="<?php echo $create_location_jibun_juso ?>">
         <font color="red"><?php echo $create_location_jibun_jusoErr ?></font><br>
+
         <input type="submit" name="submit_form_create_location" value="Submit">
       </form>
+      
       <button onclick="clearElement('create_location_div')">Clear Output</button>
       <div id="create_location_div">
         <?php echo $create_location_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
 
+    <!-- 
+      /* #region create_location */
+    -->
     <div id="create_business" class="tabcontent">
-      <h3>create_business</h3>
+
+      <h3>Create Business</h3>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+    
+        Business Name: 
+        <input type="text" id="create_business_name" name="create_business_name" value="<?php echo $create_business_name ?>">
+        <font color="red"><?php echo $create_business_nameErr ?></font><br>
+
+        Located In (FK: Location's Building Management Number): 
+        <input type="number" id="create_business_located_in" name="create_business_located_in" value="<?php echo $create_business_located_in ?>">
+        <font color="red"><?php echo $create_business_located_inErr ?></font><br>
+    
+        Address Detail: <input type="text" id="create_business_addr_detail" name="create_business_addr_detail" value="<?php echo $create_business_addr_detail ?>">
+        <font color="red"><?php echo $create_business_addr_detailErr ?></font><br>
+       
         <input type="submit" name="submit_form_create_business" value="Submit">
       </form>
+      
       <button onclick="clearElement('create_business_div')">Clear Output</button>
       <div id="create_business_div">
         <?php echo $create_business_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
