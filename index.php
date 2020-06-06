@@ -129,7 +129,7 @@
 
       /* #region Initializing Read Variables */
       $read_location_open = $read_location_out = "";
-      $read_business_open =  $read_business_out = "";
+      $read_business_open = $read_business_out = "";
       $read_restaurant_open = $read_restaurant_out = "";
       $read_cuisine_open = $read_cuisine_out = "";
       $read_serves_open = $read_serves_out = "";
@@ -621,7 +621,6 @@
           }
 
           /* #endregion */
-
         }
         elseif ( isset($_POST["submit_form_create_discussion_reply"] )){ 
           /* #region submit_form_create_discussion_reply */
@@ -677,8 +676,41 @@
           /* #endregion */
         }
 
-        elseif ( isset($_POST["submit_form_read_location"] )){ }
-        elseif ( isset($_POST["submit_form_read_business"] )){ }
+        elseif ( isset($_POST["submit_form_read_location"] )){ 
+          /* #region submit_form_read_location */
+          $read_location_open = "is_open";
+          $sql = "SELECT * FROM location;";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_location_out = "<table><thead><tr><td>PK: Building Management No.</td><td>Zip No.</td><td>Jibun Juso</td><td>Create Date</td><td>Last Update</td><td>Is Active</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_location_out = $read_location_out . "<tr><td>" . $row['bldgMgmtNo'] . "</td>";
+            $read_location_out = $read_location_out . "<td>" . $row['zip_no'] . "</td>";
+            $read_location_out = $read_location_out . "<td>" . $row['jibun_juso'] . "</td>";
+            $read_location_out = $read_location_out . "<td>" . $row['create_date'] . "</td>";
+            $read_location_out = $read_location_out . "<td>" . $row['last_update'] . "</td>";
+            $read_location_out = $read_location_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+          $read_location_out = $read_location_out . "</tbody></table>";
+          /* #endregion */ 
+        }
+        elseif ( isset($_POST["submit_form_read_business"] )){ 
+          /* #region submit_form_read_business */
+          $read_business_open = "is_open";
+          $sql = "SELECT * FROM business";
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $read_business_out = "<table><thead><tr><td>PK: Business ID</td><td>Name</td><td>FK: Located In</td><td>Address Detail</td><td>Create Date</td><td>Last Update</td><td>Is Active</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $read_business_out = $read_business_out . "<tr><td>" . $row['business_id'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['name'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['located_in'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['addr_detail'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['create_date'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['last_update'] . "</td>";
+            $read_business_out = $read_business_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+          $read_business_out = $read_business_out . "</tbody></table>";
+          /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_read_restaurant"] )){ }
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ }
         elseif ( isset($_POST["submit_form_read_serves"] )){ }
@@ -1169,9 +1201,9 @@
       /* #region Read Tab Content */
     -->
     <div id="read_location" class="tabcontent">
-      <h3>read_location</h3>
+      <h3>Read Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_read_location" value="Submit">
+        <input type="submit" name="submit_form_read_location" value="Read">
       </form>
       <button onclick="clearElement('read_location_div')">Clear Output</button>
       <div id="read_location_div">
@@ -1180,9 +1212,9 @@
     </div> 
 
     <div id="read_business" class="tabcontent">
-      <h3>read_business</h3>
+      <h3>Read Business</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_read_business" value="Submit">
+        <input type="submit" name="submit_form_read_business" value="Read">
       </form>
       <button onclick="clearElement('read_business_div')">Clear Output</button>
       <div id="read_business_div">
