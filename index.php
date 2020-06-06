@@ -182,16 +182,16 @@
       $update_works_at_works_for = $update_works_at_employed = $update_works_at_employee_type = "";
       $update_works_at_works_forErr = $update_works_at_employedErr = $update_works_at_employee_typeErr = "";
   
-      $update_restaurant_review_open = $update_restaurant_review_out = 
+      $update_restaurant_review_open = $update_restaurant_review_out = $update_restaurant_reviewErr =
       $update_restaurant_review_review_id = $update_restaurant_review_reviewed_by = $update_restaurant_review_reviewed_restaurant= $update_restaurant_review_review_star = $update_restaurant_review_review_content = $update_restaurant_review_update_date= $update_restaurant_review_last_update = $update_restaurant_review_is_active=
       $update_restaurant_review_review_idErr = $update_restaurant_review_reviewed_byErr = $update_restaurant_review_reviewed_restaurantErr = $update_restaurant_review_review_starErr = $update_restaurant_review_review_contentErr = $update_restaurant_review_update_dateErr= $update_restaurant_review_last_updateErr = $update_restaurant_review_is_activeErr="";
-      $update_review_followup_open = $update_review_followup_out =
+      $update_review_followup_open = $update_review_followup_out = $update_restaurant_review_followupErr =
       $update_review_followup_followup_id= $update_review_followup_followed_up_by = $update_review_followup_for_review= $update_review_followup_followup_content =$update_review_followup_update_date =$update_review_followup_last_date = $update_review_followup_is_active=
       $update_review_followup_followup_idErr= $update_review_followup_followed_up_byErr = $update_review_followup_for_reviewErr= $update_review_followup_followup_contentErr =$update_review_followup_update_dateErr =$update_review_followup_last_dateErr = $update_review_followup_is_activeErr=""; 
-      $update_restaurant_discussion_open = $update_restaurant_discussion_out = 
+      $update_restaurant_discussion_open = $update_restaurant_discussion_out = $update_restaurant_discussionErr =
       $update_restaurant_discussion_discussion_id=$update_restaurant_discussion_discussed_by=$update_restaurant_discussion_discussed_restaurant = $update_restaurant_discussion_discussion_content = $update_restaurant_discussion_update_date =$update_restaurant_discussion_last_update= $update_restaurant_discussion_is_active =
       $update_restaurant_discussion_discussion_idErr=$update_restaurant_discussion_discussed_byErr=$update_restaurant_discussion_discussed_restaurantErr = $update_restaurant_discussion_discussion_contentErr = $update_restaurant_discussion_update_dateErr =$update_restaurant_discussion_last_updateErr= $update_restaurant_discussion_is_activeErr ="";
-      $update_discussion_reply_open = $update_discussion_reply_out = 
+      $update_discussion_reply_open = $update_discussion_reply_out = $update_discussion_replyErr =
       $update_discussion_reply_reply_id = $update_discussion_reply_replied_by = $update_discussion_reply_for_discussion = $update_discussion_reply_reply_content =$update_discussion_reply_update_date = $update_discussion_reply_last_update = $update_discussion_reply_is_active =
       $update_discussion_reply_reply_idErr = $update_discussion_reply_replied_byErr = $update_discussion_reply_for_discussionErr = $update_discussion_reply_reply_contentErr =$update_discussion_reply_update_dateErr = $update_discussion_reply_last_updateErr = $update_discussion_reply_is_activeErr ="";
       /* #endregion */
@@ -326,6 +326,37 @@
         return $read_works_at_out;
         /* #endregion */
       }
+
+
+      function read_restaurant_review() {
+        /* #region  read_restaurant_review */
+        global $conn;
+        $sql = "SELECT * FROM restaurant_review;";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $read_restaurant_review_out = "";
+        while( $row = mysqli_fetch_array($query)) {
+          $read_restaurant_review_out = $read_restaurant_review_out . "<tr><td>" . $row['review_id'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['reviewed_by'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['reviewed_restaurant'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['review_star'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['review_content'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['create_date'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['last_update'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['is_active'] . "</td></tr>";
+        }
+        if (empty($read_restaurant_review_out)){
+          $read_restaurant_review_out = "No result";
+        } else {
+          $read_restaurant_review_out = "<table><thead>"
+        . "<tr><th>review_id</th><th>reviewed_by</th><th>reviewed_restaurant</th><th>review_star</th><th>review_content</th>"
+        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_review_out . "</table>";
+        }
+        return $read_restaurant_review_out;
+        /* #endregion */
+      }
+
+
+
       // Hand multiple submits in a single file
       //https://www.techrepublic.com/article/handling-multiple-submits-in-a-single-form-with-php/
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -1120,7 +1151,65 @@
           }
           /* #endregion */
         }
-        elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ }
+        elseif ( isset($_POST["submit_form_update_restaurant_review"] )){ 
+
+           /* #region  submit_form_update_person */
+           $update_restaurant_review_open = "is_open";
+           $sql = "UPDATE person SET ";
+ 
+           if (!empty($_POST["update_restaurant_review_review_id"]) && empty($_POST["update_restaurant_review_reviewed_by"]) && empty($_POST["update_restaurant_review_reviewed_restaurant"]) && empty($_POST["update_restaurant_review_review_star"]) 
+           && empty($_POST["update_restaurant_review_review_content"]) && empty($_POST["update_person_is_active"])) {
+             $update_restaurant_reviewErr = "Notice: Only is_active is updated";
+             // $update_person_fullnameErr = "*";
+             // $update_person_emailErr = "*";
+             // $update_person_usernameErr = "*";
+             // $update_person_passwordErr = "*";
+             // $update_person_is_activeErr = "*";
+           } else {
+           } if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review reviewed by:" .$_POST["update_restaurant_review_reviewed_by"];
+             $update_restaurant_review_reviewed_by = test_input($_POST["update_restaurant_review_reviewed_by"]);
+             $sql = $sql . " reviewed_by=\"" . $update_restaurant_review_reviewed_by . "\",";
+           } if (!empty($_POST["update_restaurant_review_reviewed_restaurant"])){
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated reviewed_restaurant:" .$_POST["update_restaurant_review_reviewed_restaurant"];
+             $update_restaurant_review_reviewed_restaurant = test_input($_POST["update_restaurant_review_reviewed_restaurant"]);
+             $sql = $sql . " reviewed_restaurant=\"" . $update_restaurant_review_reviewed_restaurant . "\",";
+           } if (!empty($_POST["update_restaurant_review_review_star"])) {
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review star:" .$_POST["update_restaurant_review_review_star"];
+             $update_restaurant_review_review_star = test_input($_POST["update_restaurant_review_review_star"]);
+             $sql = $sql . " review_star=\"" . $update_restaurant_review_review_star . "\",";
+             } if (!empty($_POST["update_restaurant_review_review_content"])) {
+              $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review content:" .$_POST["update_restaurant_review_review_content"];
+              $update_restaurant_review_review_content = test_input($_POST["update_restaurant_review_review_content"]);
+              $sql = $sql . " review_content=\"" . $update_restaurant_review_review_content . "\",";
+              } 
+           }
+           if (!empty($_POST["update_restaurant_review_is_active"])) {
+             $update_restaurant_review_is_active = 1;
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated is_active with a value:" . $update_restaurant_review_is_active;
+             $sql = $sql . " is_active=" . $update_restaurant_review_is_active . ",";
+           } else {
+             $update_restaurant_review_is_active = 0;
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated is_active with a value:" .$update_restaurant_review_is_active;
+             $sql = $sql . " is_active=" . $update_restaurant_review_is_active . ",";
+           }
+           $sql = $sql . " last_update=\"" . date("Y-m-d h:i:s") . "\"";
+ 
+           if (empty($_POST["update_restaurant_review_review_id"])) {
+             $update_restaurant_review_review_idErr = "You must enter a value for update_restaurant_review_review_id";
+           } else {
+             $update_restaurant_review_out = $update_restaurant_review_out . "<br>For a row whose review_id value is:" . $_POST["update_restaurant_review_review_id"];
+             $update_restaurant_review_review_id = $_POST["update_restaurant_review_review_id"];
+             $sql = $sql . " WHERE review_id=" . $update_restaurant_review_review_id . ";";
+           }
+           if ($update_person_person_idErr === "") {
+             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+           }
+           /* #endregion */
+
+
+
+        }
         elseif ( isset($_POST["submit_form_update_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_update_restaurant_discussion"] )){ }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ }
@@ -1672,12 +1761,6 @@
         <font color="red"><?php echo $create_discussion_reply_for_discussionErr ?></font><br>
         Reply Content: <input type="text" id="create_discussion_reply_reply_content" name="create_discussion_reply_reply_content" value="<?php echo $create_discussion_reply_reply_content ?>">
         <font color="red"><?php echo $create_discussion_reply_reply_contentErr ?></font><br>
-        <!-- create_date: <input type="date" id="create_discussion_reply_create_date" name="create_discussion_reply_create_date" value="<?php echo $create_discussion_reply_create_date ?>">
-        <font color="red"><?php echo $create_discussion_reply_create_dateErr ?></font><br>
-        last_update: <input type="date" id="create_discussion_reply_last_update" name="create_discussion_reply_last_update" value="<?php echo $create_discussion_reply_last_update ?>">
-        <font color="red"><?php echo $create_discussion_reply_last_updateErr ?></font><br> 
-        is_active: <input type="checkbox" id="create_discussion_reply_is_active" name="create_discussion_reply_is_active" value="<?php echo $create_discussion_reply_is_active ?>">
-        <font color="red"><?php echo $create_discussion_reply_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_discussion_reply" value="Submit">
       </form>
       <button onclick="clearElement('create_discussion_reply_div')">Clear Output</button>
@@ -2001,8 +2084,28 @@
     
     <div id="update_restaurant_review" class="tabcontent">
       <h3>update_restaurant_review</h3>
+      <div id="update_restaurant_review_read_div">
+        <?php echo read_restaurant_review(); ?>
+      </div> 
+      <br>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+ 
+
+        restaurant_review_review_id: <input type="number" id="update_restaurant_review_review_id" name="update_restaurant_review_review_id" value="<?php echo $update_restaurant_review_review_id ?>">
+        <font color="red"><?php echo $update_restaurant_review_review_idErr ?></font><br>
+        restaurant_review_reviewed_by: <input type="number" id="update_restaurant_review_reviewed_by" name="update_restaurant_review_reviewed_by" value="<?php echo $update_restaurant_review_reviewed_by ?>">
+        <font color="red"><?php echo $update_restaurant_review_reviewed_byErr ?></font><br>
+        restaurant_review_reviewed_restaurant: <input type="number" id="update_restaurant_review_reviewed_restaurant" name="update_restaurant_review_reviewed_restaurant" value="<?php echo $update_restaurant_review_reviewed_restaurant ?>">
+        <font color="red"><?php echo $update_restaurant_review_reviewed_restaurantErr ?></font><br>
+        restaurant_review_review_star (1-5): <input type="number" id="update_restaurant_review_review_star" name="update_restaurant_review_review_star" value="<?php echo $update_restaurant_review_review_star ?>">
+        <font color="red"><?php echo $update_restaurant_review_review_starErr ?></font><br>
+        restaurant_review_review_content: <input type="text" id="update_restaurant_review_review_content" name="update_restaurant_review_review_content" value="<?php echo $update_restaurant_review_review_content ?>">
+        <font color="red"><?php echo $update_restaurant_review_review_contentErr ?></font><br>
+         is_active: <input type="checkbox" id="update_restaurant_review_is_active" name="update_restaurant_review_is_active">
+        <font color="red"><?php echo $update_restaurant_review_is_activeErr ?></font><br>
+
         <input type="submit" name="submit_form_update_restaurant_review" value="Submit">
+        <button type="reset" onclick="clearElement('update_restaurant_review_div')" value="Reset">Clear Output</button>
       </form>
       <button onclick="clearElement('update_restaurant_review_div')">Clear Output</button>
       <div id="update_restaurant_review_div">
