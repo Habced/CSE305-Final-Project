@@ -384,7 +384,6 @@
         }
         elseif ( isset($_POST["submit_form_create_person"] )){ 
           /* #region submit_form_create_person */
-          /* #endregion */
           $create_person_open = "is_open";
           if (empty($_POST["create_person_person_id"])) {
             $create_person_person_idErr = "You must enter a value for create_person_person_id";
@@ -434,10 +433,10 @@
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_person_out = "Success";
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_works_at"] )){ 
           /* #region submit_form_create_works_at */
-          /* #endregion */
           $create_works_at_open = "is_open";
           if (empty($_POST["create_works_at_works_for"])) {
             $create_works_at_works_forErr = "You must enter a value for create_works_at_works_for";
@@ -460,6 +459,7 @@
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_person_out = "Success";
           }
+          /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ 
           /* #region submit_form_create_restaurant_review */
@@ -675,7 +675,6 @@
           }
 
           /* #endregion */
-
         }
 
         elseif ( isset($_POST["submit_form_read_location"] )){ }
@@ -946,11 +945,6 @@
       /* #endregion */
     -->
 
-<!-- 
-      $create_serves_open = $create_serves_out = "";
-      $create_serves_served_at = $create_serves_serving = "";
-      $create_serves_served_atErr = $create_serves_servingErr = "";
- -->
     <!-- 
       /* #region create_serves */
     -->
@@ -979,6 +973,9 @@
       /* #endregion
     -->
 
+    <!-- 
+      /* #region create_person */
+    -->
     <div id="create_person" class="tabcontent">
       <h3>create_person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1005,7 +1002,13 @@
         <?php echo $create_person_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
+    <!-- 
+      /* #region create_works_at */
+    -->
     <div id="create_works_at" class="tabcontent">
       <h3>create_works_at</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1022,7 +1025,13 @@
         <?php echo $create_works_at_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
+    <!-- 
+      /* #region create_restaurant_review */
+    -->
     <div id="create_restaurant_review" class="tabcontent">
       <h3>create_restaurant_review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1049,7 +1058,13 @@
         <?php echo $create_restaurant_review_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
+    <!-- 
+      /* #region create_review_followup */
+    -->
     <div id="create_review_followup" class="tabcontent">
       <h3>create_review_followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1075,7 +1090,13 @@
         <?php echo $create_review_followup_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
     
+    <!-- 
+      /* #region create_restaurant_discussion */
+    -->
     <div id="create_restaurant_discussion" class="tabcontent">
       <h3> create_restaurant_discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1100,7 +1121,13 @@
         <?php echo $create_restaurant_discussion_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
 
+    <!-- 
+      /* #region create_discussion_reply */
+    -->
     <div id="create_discussion_reply" class="tabcontent">
       <h3>create_discussion_reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -1130,6 +1157,9 @@
       /* #endregion */
     -->
 
+    <!-- 
+      /* #endregion */
+    -->
     <!-- ############################################### ###################### ############################################### -->
     <!-- ############################################### Read Forms Tab Content ############################################### -->
     <!-- ############################################### ###################### ############################################### -->
