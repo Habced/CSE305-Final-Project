@@ -194,6 +194,11 @@
       $update_discussion_reply_open = $update_discussion_reply_out = $update_discussion_replyErr =
       $update_discussion_reply_reply_id = $update_discussion_reply_replied_by = $update_discussion_reply_for_discussion = $update_discussion_reply_reply_content =$update_discussion_reply_update_date = $update_discussion_reply_last_update = $update_discussion_reply_is_active =
       $update_discussion_reply_reply_idErr = $update_discussion_reply_replied_byErr = $update_discussion_reply_for_discussionErr = $update_discussion_reply_reply_contentErr =$update_discussion_reply_update_dateErr = $update_discussion_reply_last_updateErr = $update_discussion_reply_is_activeErr ="";
+      $update_restaurant_review_is_active=0;
+      $update_review_followup_is_active=0;
+      $update_discussion_reply_is_active=0;
+      $update_discussion_restaurant_discussion_is_active=0;
+
       /* #endregion */
 
       /* #region Initializing Delete Variables */
@@ -239,7 +244,7 @@
       //   }
       //   if( $a_field1Err === "" ) {
       //     $a_field1 = test_input($_POST["a_field1"]);
-      //     $sql = "SELECT * FROM playground_tests;";
+      //     $sql = "1* FROM playground_tests;";
       //     $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
       //     $a_out = ""; // eg<table><thead><tr><td>a_field1</td></tr></thead><tbody>
       //     while( $row = mysqli_fetch_array($query)) {
@@ -1152,7 +1157,7 @@
 
            /* #region  submit_form_update_person */
            $update_restaurant_review_open = "is_open";
-           $sql = "UPDATE person SET ";
+           $sql = "UPDATE restaurant_review SET ";
  
            if (!empty($_POST["update_restaurant_review_review_id"]) && empty($_POST["update_restaurant_review_reviewed_by"]) && empty($_POST["update_restaurant_review_reviewed_restaurant"]) && empty($_POST["update_restaurant_review_review_star"]) 
            && empty($_POST["update_restaurant_review_review_content"]) && empty($_POST["update_person_is_active"])) {
@@ -1163,7 +1168,7 @@
              // $update_person_passwordErr = "*";
              // $update_person_is_activeErr = "*";
            } else {
-           } if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
+            if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
              $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review reviewed by:" .$_POST["update_restaurant_review_reviewed_by"];
              $update_restaurant_review_reviewed_by = test_input($_POST["update_restaurant_review_reviewed_by"]);
              $sql = $sql . " reviewed_by=\"" . $update_restaurant_review_reviewed_by . "\",";
@@ -1197,9 +1202,9 @@
            } else {
              $update_restaurant_review_out = $update_restaurant_review_out . "<br>For a row whose review_id value is:" . $_POST["update_restaurant_review_review_id"];
              $update_restaurant_review_review_id = $_POST["update_restaurant_review_review_id"];
-             $sql = $sql . " WHERE review_id=" . $update_restaurant_review_review_id . ";";
-           }
-           if ($update_person_person_idErr === "") {
+             $sql = $sql . " WHERE review_id= " . $update_restaurant_review_review_id . ";";
+            }
+           if ($update_restaurant_review_review_idErr === "") {
              $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
            }
            /* #endregion */
@@ -2061,7 +2066,7 @@
         <input type="submit" name="submit_form_update_restaurant_review" value="Submit">
         <button type="reset" onclick="clearElement('update_restaurant_review_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('update_restaurant_review_div')">Clear Output</button>
+      <!-- <button onclick="clearElement('update_restaurant_review_div')">Clear Output</button> -->
       <div id="update_restaurant_review_div">
         <?php echo $update_restaurant_review_out; ?>
       </div> 
