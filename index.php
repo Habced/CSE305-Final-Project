@@ -96,7 +96,12 @@
       = $create_restaurant_has_weekly_breakErr = $create_restaurant_weekly_break_dateErr = $create_restaurant_create_dateErr = $create_restaurant_last_updateErr = $create_restaurant_is_activeErr = "";
 
       $create_cuisine_open = $create_cuisine_out = "";
+      $create_cuisine_cuisine_type = $create_cuisine_cuisine_info = "";
+      $create_cuisine_cuisine_typeErr = $create_cuisine_cuisine_infoErr = "";
+
       $create_serves_open = $create_serves_out = "";
+      $create_serves_served_at = $create_serves_serving = "";
+      $create_serves_served_atErr = $create_serves_servingErr = "";
 
       $create_person_open = $create_person_out = "";
       $create_person_person_id = $create_person_fullname = $create_person_email = $create_person_username = $create_person_password = $create_person_create_date
@@ -300,10 +305,44 @@
         }
         elseif ( isset($_POST["submit_form_create_cuisine"] )){ 
           /* #region submit_form_create_cuisine */
+          $create_cuisine_open = "is_open";
+          if (empty($_POST["create_cuisine_cuisine_type"])) { 
+            $create_cuisine_cuisine_typeErr = "You must enter a cuisine type"; 
+          } else {
+            $create_cuisine_cuisine_type = test_input($_POST["create_cuisine_cuisine_type"]);
+          }
+          if (empty($_POST["create_cuisine_cuisine_info"])) { 
+            $create_cuisine_cuisine_infoErr = "You must enter something for cuisine information"; 
+          } else {
+            $create_cuisine_cuisine_info = test_input($_POST["create_cuisine_cuisine_info"]);
+          }
+          
+          if( $create_cuisine_cuisine_typeErr === "" && $create_cuisine_cuisine_infoErr === "" ) {
+            $sql = "INSERT INTO cuisine (cuisine_type, cuisine_info) VALUES (\"" . $create_cuisine_cuisine_type . "\", \"" . $create_cuisine_cuisine_info . "\" )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_cuisine_out = "Success";
+          }
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_serves"] )){ 
           /* #region submit_form_create_serves */
+          $create_serves_open = "is_open";
+          if (empty($_POST["create_serves_served_at"])) { 
+            $create_serves_served_atErr = "You must enter a serving location"; 
+          } else {
+            $create_serves_served_at = test_input($_POST["create_serves_served_at"]);
+          }
+          if (empty($_POST["create_serves_serving"])) { 
+            $create_serves_servingErr = "You must enter a cuisine"; 
+          } else {
+            $create_serves_serving = test_input($_POST["create_serves_serving"]);
+          }
+          
+          if( $create_serves_served_atErr === "" && $create_serves_servingErr === "" ) {
+            $sql = "INSERT INTO serves (served_at, serving) VALUES (" . $create_serves_served_at . ", " . $create_serves_serving . " )";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $create_serves_out = "Success";
+          }
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_create_person"] )){ 
@@ -733,7 +772,10 @@
     <!-- 
       /* #endregion */
     -->
-    
+
+    <!-- 
+      /* #region create_restaurant */
+    -->
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -762,10 +804,27 @@
         <?php echo $create_restaurant_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
 
+    <!-- 
+      /* #region create_cuisine */
+    -->
     <div id="create_cuisine" class="tabcontent">
-      <h3>create_cuisine</h3>
+
+      <h3>Create Cuisine</h3>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+
+        Cuisine Type: 
+        <input type="text" id="create_cuisine_cuisine_type" name="create_cuisine_cuisine_type" value="<?php echo $create_cuisine_cuisine_type ?>">
+        <font color="red"><?php echo $create_cuisine_cuisine_typeErr ?></font><br>
+
+        Cuisine Information: 
+        <input type="text" id="create_cuisine_cuisine_info" name="create_cuisine_cuisine_info" value="<?php echo $create_cuisine_cuisine_info ?>">
+        <font color="red"><?php echo $create_cuisine_cuisine_infoErr ?></font><br>
+
         <input type="submit" name="submit_form_create_cuisine" value="Submit">
       </form>
       <button onclick="clearElement('create_cuisine_div')">Clear Output</button>
@@ -773,10 +832,32 @@
         <?php echo $create_cuisine_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion */
+    -->
 
+<!-- 
+      $create_serves_open = $create_serves_out = "";
+      $create_serves_served_at = $create_serves_serving = "";
+      $create_serves_served_atErr = $create_serves_servingErr = "";
+ -->
+    <!-- 
+      /* #region create_serves */
+    -->
     <div id="create_serves" class="tabcontent">
-      <h3>create_serves</h3>
+
+      <h3>Create Serves</h3>
+    
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+
+        The Cuisine being served: 
+        <input type="text" id="create_serves_serving" name="create_serves_serving" value="<?php echo $create_serves_serving ?>">
+        <font color="red"><?php echo $create_serves_servingErr ?></font><br>
+
+        Cuisine is served at: 
+        <input type="text" id="create_serves_served_at" name="create_serves_served_at" value="<?php echo $create_serves_served_at ?>">
+        <font color="red"><?php echo $create_serves_served_atErr ?></font><br>
+        
         <input type="submit" name="submit_form_create_serves" value="Submit">
       </form>
       <button onclick="clearElement('create_serves_div')">Clear Output</button>
@@ -784,6 +865,9 @@
         <?php echo $create_serves_out; ?>
       </div> 
     </div>
+    <!-- 
+      /* #endregion
+    -->
 
     <div id="create_person" class="tabcontent">
       <h3>create_person</h3>
