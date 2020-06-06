@@ -206,6 +206,7 @@
       $delete_business_business_idErr = "";
 
       $delete_restaurant_open = $delete_restaurant_out = "";
+      $delete_restaurant_restaurant_id  = $delete_restaurant_restaurant_idErr = "";
 
       $delete_cuisine_open = $delete_cuisine_out = "";
       $delete_cuisine_cuisine_id = "";
@@ -216,7 +217,9 @@
       $delete_serves_served_atErr = $delete_serves_servingErr = "";
 
       $delete_person_open = $delete_person_out = "";
+      $delete_person_person_id = $delete_person_person_idErr = "";
       $delete_works_at_open = $delete_works_at_out = "";
+      $delete_works_at_works_for = $delete_works_at_works_forErr = $delete_works_at_employed= $delete_works_at_employedErr = "";
 
       $delete_restaurant_review_open = $delete_restaurant_review_out = 
       $delete_restaurant_review_review_id = $delete_restaurant_review_reviewed_by = $delete_restaurant_review_reviewed_restaurant= $delete_restaurant_review_review_star = $delete_restaurant_review_review_content = $delete_restaurant_review_delete_date= $delete_restaurant_review_last_update = $delete_restaurant_review_is_active=
@@ -1156,7 +1159,20 @@
           }
           /* #endregion */ 
         }
-        elseif ( isset($_POST["submit_form_delete_restaurant"] )){ }
+        elseif ( isset($_POST["submit_form_delete_restaurant"] )){
+         /* #region  sumit_from_delete_restaurant */
+          $delete_restaurant_open = "is_open";
+          if (empty($_POST["delete_restaurant_restaurant_id"])) {
+            $delete_restaurant_restaurant_idErr = "You must enter a value for delete_restaurant_restaurant_id";
+          } else {
+            $delete_restaurant_restaurant_id = $_POST["delete_restaurant_restaurant_id"];
+            $delete_restaurant_out = "The restaurant of which restaurant_id is ". $delete_restaurant_restaurant_id . " is deleted.";
+            $sql = "DELETE FROM restaurant WHERE restaurant_id=" . $delete_restaurant_restaurant_id . ";";
+            echo $sql;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          }
+         /* #endregion */
+        }
         elseif ( isset($_POST["submit_form_delete_cuisine"] )){ 
           /* #region submit_form_delete_cuisine */
           $delete_cuisine_open = "is_open";
@@ -1192,8 +1208,38 @@
           }
           /* #endregion */ 
         }
-        elseif ( isset($_POST["submit_form_delete_person"] )){ }
-        elseif ( isset($_POST["submit_form_delete_works_at"] )){ }
+        elseif ( isset($_POST["submit_form_delete_person"] )){
+          /* #region  submit_form_delete_person */
+          $delete_person_open = "is_open";
+          if (empty($_POST["delete_person_person_id"])) {
+            $delete_person_person_idErr = "You must enter a value for person_id";
+          } else {
+            $delete_person_person_id = $_POST["delete_person_person_id"];
+            $delete_person_out = "The person whose person_id is ". $delete_person_person_id . " is deleted.";
+            $sql = "DELETE FROM person WHERE person_id=" . $delete_person_person_id . ";";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          }
+          /* #endregion */
+         }
+        elseif ( isset($_POST["submit_form_delete_works_at"] )){
+          /* #region  submit_form_delte_works_at */
+          $delete_works_at_open = "is_open";
+          if (empty($_POST["delete_works_at_works_for"])) {
+            $delete_works_at_works_forErr = "You must enter a value for works_for";
+          } else {
+            $delete_works_at_works_for = $_POST["delete_works_at_works_for"];
+            $sql = "DELETE FROM works_at WHERE works_for=" . $delete_works_at_works_for;
+          }
+          if (empty($_POST["delete_works_at_employed"])) {
+            $delete_works_at_employedErr = "You must enter a value for employed";
+          } else {
+            $delete_works_at_employed = $_POST["delete_works_at_employed"];
+            $delete_works_at_out = "The works_at realtion of which works for is ". $delete_works_at_works_for . " and employed is " . $delete_works_at_employed . " is deleted.";
+            $sql = $sql . " AND employed=" . $delete_works_at_employed . ";";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          }
+          /* #endregion */
+         }
         elseif ( isset($_POST["submit_form_delete_restaurant_review"] )){ }
         elseif ( isset($_POST["submit_form_delete_review_followup"] )){ }
         elseif ( isset($_POST["submit_form_delete_restaurant_discussion"] )){ }
@@ -2055,10 +2101,13 @@
     
     <div id="delete_restaurant" class="tabcontent">
       <h3>delete_restaurant</h3>
+      <?php echo read_restaurant(); ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        restaurant_id: <input type="number" id="delete_restaurant_restaurant_id" name="delete_restaurant_restaurant_id" value="<?php echo $delete_restaurant_restaurant_id ?>">
+        <font color="red"><?php echo $delete_restaurant_restaurant_idErr ?></font><br>
         <input type="submit" name="submit_form_delete_restaurant" value="Submit">
+        <button type="reset" onclick="clearElement('delete_restaurant_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_restaurant_div')">Clear Output</button>
       <div id="delete_restaurant_div">
         <?php echo $delete_restaurant_out; ?>
       </div> 
@@ -2093,10 +2142,13 @@
 
     <div id="delete_person" class="tabcontent">
       <h3>delete_person</h3>
+      <?php echo read_person() ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+          person_id: <input type="number" id="delete_person_person_id" name="delete_person_person_id" value="<?php echo $delete_person_person_id ?>">
+          <font color="red"><?php echo $delete_person_person_idErr ?></font><br>
         <input type="submit" name="submit_form_delete_person" value="Submit">
+        <button type="reset" onclick="clearElement('delete_person_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_person_div')">Clear Output</button>
       <div id="delete_person_div">
         <?php echo $delete_person_out; ?>
       </div> 
@@ -2104,10 +2156,15 @@
     
     <div id="delete_works_at" class="tabcontent">
       <h3>delete_works_at</h3>
+      <?php echo read_works_at() ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        works_for: <input type="number" id="delete_works_at_works_for" name="delete_works_at_works_for" value="<?php echo $delete_works_at_works_for ?>">
+        <font color="red"><?php echo $delete_works_at_works_forErr ?></font><br>
+        employed: <input type="number" id="delete_works_at_employed" name="delete_works_at_employed" value="<?php echo $delete_works_at_employed ?>">
+        <font color="red"><?php echo $update_works_at_employedErr ?></font><br>
         <input type="submit" name="submit_form_delete_works_at" value="Submit">
+        <button type="reset" onclick="clearElement('delete_works_at_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_works_at_div')">Clear Output</button>
       <div id="delete_works_at_div">
         <?php echo $delete_works_at_out; ?>
       </div> 
