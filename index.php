@@ -377,21 +377,7 @@
           }else {
             $create_restaurant_weekly_break_date = test_input($_POST["create_restaurant_weekly_break_date"]);
           }
-          // if (empty($_POST["create_restaurant_create_date"])) {
-          //   $create_restaurant_create_dateErr = "You must enter a value for create_restaurant_create_date";
-          // } else {
-          //   $create_restaurant_create_date = test_input($_POST["create_restaurant_create_date"]);
-          // }
-          // if (empty($_POST["create_restaurant_last_update"])) {
-          //   $create_restaurant_last_updateErr = "You must enter a value for create_restaurant_last_update";
-          // } else {
-          //   $create_restaurant_last_update = test_input($_POST["create_restaurant_last_update"]);
-          // }
-          // if (empty($_POST["create_restaurant_is_active"])) {
-          //   $create_restaurant_is_activeErr = "You must enter a value for create_restaurant_is_active";
-          // } else {
-          //   $create_restaurant_is_active = test_input($_POST["create_restaurant_is_active"]);
-          // }
+ 
           if ($create_restaurant_weekday_open_timeErr === "" && $create_restaurant_weekday_end_timeErr === "" && $create_restaurant_weekend_open_timeErr === "" &&
           $create_restaurant_weekend_end_timeErr === "" && $create_restaurant_has_weekly_breakErr === "" && $create_restaurant_weekly_break_dateErr === "" && 
           $create_restaurant_create_dateErr === "" && $create_restaurant_last_updateErr === "" && $create_restaurant_is_activeErr == "" && $create_restaurant_restaurant_idErr === ""){
@@ -675,7 +661,7 @@
           if (empty($_POST["create_discussion_reply_reply_content"])) {
             $create_discussion_reply_reply_contentErr = "You must enter a value for create_discussion_reply_reply_content";
           }else{
-            $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]);
+            $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]); 
           }
          
           if( $create_discussion_reply_reply_idErr === "" && $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
