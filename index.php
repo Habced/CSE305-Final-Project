@@ -820,7 +820,7 @@
              (" . $create_review_followup_followup_id . ", " . $create_review_followup_followed_up_by . ", " . $create_review_followup_for_review . ", 
              \"" . $create_review_followup_followup_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $create_restaurant_review_out = "Success";
+            $create_restaurant_followup_out = "Success";
           }
 
           /* #endregion */
@@ -2151,9 +2151,8 @@
         <font color="red"><?php echo $create_location_jibun_jusoErr ?></font><br>
 
         <input type="submit" name="submit_form_create_location" value="Submit">
+        <button type="reset" onclick="clearElement('create_location_div')" value="Reset">Clear Output</button>
       </form>
-      
-      <button onclick="clearElement('create_location_div')">Clear Output</button>
       <div id="create_location_div">
         <?php echo $create_location_out; ?>
       </div> 
@@ -2183,9 +2182,9 @@
         <font color="red"><?php echo $create_business_addr_detailErr ?></font><br>
        
         <input type="submit" name="submit_form_create_business" value="Submit">
+        <button type="reset" onclick="clearElement('create_business_div')" value="Reset">Clear Output</button>
       </form>
       
-      <button onclick="clearElement('create_business_div')">Clear Output</button>
       <div id="create_business_div">
         <?php echo $create_business_out; ?>
       </div> 
@@ -2255,8 +2254,8 @@
         <font color="red"><?php echo $create_cuisine_cuisine_infoErr ?></font><br>
 
         <input type="submit" name="submit_form_create_cuisine" value="Submit">
+        <button type="reset" onclick="clearElement('create_cuisine_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_cuisine_div')">Clear Output</button>
       <div id="create_cuisine_div">
         <?php echo $create_cuisine_out; ?>
       </div> 
@@ -2283,8 +2282,8 @@
         <font color="red"><?php echo $create_serves_served_atErr ?></font><br>
         
         <input type="submit" name="submit_form_create_serves" value="Submit">
+        <button type="reset" onclick="clearElement('create_serves_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_serves_div')">Clear Output</button>
       <div id="create_serves_div">
         <?php echo $create_serves_out; ?>
       </div> 
@@ -2372,8 +2371,8 @@
         is_active: <input type="checkbox" id="create_restaurant_review_is_active" name="create_restaurant_review_is_active" value="<?php echo $create_restaurant_review_is_active ?>">
         <font color="red"><?php echo $create_restaurant_review_is_activeErr ?></font><br>-->
         <input type="submit" name="submit_form_create_restaurant_review" value="Submit">
+        <button type="reset" onclick="clearElement('create_restaurant_review_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_restaurant_review_div')">Clear Output</button>
       <div id="create_restaurant_review_div">
         <?php echo $create_restaurant_review_out; ?>
       </div> 
@@ -2404,8 +2403,8 @@
         is_active: <input type="checkbox" id="create_review_followup_is_active" name="create_review_followup_is_active" value="<?php echo $create_review_followup_is_active ?>">
         <font color="red"><?php echo $create_review_followup_is_activeErr ?></font><br> -->
         <input type="submit" name="submit_form_create_review_followup" value="Submit">
+        <button type="reset" onclick="clearElement('create_review_followup_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_review_followup_div')">Clear Output</button>
       <div id="create_review_followup_div">
         <?php echo $create_review_followup_out; ?>
       </div> 
@@ -2422,7 +2421,7 @@
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
       Discussion ID: <input type="number" id="create_restaurant_discussion_discussion_id" name="create_restaurant_discussion_discussion_id" value="<?php echo $create_restaurant_discussion_discussion_id ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussion_idErr ?></font><br>
-        Discuss By: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
+        Discussed By: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussed_byErr ?></font><br>
         Discussed Restaurant: <input type="number" id="create_restaurant_discussion_discussed_restaurant" name="create_restaurant_discussion_discussed_restaurant" value="<?php echo $create_restaurant_discussion_discussed_restaurant ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussed_restaurantErr ?></font><br>
@@ -2430,8 +2429,8 @@
         <font color="red"><?php echo $create_restaurant_discussion_discussion_contentErr ?></font><br>
  
         <input type="submit" name="submit_form_create_restaurant_discussion" value="Submit">
+        <button type="reset" onclick="clearElement('create_restaurant_discussion_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_restaurant_discussion_div')">Clear Output</button>
       <div id="create_restaurant_discussion_div">
         <?php echo $create_restaurant_discussion_out; ?>
       </div> 
@@ -2455,8 +2454,8 @@
         Reply Content: <input type="text" id="create_discussion_reply_reply_content" name="create_discussion_reply_reply_content" value="<?php echo $create_discussion_reply_reply_content ?>">
         <font color="red"><?php echo $create_discussion_reply_reply_contentErr ?></font><br>
         <input type="submit" name="submit_form_create_discussion_reply" value="Submit">
+        <button type="reset" onclick="clearElement('create_discussion_reply_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('create_discussion_reply_div')">Clear Output</button>
       <div id="create_discussion_reply_div">
         <?php echo $create_discussion_reply_out; ?>
       </div> 
