@@ -257,6 +257,10 @@
       $filter_location_bldgMgmtNo = "";
       $filter_location_bldgMgmtNoErr = "";
 
+
+      $filter_cuisine_open = $filter_cuisine_out = "";
+      $filter_cuisine_cuisine_id = "";
+
       /* #endregion */
 
       function read_restaurant() {
@@ -1746,16 +1750,13 @@
 
         /* #region SUBMIT FORM FILTER */
         elseif ( isset($_POST["submit_form_filter_location"] )){ 
-          /* #region submit_form_read_location */
+          /* #region submit_form_filter_location */
           $filter_location_open = "is_open";
           $filter_location_bldgMgmtNo = test_input($_POST["filter_location_bldgMgmtNo"]);
           $sql = "SELECT * FROM business, restaurant WHERE business.business_id = restaurant.restaurant_id";
           if ($filter_location_bldgMgmtNo != "all"){
             $sql = $sql . " AND business.located_in = " . $filter_location_bldgMgmtNo ;
           } 
-          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $filter_location_out = "Success"; 
-
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           $filter_location_out = "<table><thead><tr><td>Restaurant Name</td><td>Weekday Open Close Times</td><td>Weekend Open Close Time</td><td>Weekly Break Day</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
@@ -1766,6 +1767,26 @@
           }
           $filter_location_out = $filter_location_out . "</tbody></table>";
           /* #endregion */ 
+        }
+
+
+        elseif ( isset($_POST["submit_form_filter_cuisine"] )){ 
+          /* #region submit_form_filter_cuisine */
+          $filter_cuisine_open = "is_open";
+          $filter_cuisine_cuisine_id = test_input($_POST["filter_cuisine_cuisine_id"]);
+          $sql = "SELECT * FROM cuisine, serves, restaurant, business WHERE business.business_id = restaurant.restaurant_id AND restaurant.restaurant_id = serves.served_at AND cuisine.cuisine_id = serves.serving";
+          if ($filter_cuisine_cuisine_id != "all"){
+            $sql = $sql . " AND cuisine.cuisine_id = " . $filter_cuisine_cuisine_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $filter_cuisine_out = "<table><thead><tr><td>Restaurant Name</td><td>Serves Cuisine</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $filter_cuisine_out = $filter_cuisine_out . "<tr><td>" . $row['name'] . "</td>";
+            $filter_cuisine_out = $filter_cuisine_out . "<td>" . $row['cuisine_type'] . "</td></tr>";
+          }
+          $filter_cuisine_out = $filter_cuisine_out . "</tbody></table>";
+          /* #endregion */ 
+
         }
         /* #endregion */
 
@@ -1862,11 +1883,12 @@
       /* #endregion */
     -->
     <!-- 
-      /* #region  Filtering Functions  */ 
+      /* #region Filtering Tabs  */ 
     -->
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter By Location</button>
       <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
+<<<<<<< HEAD
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Review Filter by Person</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter_restaurant')" id="<?php echo $review_filter_restaurant_open; ?>">Review Filter by Restaurant</button>
@@ -1880,6 +1902,10 @@
 
 
       <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
+=======
+      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
+>>>>>>> 6b0cf240bb754f33520db3c2a932a72923c9dd38
       <br>
     </div>
     <!--
@@ -2907,17 +2933,20 @@
     <!-- ############################################### ######################## ############################################### -->
 
     <div id="filter_location" class="tabcontent">
-      <h3>Location Filter</h3>
       <h3>Filter Restaurants by Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <select name="filter_location_bldgMgmtNo">
-          <option value="all" selected="selected">All Locations</option>
+          <option value="all" <?php echo empty($filter_location_bldgMgmtNo) ? "selected=\"selected\"" : "" ?>>All Locations</option>
           <?php
             $sql = "SELECT * FROM location";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $myTemp = "";
             while( $row = mysqli_fetch_array($query)) {
-              $myTemp = $myTemp . "<option value=\"" . $row['bldgMgmtNo'] . "\">" . $row['jibun_juso'] . "</option>";
+              $myTemp = $myTemp . "<option value=\"" . $row['bldgMgmtNo'] . "\" ";
+              if( $filter_location_bldgMgmtNo == $row['bldgMgmtNo'] ){
+                $myTemp = $myTemp . " selected=\"selected\" ";
+              }
+              $myTemp = $myTemp . ">" . $row['jibun_juso'] . "</option>";
             }
             echo $myTemp;
           ?>
@@ -2943,6 +2972,32 @@
       </div> 
     </div>
 
+    <div id="filter_cuisine" class="tabcontent">
+      <h3>Filter Restaurants by Cuisine</h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        <select name="filter_cuisine_cuisine_id">
+          <option value="all" <?php echo empty($filter_cuisine_cuisine_id) ? "selected=\"selected\"" : "" ?> >All Cuisines</option>
+          <?php
+            $sql = "SELECT * FROM cuisine";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $myTemp = "";
+            while( $row = mysqli_fetch_array($query)) {
+              $myTemp = $myTemp . "<option value=\"" . $row['cuisine_id'] . "\" ";
+              if( $filter_cuisine_cuisine_id == $row['cuisine_id'] ){
+                $myTemp = $myTemp . " selected=\"selected\" ";
+              }
+              $myTemp = $myTemp . ">" . $row['cuisine_type'] . "</option>";
+            }
+            echo $myTemp;
+          ?>
+          <input type="submit" name="submit_form_filter_cuisine" value="Get Restaurants">
+        </select>
+
+      </form>
+       <div id="filter_cuisine_div">
+        <?php echo $filter_cuisine_out; ?>
+      </div> 
+    </div>
 
 
 
