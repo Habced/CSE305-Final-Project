@@ -1801,19 +1801,17 @@
           $restaurant_rating_filter_open = "is_open";
           $restaurant_rating_filter_out = "";
           $order = $where = "";
-          if (empty($_POST["restaurant_rating_filter_order"])){
-            $restaurant_rating_filter_out = "The default order is descending<br>";
-          } elseif ($_POST["restaurant_rating_filter_order"] === "Highest to Lowest") {
+          if ($_POST["restaurant_rating_filter_order"] === "Highest to Lowest") {
             $order = " ORDER BY Star DESC";
-          } elseif ($_POST["restaurant_rating_filter_order"] === "Lowest to Highest") {
+          } else if ($_POST["restaurant_rating_filter_order"] === "Lowest to Highest") {
             $order = " ORDER BY Star ASC";
           }
-          if (empty($_POST["restaurant_rating_filter_order"])) {
+          if (empty($_POST["restaurant_rating_filter_is_active"])) {
             $where = "0";
           } else {
             $where = "1";
           }
-
+          
           $restaurant_rating_filter_out = $restaurant_rating_filter_out . read_restaurant_rating_filter($where, $order);
         }
 
@@ -3176,20 +3174,18 @@
       <h3>Restaurant Rating Filter</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
           Rating more than or equal to: 
-          <input list="ratings" id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
-          <datalist id="ratings">
-            <option value="1">
-            <option value="2">
-            <option value="3">
-            <option value="4">
-            <option value="5">
-          </datalist><br>
+          <select id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select><br>
           Order:
-          <input list="order" id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
-          <datalist id="order">
-            <option value="Highest to Lowest">
-            <option value="Lowest to Highest">
-          </datalist><br>
+          <select id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
+            <option value="Highest to Lowest">Highest to Lowest</option>
+            <option value="Lowest to Highest">Lowest to Highest</option>
+          </select><br>
           Is acitve:
           <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
           <br>
