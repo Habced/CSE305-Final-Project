@@ -2105,8 +2105,7 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Restaurant Rating Filter</button>
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant By Location</button>
-      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
+       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
