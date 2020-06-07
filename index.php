@@ -270,6 +270,10 @@
 
       $filter_posts_restaurant_open = $filter_posts_restaurant_out =
       $filter_posts_restaurant_id = "";
+
+
+      $sort_posts_open = $sort_posts_out = $sot_posts_id = "";
+      
       /* #endregion */
 
 
@@ -350,10 +354,10 @@
       }
 
 
-      function read_restaurant_review() {
+      function read_restaurant_review($orderby) {
         /* #region  read_restaurant_review */
         global $conn;
-        $sql = "SELECT * FROM restaurant_review;";
+        $sql = "SELECT * FROM restaurant_review " . $orderby . ";";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_review_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -378,10 +382,10 @@
       }
 
       
-      function read_review_followup() {
+      function read_review_followup($orderby) {
         /* #region  read_restaurant_review */
         global $conn;
-        $sql = "SELECT * FROM review_followup;";
+        $sql = "SELECT * FROM review_followup " . $orderby . ";";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_followup_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -405,12 +409,12 @@
       }
 
 
-      function read_restaurant_discussion(){
+      function read_restaurant_discussion($orderby){
 
          /* #region  read_restaurant_discussion */
        
         global $conn;
-        $sql = "SELECT * FROM restaurant_discussion;";
+        $sql = "SELECT * FROM restaurant_discussion " . $orderby . ";";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_discussion_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -434,11 +438,11 @@
       }
 
 
-      function read_discussion_reply(){
+      function read_discussion_reply($orderby){
        /* #region  read_discussion_reply */
        
        global $conn;
-       $sql = "SELECT * FROM discussion_reply;";
+       $sql = "SELECT * FROM discussion_reply " . $orderby . ";";
        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
        $read_discussion_reply_out = "";
        while( $row = mysqli_fetch_array($query)) {
@@ -462,6 +466,7 @@
       }
       
       function read_restaurant_rating_filter($where , $order){
+      /* #region  read_restaurant_rating_filter */
         global $conn;
         $restaurant_rating_filter_review_star = $_POST["restaurant_rating_filter_review_star"];
         $sql = "SELECT restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, r.is_active, AVG(review_star) AS Star"  
@@ -499,6 +504,7 @@
         }
        
         return $restaurant_rating_filter_out;
+  /* #endregion */
       }
 
 
@@ -1798,6 +1804,7 @@
         }
         /* #endregion */
         elseif ( isset($_POST["submit_form_restaurant_rating_filter"] )){
+        /* #region  submit_form_restaurant_rating_filter */
           $restaurant_rating_filter_open = "is_open";
           $restaurant_rating_filter_out = "";
           $order = $where = "";
@@ -1815,6 +1822,7 @@
           }
 
           $restaurant_rating_filter_out = $restaurant_rating_filter_out . read_restaurant_rating_filter($where, $order);
+     /* #endregion */
         }
 
         /* #region SUBMIT FORM FILTER */
@@ -1940,7 +1948,7 @@
             $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-      
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . " <br><h2>Restaurant Reviews</h2>";
           $filter_posts_restaurant_out = "<table><thead><tr><td>Restaurant ID</td><td>Reviewer</td><td>Review ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
           
           while( $row = mysqli_fetch_array($query)) {
@@ -1955,12 +1963,14 @@
 
           
        
+          /* #region  submit_form_filter_posts_restaurant */
           
           $sql = "SELECT * FROM review_followup, restaurant, restaurant_review WHERE   restaurant.restaurant_id = restaurant_review.reviewed_restaurant AND restaurant_review.review_id = review_followup.for_review";
           if ($filter_posts_restaurant_id != "all"){
             $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . " <br><h2>Restaurant Review Followups</h2>";
           $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Review Followup By</td><td>Followup ID</td><td>Followup Content</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
             $filter_posts_restaurant_out= $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
@@ -1976,6 +1986,7 @@
             $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . " <br><h2>Restaurant Discussions</h2>";
           $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Discussed By</td><td>Discussion ID</td><td>Discussion Content</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
             $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
@@ -1992,7 +2003,8 @@
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           
-          $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Replied By</td><td>Discussion Reply ID</td><td>Reply Content</td></tr></thead><tbody>";
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . " <br><h2>Discussion Replies</h2>";
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out .  "<table><thead><tr><td>Restaurant ID</td><td>Replied By</td><td>Discussion Reply ID</td><td>Reply Content</td></tr></thead><tbody>";
     
           while( $row = mysqli_fetch_array($query)) {
             $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
@@ -2002,9 +2014,36 @@
           }
           $filter_posts_restaurant_out = $filter_posts_restaurant_out . "</tbody></table>";
 
-        }
-        /* #endregion */
+        } 
+        elseif ( isset($_POST["submit_form_sort_posts"] )){
+
+
+           /* #region  submit_form_restaurant_rating_filter */
+           $sort_posts_open = "is_open";
+           $sort_posts_out = "";
+           $orderby = "";
+          
+           if ($_POST["post_order"] === "Newest to Oldest") {
+            $orderby = "ORDER BY last_update DESC";
+            $sort_posts_out = $sort_posts_out . " <br> <h1>Newest Oldest</h1> ";
+          } elseif ($_POST["post_order"] === "Oldest to Newest") {
+            $orderby = "ORDER BY last_update ASC";
+            $sort_posts_out = $sort_posts_out . " <br> <h1>Oldest Newest</h1>  ";
+
+          }
+          $sort_posts_out = $sort_posts_out . " <h2>Restaurant Reviews</h2> ";
+          $sort_posts_out = $sort_posts_out . read_restaurant_review($orderby) . "<br> ";
+          $sort_posts_out = $sort_posts_out . " <h2>Restaurant Reviews Followups</h2> ";
+          $sort_posts_out = $sort_posts_out . read_review_followup ($orderby) . "<br> ";
+          $sort_posts_out = $sort_posts_out . " <h2>Restaurant Discussions</h2> ";
+          $sort_posts_out = $sort_posts_out . read_restaurant_discussion($orderby) . " <br> ";
+          $sort_posts_out = $sort_posts_out . " <h2>Restaurant Discussion Replies</h2> ";
+          $sort_posts_out = $sort_posts_out . read_discussion_reply($orderby) . " <br> ";
+
       
+          /* #endregion */
+        /* #endregion */
+          }
         }
       
     ?>
@@ -2108,7 +2147,7 @@
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
-      <button class="tablinks" onclick="openPart(event, ' b')" id="<?php echo $b_open; ?>">Sort Posts by Recent Update</button>
+      <button class="tablinks" onclick="openPart(event, 'sort_posts')" id="<?php echo $sort_posts_open; ?>">Sort Posts by Recent Update</button>
 
 
 
@@ -2841,7 +2880,7 @@
     <div id="update_restaurant_review" class="tabcontent">
       <h3>Update Restaurant Review</h3>
       <div id="update_restaurant_review_read_div">
-        <?php echo read_restaurant_review(); ?>
+        <?php echo read_restaurant_review(""); ?>
       </div> 
       <br>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -2874,7 +2913,7 @@
     <div id="update_review_followup" class="tabcontent">
     <h3>Update Review Followup</h3>
       <div id="update_person_read_div">
-        <?php echo read_review_followup(); ?>
+        <?php echo read_review_followup(""); ?>
       </div> 
       <br>
       <font color="red"><?php echo $update_restaurant_review_followupErr ?></font>
@@ -2902,7 +2941,7 @@
     <div id="update_restaurant_discussion" class="tabcontent">
         <h3>Update Restaurant Discussion</h3>
           <div id="update_restaurant_discussion_read_div">
-            <?php echo read_restaurant_discussion(); ?>
+            <?php echo read_restaurant_discussion(""); ?>
           </div> 
           <br>
           <font color="red"><?php echo $update_restaurant_discussionErr ?></font>
@@ -2931,7 +2970,7 @@
       <h3>Update Discussion Reply</h3>
         <div id="update_discussion_reply_read_div">
 
-          <?php echo read_discussion_reply(); ?>
+          <?php echo read_discussion_reply(""); ?>
         </div> 
         <br>
         <font color="red"><?php echo $update_discussion_replyErr ?></font>
@@ -3082,7 +3121,7 @@
     
     <div id="delete_restaurant_review" class="tabcontent">
       <h3>delete_restaurant_review</h3>
-      <?php echo read_restaurant_review() ?>
+      <?php echo read_restaurant_review("") ?>
 
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
           review_id: <input type="number" id="delete_restaurant_review_review_id" name="delete_restaurant_review_review_id" value="<?php echo $delete_restaurant_review_review_id ?>">
@@ -3293,9 +3332,21 @@
 
 
 
-
-
-
+    <div id="sort_posts" class="tabcontent">
+      <h3>Sort Posts by Time</h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" > 
+          Last Update Time Order:
+          <select id = "post_order" name="post_order">
+            <option value="Newest to Oldest">Newest to Oldest</option>
+            <option value="Oldest to Newest">Oldest to Newest</option>
+          </select> 
+        <input type="submit" name="submit_form_sort_posts" value="Submit">
+      </form>
+      <button onclick="clearElement('sort_posts_div')">Clear Output</button>
+      <div id="sort_posts_div">
+        <?php echo $sort_posts_out; ?>
+      </div> 
+    </div>
 
 
 
