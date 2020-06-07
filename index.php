@@ -244,11 +244,21 @@
       $delete_discussion_reply_reply_idErr = $delete_discussion_reply_replied_byErr = $delete_discussion_reply_for_discussionErr = $delete_discussion_reply_reply_contentErr =$delete_discussion_reply_delete_dateErr = $delete_discussion_reply_last_updateErr = $delete_discussion_reply_is_activeErr ="";
       /* #endregion */
 
+      $restaurant_rating_filter_open = $restaurant_rating_filter_out = "";
+      $restaurant_rating_filter_review_star = "";
 
-      function read_restaurant() {
+
+
+
+      function read_restaurant($where_clause) {
         /* #region  read_restaurant */
         global $conn;
-        $sql = "SELECT * FROM restaurant;";
+        $sql = "SELECT * FROM restaurant r ";
+        if (!empty($where_clause)){
+          $sql = $sql . $where_clause;
+        } 
+        $sql = $sql . ";";
+        echo $sql;
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -866,7 +876,7 @@
         elseif ( isset($_POST["submit_form_read_restaurant"] )){
           /* #region  submit_from_read_restaurant */
           $read_restaurant_open = "is_open"; 
-          $read_restaurant_out = read_restaurant();
+          $read_restaurant_out = read_restaurant("");
         }
           /* #endregion */
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
@@ -1697,7 +1707,18 @@
                      /* #endregion */
         }
         /* #endregion */
-        
+        elseif ( isset($_POST["submit_form_restaurant_rating_filter"] )){
+          $restaurant_rating_filter_open = "is_open";
+          $where_clause =  "";
+          $restaurant_rating_filter_review_star = "0";
+          if (!empty($_POST["restaurant_rating_filter_review_star"])){
+            $restaurant_rating_filter_review_star = $_POST["restaurant_rating_filter_review_star"];
+            $where_clause = "WHERE ". $restaurant_rating_filter_review_star . "=<" . " (SELECT AVG(review_star) FROM restaurant_review rr WHERE r.restaurant_id=rr.reviewed_restaurant)";
+          }
+
+          $restaurant_rating_filter_out = "All restaurants of which average star is more than or equal to " . $restaurant_rating_filter_review_star . "<br>"; 
+          $restaurant_rating_filter_out = $restaurant_rating_filter_out . read_restaurant($where_clause);
+        }
       }
     ?>
 
@@ -1795,7 +1816,7 @@
     -->
 
     <div class="tab"><!-- FILTER -->
-      <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Restaurant Rating Filter</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
       <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
       <br>
@@ -2366,7 +2387,7 @@
       -->
       <h3>Update Restaurant</h3>
       <div id="update_restaurant_read_div">
-        <?php echo read_restaurant(); ?>
+        <?php echo read_restaurant(""); ?>
       </div> 
       <br>
       <font color="red"><?php echo $update_restaurantErr ?></font>
@@ -2476,6 +2497,10 @@
     </div>
 
     <div id="update_person" class="tabcontent">
+
+      <!-- 
+        /* #region  Update Person */
+       -->
       <h3>update_person</h3>
       <div id="update_person_read_div">
         <?php echo read_person(); ?>
@@ -2501,6 +2526,9 @@
       <div id="update_person_div">
         <?php echo $update_person_out; ?>
       </div> 
+      <!-- 
+        /* #endregion */
+       -->
     </div>
     
     <div id="update_works_at" class="tabcontent">
@@ -2695,7 +2723,7 @@
     
     <div id="delete_restaurant" class="tabcontent">
       <h3>delete_restaurant</h3>
-      <?php echo read_restaurant(); ?>
+      <?php echo read_restaurant(""); ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         restaurant_id: <input type="number" id="delete_restaurant_restaurant_id" name="delete_restaurant_restaurant_id" value="<?php echo $delete_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $delete_restaurant_restaurant_idErr ?></font><br>
@@ -2822,16 +2850,23 @@
       /* #endregion */
     -->
 
-    <div id="restaurant_filter" class="tabcontent">
-      <h3>Restaurant Filter</h3>
+    <div id="restaurant_rating_filter" class="tabcontent">
+      <h3>Restaurant Rating Filter</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      restaurant_id: <input type="number" id="restaurant_filter_restaurant_id" name="delete_discussion_restaurant_id" value="<?php echo $restaurant_filter_restaurant_id ?>">
-          <font color="red"><?php echo $restaurant_filter_restaurant_idErr ?></font><br>
-        <input type="submit" name="submit_form_restaurant_filter" value="Submit">
-        <button type="reset" onclick="clearElement('restaurant_filter_div')" value="Reset">Clear Output</button>
+          Rating more than or equal to: 
+          <input list="ratings" id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
+          <datalist id="ratings">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+          </datalist>
+        <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
       </form>
-       <div id="restaurant_filter_div">
-        <?php echo $delete_discussion_reply_out; ?>
+      <button onclick="clearElement('restaurant_rating_filter_div')">Clear Output</button>
+      <div id="restaurant_rating_filter_div">
+        <?php echo $restaurant_rating_filter_out; ?>
       </div> 
     </div>
 
