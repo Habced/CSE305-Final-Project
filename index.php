@@ -2115,8 +2115,9 @@
     <!--
        /* #endregion */ 
     -->
-
-
+    <div class="tab">
+      <button class="tablinks" onclick="openPart(event, 'wrap_up')" id="<?php echo $wrap_up; ?>">Wrap Up</button>
+    </div>
     <!-- ----------- Tab content ----------- -->
 
     
