@@ -9,6 +9,10 @@
 
   </head>
   <body>
+ 
+     <!--
+       /* #region  CSS */ 
+     -->
     <style>
       body {
         background-color: #eee;
@@ -45,6 +49,10 @@
         border-top: none;
       }
     </style>
+   <!--
+     /* #endregion */ 
+     -->
+  
     <?php 
       $dbhost = "us-cdbr-east-06.cleardb.net";
       $dbuser = "b2b72fbf85a330";
@@ -1859,8 +1867,18 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter By Location</button>
       <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'discussion_filter')" id="<?php echo $discussion_filter_open; ?>">Review Filter</button>
+
+      <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Review Filter by Person</button>
+      <button class="tablinks" onclick="openPart(event, 'review_filter_restaurant')" id="<?php echo $review_filter_restaurant_open; ?>">Review Filter by Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'review_sort_replies')" id="<?php echo $review_sort_replies_open; ?>">Review Sort by Most Replies</button>
+      <button class="tablinks" onclick="openPart(event, 'review_sort_lastUpdate')" id="<?php echo $review_sort_lastUpdate_open; ?>">Review Sort by Recent Update</button>
+
+      <button class="tablinks" onclick="openPart(event, 'discussion_filter_person')" id="<?php echo $discussion_filter_person_open; ?>">Discussion Filter by Person</button>
+      <button class="tablinks" onclick="openPart(event, 'discussion_filter_restaurant')" id="<?php echo $discussion_filter_resturant_open; ?>">Discussion Filter by Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'discussion_sort_replies')" id="<?php echo $discussion_sort_replies_open; ?>">Discussion Sort by Most Replies</button>
+      <button class="tablinks" onclick="openPart(event, 'discussion_filter_lastUpdate')" id="<?php echo $discussion_filter_lastUpdate_open; ?>">Discussion Sort by Recent Date</button>
+
+
       <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
       <br>
     </div>
@@ -2924,6 +2942,48 @@
         <?php echo $delete_discussion_reply_out; ?>
       </div> 
     </div>
+
+
+
+
+
+
+
+
+
+    <div id="review_filter_person" class="tabcontent">
+      <h3>Restaurant Review Filter by Person </h3>
+       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        <select name="review_filter_person">
+          <option value="all" selected="selected">All Persons</option>
+          <?php
+            $sql = "SELECT * FROM location";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $myTemp = "";
+            while( $row = mysqli_fetch_array($query)) {
+              $myTemp = $myTemp . "<option value=\"" . $row['bldgMgmtNo'] . "\">" . $row['jibun_juso'] . "</option>";
+            }
+            echo $myTemp;
+          ?>
+          <input type="submit" name="submit_form_filter_location" value="Get Restaurants">
+        </select>
+
+      </form>
+       <div id="filter_location_div">
+        <?php echo $filter_location_out; ?>
+      </div> 
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
     <script>
