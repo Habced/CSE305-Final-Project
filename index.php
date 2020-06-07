@@ -1313,7 +1313,12 @@
              // $update_person_usernameErr = "*";
              // $update_person_passwordErr = "*";
              // $update_person_is_activeErr = "*";
-           } else {
+           } else if (($_POST["update_restaurant_review_review_star"]) < 1 || ($_POST["update_restaurant_review_review_star"]) > 5 ){
+            $update_restaurant_reviewErr = "The rating star ranges from 1 to 5.";
+          } 
+           
+           
+           else {
             if (!empty($_POST["update_restaurant_review_reviewed_by"])) {
              $update_restaurant_review_out = $update_restaurant_review_out . "<br>Updated restaurant review reviewed by:" .$_POST["update_restaurant_review_reviewed_by"];
              $update_restaurant_review_reviewed_by = test_input($_POST["update_restaurant_review_reviewed_by"]);
@@ -1468,7 +1473,7 @@
 
 
 
-
+          
 
         }
         elseif ( isset($_POST["submit_form_update_discussion_reply"] )){ 
@@ -1513,7 +1518,7 @@
             if (empty($_POST["update_discussion_reply_reply_id"])) {
               $update_discussion_reply_reply_idErr = "You must enter a value for update_discussion_reply_reply_id";
             } else {
-              $update_discussion_reply_out = $update_discussion_reply_out . "<br>For a row whose reply_ud value is:" . $_POST["update_discussion_reply_reply_id"];
+              $update_discussion_reply_out = $update_discussion_reply_out . "<br>For a row whose reply_id value is:" . $_POST["update_discussion_reply_reply_id"];
               $update_discussion_reply_reply_id = $_POST["update_discussion_reply_reply_id"];
               $sql = $sql . " WHERE reply_id=" . $update_discussion_reply_reply_id . ";";
             }
@@ -1522,8 +1527,10 @@
             }
           }
             /* #endregion */
+          
+          /* #endregion */
 
-
+        /* #region SUBMIT FROM DELETE */
         elseif ( isset($_POST["submit_form_delete_location"] )){ 
           /* #region submit_form_delete_location */
           $delete_location_open = "is_open";
@@ -1690,6 +1697,7 @@
                      /* #endregion */
         }
         /* #endregion */
+        
       }
     ?>
 
@@ -1782,6 +1790,21 @@
     <!-- 
       /* #endregion */
     -->
+    <!-- 
+      /* #region  Filtering Functions  */ 
+    -->
+
+    <div class="tab"><!-- FILTER -->
+      <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
+      <br>
+    </div>
+    <!--
+       /* #endregion */ 
+    -->
+
+
     <!-- ----------- Tab content ----------- -->
 
     
@@ -2124,7 +2147,7 @@
         <?php echo $create_discussion_reply_out; ?>
       </div> 
     </div>
-
+          
     <!-- 
       /* #endregion */
     -->
@@ -2798,6 +2821,19 @@
     <!-- 
       /* #endregion */
     -->
+
+    <div id="restaurant_filter" class="tabcontent">
+      <h3>Restaurant Filter</h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+      restaurant_id: <input type="number" id="restaurant_filter_restaurant_id" name="delete_discussion_restaurant_id" value="<?php echo $restaurant_filter_restaurant_id ?>">
+          <font color="red"><?php echo $restaurant_filter_restaurant_idErr ?></font><br>
+        <input type="submit" name="submit_form_restaurant_filter" value="Submit">
+        <button type="reset" onclick="clearElement('restaurant_filter_div')" value="Reset">Clear Output</button>
+      </form>
+       <div id="restaurant_filter_div">
+        <?php echo $delete_discussion_reply_out; ?>
+      </div> 
+    </div>
 
 
     <script>
