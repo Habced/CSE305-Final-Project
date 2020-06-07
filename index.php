@@ -1876,8 +1876,9 @@
             $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-      
-          $review_filter_person_out = "<table><thead><tr><td>Person ID</td><td>Restaurant ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
+          $review_filter_person_out =  " <br><h2> Restaurant Reviews</h2>";
+
+          $review_filter_person_out =  $review_filter_person_out . "<table><thead><tr><td>Person ID</td><td>Restaurant ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
           
           while( $row = mysqli_fetch_array($query)) {
             $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
@@ -1895,6 +1896,7 @@
             $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $review_filter_person_out = $review_filter_person_out.  " <br><h2> Restaurant Review Followup</h2>";
           $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Review Followup ID</td><td>Followup Content</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
             $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
@@ -1909,6 +1911,7 @@
             $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $review_filter_person_out = $review_filter_person_out.  " <br><h2>Restaurant Discussions</h2>";
           $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Discussion ID</td><td>Discussion Content</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
             $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
@@ -1923,7 +1926,7 @@
             $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          
+          $review_filter_person_out = $review_filter_person_out.  " <br><h2> Discussion Replies</h2>";
           $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Discussion Reply ID</td><td>Reply Content</td></tr></thead><tbody>";
     
           while( $row = mysqli_fetch_array($query)) {
@@ -1948,8 +1951,8 @@
             $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
           } 
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $filter_posts_restaurant_out = $filter_posts_restaurant_out . " <br><h2>Restaurant Reviews</h2>";
-          $filter_posts_restaurant_out = "<table><thead><tr><td>Restaurant ID</td><td>Reviewer</td><td>Review ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
+          $filter_posts_restaurant_out =  " <br><h2>Restaurant Reviews</h2> ";
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<table><thead><tr><td>Restaurant ID</td><td>Reviewer</td><td>Review ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
           
           while( $row = mysqli_fetch_array($query)) {
             $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
