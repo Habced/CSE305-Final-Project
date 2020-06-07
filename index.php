@@ -820,7 +820,7 @@
              (" . $create_review_followup_followup_id . ", " . $create_review_followup_followed_up_by . ", " . $create_review_followup_for_review . ", 
              \"" . $create_review_followup_followup_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $create_restaurant_review_out = "Success";
+            $create_restaurant_followup_out = "Success";
           }
 
           /* #endregion */
@@ -2422,7 +2422,7 @@
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
       Discussion ID: <input type="number" id="create_restaurant_discussion_discussion_id" name="create_restaurant_discussion_discussion_id" value="<?php echo $create_restaurant_discussion_discussion_id ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussion_idErr ?></font><br>
-        Discuss By: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
+        Discussed By: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussed_byErr ?></font><br>
         Discussed Restaurant: <input type="number" id="create_restaurant_discussion_discussed_restaurant" name="create_restaurant_discussion_discussed_restaurant" value="<?php echo $create_restaurant_discussion_discussed_restaurant ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussed_restaurantErr ?></font><br>
