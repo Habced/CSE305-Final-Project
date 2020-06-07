@@ -1891,8 +1891,7 @@
       <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
 
-      <<<<<<< HEAD
-
+ 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Review Filter by Person</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter_restaurant')" id="<?php echo $review_filter_restaurant_open; ?>">Review Filter by Restaurant</button>
       <button class="tablinks" onclick="openPart(event, 'review_sort_replies')" id="<?php echo $review_sort_replies_open; ?>">Review Sort by Most Replies</button>
