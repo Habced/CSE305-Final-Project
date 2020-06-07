@@ -157,7 +157,7 @@
 
       $update_business_open = $update_business_out = "";
       $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
-      $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = "";
+      $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $update_business_addr_detailErr = "";
       
       $update_restaurant_open = $update_restaurant_out = $update_restaurantErr = "";
       $update_restaurant_restaurant_id = $update_restaurant_weekday_open_time = $update_restaurant_weekday_end_time = $update_restaurant_weekend_open_time = $update_restaurant_weekend_end_time
@@ -1063,6 +1063,52 @@
       // $update_business_open = $update_business_out = "";
       // $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
       // $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = "";
+
+          $update_business_open = "is_open";
+          if (empty($_POST["update_business_business_id"])) { 
+            $update_business_business_idErr = "You must enter a Business ID.";
+          } else {
+            $update_business_business_id = test_input($_POST["update_business_business_id"]);
+          }
+          if (empty($_POST["update_business_name"]) && empty($_POST["update_business_located_in"]) && empty($_POST["update_business_addr_detail"]) ) { 
+            $update_business_nameErr = "All update values cannot be empty";
+            $update_business_located_inErr = "All update values cannot be empty";
+            $create_business_addr_detailErr = "All update values cannot be empty";
+          } else {
+            $isFirst = 1;
+            $sql = "UPDATE business SET ";
+            if (!empty($_POST["update_business_name"])) { 
+              if( $isFirst != 1 ) {
+                $sql = $sql . ", ";
+              } else {
+                $isFirst = 0;
+              }
+              $update_business_name = test_input($_POST["update_business_name"]);
+              $sql = $sql . " name = \"" . $update_business_name . "\" ";
+            }
+            if (!empty($_POST["update_business_located_in"])) { 
+              if( $isFirst != 1 ) {
+                $sql = $sql . ", ";
+              } else {
+                $isFirst = 0;
+              }
+              $update_business_located_in = test_input($_POST["update_business_located_in"]);
+              $sql = $sql . " located_in = " . $update_business_located_in;
+            }
+            if (!empty($_POST["update_business_addr_detail"])) { 
+              if( $isFirst != 1 ) {
+                $sql = $sql . ", ";
+              } else {
+                $isFirst = 0;
+              }
+              $update_business_addr_detail = test_input($_POST["update_business_addr_detail"]);
+              $sql = $sql . " addr_detail = \"" . $update_business_addr_detail . "\" ";
+            }
+            $sql = $sql . ", last_update = \"" . date("Y-m-d h:i:s") . "\" WHERE business_id = " . $update_business_business_id;
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $update_business_out = "Success";
+          }
+
           /* #endregion */
         }
         elseif ( isset($_POST["submit_form_update_restaurant"] )){ 
@@ -2218,10 +2264,7 @@
     <div id="update_location" class="tabcontent">
       <h3>Update Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      <!-- $update_location_open = $update_location_out = "";
-      $update_location_bldgMgmtNo = $update_location_zip_no = $update_location_jibun_juso = "";
-      $update_location_bldgMgmtNoErr = $update_location_zip_noErr = $update_location_jibun_jusoErr = ""; -->
-
+      
         *Building Mangament No: 
         <input type="number" id="update_location_bldgMgmtNo" name="update_location_bldgMgmtNo" value="<?php echo $update_location_bldgMgmtNo ?>">
         <font color="red"><?php echo $update_location_bldgMgmtNoErr ?></font><br>
@@ -2234,7 +2277,7 @@
         <input type="text" id="update_location_jibun_juso" name="update_location_jibun_juso" value="<?php echo $update_location_jibun_juso ?>">
         <font color="red"><?php echo $update_location_jibun_jusoErr ?></font><br>
 
-        <input type="submit" name="submit_form_update_location" value="Submit">
+        <input type="submit" name="submit_form_update_location" value="Update">
       </form>
       <button onclick="clearElement('update_location_div')">Clear Output</button>
       <div id="update_location_div">
@@ -2244,11 +2287,25 @@
     
     <div id="update_business" class="tabcontent">
       <h3>Update Business</h3>
-      <!-- $update_business_open = $update_business_out = "";
-      $update_business_business_id = $update_business_name = $update_business_located_in = $update_business_addr_detail = "";
-      $update_business_business_idErr = $update_business_nameErr = $update_business_located_inErr = $create_business_addr_detailErr = ""; -->
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_update_business" value="Submit">
+          
+        *Business IDs: 
+        <input type="number" id="update_business_business_id" name="update_business_business_id" value="<?php echo $update_business_business_id ?>">
+        <font color="red"><?php echo $update_business_business_idErr ?></font><br>
+
+        Business Name (Optional): 
+        <input type="text" id="update_business_name" name="update_business_name" value="<?php echo $update_business_name ?>">
+        <font color="red"><?php echo $update_business_nameErr ?></font><br>
+
+        Building Mangament No (Optional): 
+        <input type="text" id="update_business_located_in" name="update_business_located_in" value="<?php echo $update_business_located_in ?>">
+        <font color="red"><?php echo $update_business_located_inErr ?></font><br>
+        
+        Address Detail (Optional): 
+        <input type="text" id="update_business_addr_detail" name="update_business_addr_detail" value="<?php echo $update_business_addr_detail ?>">
+        <font color="red"><?php echo $update_business_addr_detailErr ?></font><br>
+
+        <input type="submit" name="submit_form_update_business" value="Update">
       </form>
       <button onclick="clearElement('update_business_div')">Clear Output</button>
       <div id="update_business_div">
@@ -2257,7 +2314,7 @@
     </div>
 
     <div id="update_restaurant" class="tabcontent">
-      <h3>update_restaurant</h3>
+      <h3>Update Restaurant</h3>
       <div id="update_restaurant_read_div">
         <?php echo read_restaurant(); ?>
       </div> 
