@@ -2930,6 +2930,7 @@
         </select>
 
       </form>
+      <button onclick="clearElement('filter_location_div')">Clear Output</button>
        <div id="filter_location_div">
         <?php echo $filter_location_out; ?>
       </div> 
@@ -2970,6 +2971,7 @@
         </select>
 
       </form>
+      <button onclick="clearElement('filter_cuisine_div')">Clear Output</button>
        <div id="filter_cuisine_div">
         <?php echo $filter_cuisine_out; ?>
       </div> 
