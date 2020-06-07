@@ -1637,10 +1637,58 @@
           }
           /* #endregion */
          }
-        elseif ( isset($_POST["submit_form_delete_restaurant_review"] )){ }
-        elseif ( isset($_POST["submit_form_delete_review_followup"] )){ }
-        elseif ( isset($_POST["submit_form_delete_restaurant_discussion"] )){ }
-        elseif ( isset($_POST["submit_form_delete_discussion_reply"] )){ }
+        elseif ( isset($_POST["submit_form_delete_restaurant_review"] )){ 
+             /* #region  submit_form_delete_restaurant_review */
+             $delete_restaurant_review_open = "is_open";
+             if (empty($_POST["delete_restaurant_review_review_id"])) {
+               $delete_restaurant_review_review_idErr = "You must enter a valid/existing value for review_id";
+             } else {
+               $delete_restaurant_review_review_id = $_POST["delete_restaurant_review_review_id"];
+               $delete_restaurant_review_out = "The restaurant review id that is ". $delete_restaurant_review_review_id . " is deleted.";
+               $sql = "DELETE FROM restaurant_review WHERE review_id=" . $delete_restaurant_review_review_id . ";";
+               $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+             }
+             /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_delete_review_followup"] )){
+              /* #region  submit_form_delete_review_followup */
+              $delete_review_followup_open = "is_open";
+              if (empty($_POST["delete_review_followup_followup_id"])) {
+                $delete_review_followup_followup_idErr = "You must enter a valid/existing value for followup_id";
+              } else {
+                $delete_review_followup_followup_id = $_POST["delete_review_followup_followup_id"];
+                $delete_review_followup_out = "The review followup  id that is ". $delete_review_followup_followup_id . " is deleted.";
+                $sql = "DELETE FROM review_followup WHERE followup_id=" . $delete_review_followup_followup_id . ";";
+                $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+              }
+              /* #endregion */
+         }
+        elseif ( isset($_POST["submit_form_delete_restaurant_discussion"] )){
+                  /* #region  submit_form_delete_restaurant_discussion */
+                  $delete_restaurant_discussion_open = "is_open";
+                  if (empty($_POST["delete_restaurant_discussion_discussion_id"])) {
+                    $delete_restaurant_discussion_discussion_idErr = "You must enter a valid/existing value for discussion_id";
+                  } else {
+                    $delete_restaurant_discussion_discussion_id = $_POST["delete_restaurant_discussion_discussion_id"];
+                    $delete_restaurant_discussion_out = "The restaurant discussion  id that is ". $delete_restaurant_discussion_discussion_id . " is deleted.";
+                    $sql = "DELETE FROM restaurant_discussion WHERE discussion_id=" . $delete_restaurant_discussion_discussion_id . ";";
+                    $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+                  }
+                  /* #endregion */
+         }
+        elseif ( isset($_POST["submit_form_delete_discussion_reply"] )){ 
+                    /* #region  submit_form_delete_discussion_reply */
+                    $delete_discussion_reply_open = "is_open";
+                     if (empty($_POST["delete_discussion_reply_reply_id"])) {
+                       $delete_discussion_reply_reply_idErr = "You must enter a valid/existing value for discussion reply_id";
+                     } else {
+                        $delete_discussion_reply_reply_id = $_POST["delete_discussion_reply_reply_id"];
+                        $delete_discussion_reply_out = "The restaurant discussion reply id that is ". $delete_discussion_reply_reply_id . " is deleted.";
+                        $sql = "DELETE FROM discussion_reply WHERE reply_id=" . $delete_discussion_reply_reply_id . ";";
+                        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+                            }
+                     /* #endregion */
+        }
         /* #endregion */
       }
     ?>
@@ -2695,11 +2743,15 @@
     
     <div id="delete_restaurant_review" class="tabcontent">
       <h3>delete_restaurant_review</h3>
+      <?php echo read_restaurant_review() ?>
+
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_restaurant_review" value="Submit">
-      </form>
-      <button onclick="clearElement('delete_restaurant_review_div')">Clear Output</button>
-      <div id="delete_restaurant_review_div">
+          review_id: <input type="number" id="delete_restaurant_review_review_id" name="delete_restaurant_review_review_id" value="<?php echo $delete_restaurant_review_review_id ?>">
+          <font color="red"><?php echo $delete_restaurant_review_review_idErr ?></font><br>
+          <input type="submit" name="submit_form_delete_restaurant_review" value="Submit">
+        <button type="reset" onclick="clearElement('delete_restaurant_review_div')" value="Reset">Clear Output</button>
+       </form>
+       <div id="delete_restaurant_review_div">
         <?php echo $delete_restaurant_review_out; ?>
       </div> 
     </div>
@@ -2707,9 +2759,11 @@
     <div id="delete_review_followup" class="tabcontent">
       <h3>delete_review_followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_review_followup" value="Submit">
+      followup_id: <input type="number" id="delete_review_followup_followup_id" name="delete_review_followup_followup_id" value="<?php echo $delete_review_followup_followup_id ?>">
+          <font color="red"><?php echo $delete_review_followup_followup_idErr ?></font><br>
+          <input type="submit" name="submit_form_delete_review_followup" value="Submit">
+        <button type="reset" onclick="clearElement('delete_review_followup_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_review_followup_div')">Clear Output</button>
       <div id="delete_review_followup_div">
         <?php echo $delete_review_followup_out; ?>
       </div> 
@@ -2718,10 +2772,12 @@
     <div id="delete_restaurant_discussion" class="tabcontent">
       <h3> delete_restaurant_discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_restaurant_discussion" value="Submit">
+      discussion_id: <input type="number" id="delete_restaurant_discussion_discussion_id" name="delete_restaurant_discussion_discussion_id" value="<?php echo $delete_restaurant_discussion_discussion_id ?>">
+          <font color="red"><?php echo $delete_restaurant_discussion_discussion_idErr ?></font><br>
+          <input type="submit" name="submit_form_delete_restaurant_discussion" value="Submit">
+        <button type="reset" onclick="clearElement('delete_restaurant_discussion_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_restaurant_discussion_div')">Clear Output</button>
-      <div id="delete_restaurant_discussion_div">
+       <div id="delete_restaurant_discussion_div">
         <?php echo $delete_restaurant_discussion_out; ?>
       </div> 
     </div>
@@ -2729,10 +2785,12 @@
     <div id="delete_discussion_reply" class="tabcontent">
       <h3>delete_discussion_reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_discussion_reply" value="Submit">
+      reply_id: <input type="number" id="delete_discussion_reply_reply_id" name="delete_discussion_reply_reply_id" value="<?php echo $delete_discussion_reply_reply_id ?>">
+          <font color="red"><?php echo $delete_discussion_reply_reply_idErr ?></font><br>
+          <input type="submit" name="submit_form_delete_discussion_reply" value="Submit">
+        <button type="reset" onclick="clearElement('delete_discussion_reply_div')" value="Reset">Clear Output</button>
       </form>
-      <button onclick="clearElement('delete_discussion_reply_div')">Clear Output</button>
-      <div id="delete_discussion_reply_div">
+       <div id="delete_discussion_reply_div">
         <?php echo $delete_discussion_reply_out; ?>
       </div> 
     </div>
