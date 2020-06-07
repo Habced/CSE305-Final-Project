@@ -263,6 +263,13 @@
       $filter_cuisine_open = $filter_cuisine_out = "";
       $filter_cuisine_cuisine_id = "";
 
+
+      $review_filter_person_open = $review_filter_person_out =
+       $review_filter_person_person_id="";
+
+
+      $filter_posts_restaurant_open = $filter_posts_restaurant_out =
+      $filter_posts_restaurant_id = "";
       /* #endregion */
 
 
@@ -1850,9 +1857,156 @@
           /* #endregion */ 
 
         }
+
+        elseif ( isset($_POST["submit_form_review_filter_person"] )){ 
+          /* #region submit_form_review_filter_person */
+          $review_filter_person_open = "is_open";
+          $review_filter_person_person_id = test_input($_POST["review_filter_person_person_id"]);
+
+          $sql = "SELECT * FROM restaurant_review, person WHERE restaurant_review.reviewed_by = person.person_id";
+          if ($review_filter_person_person_id != "all"){
+            $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+      
+          $review_filter_person_out = "<table><thead><tr><td>Person ID</td><td>Restaurant ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
+          
+          while( $row = mysqli_fetch_array($query)) {
+            $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['reviewed_restaurant']  . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['review_star']  . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['review_content'] . "</td></tr>";
+          }
+          $review_filter_person_out = $review_filter_person_out . "</tbody></table>";
+          /* #endregion */ 
+
+
+          
+          $sql = "SELECT * FROM review_followup, person WHERE review_followup.followed_up_by = person.person_id";
+          if ($review_filter_person_person_id != "all"){
+            $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Review Followup ID</td><td>Followup Content</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['followup_id']  . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['followup_content'] . "</td></tr>";
+          }
+          $review_filter_person_out = $review_filter_person_out . "</tbody></table>";
+
+
+          $sql = "SELECT * FROM restaurant_discussion, person WHERE restaurant_discussion.discussed_by = person.person_id";
+          if ($review_filter_person_person_id != "all"){
+            $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Discussion ID</td><td>Discussion Content</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['discussion_id']  . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['discussion_content'] . "</td></tr>";
+          }
+          $review_filter_person_out = $review_filter_person_out . "</tbody></table>";
+
+        
+          $sql = "SELECT * FROM discussion_reply, person WHERE discussion_reply.replied_by = person.person_id";
+          if ($review_filter_person_person_id != "all"){
+            $sql = $sql . " AND person.person_id = " . $review_filter_person_person_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          
+          $review_filter_person_out = $review_filter_person_out.  "<table><thead><tr><td>Person ID</td><td>Discussion Reply ID</td><td>Reply Content</td></tr></thead><tbody>";
+    
+          while( $row = mysqli_fetch_array($query)) {
+            $review_filter_person_out = $review_filter_person_out . "<tr><td>" . $row['person_id'] . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['reply_id']  . "</td>";
+            $review_filter_person_out = $review_filter_person_out . "<td>" . $row['reply_content'] . "</td></tr>";
+          }
+          $review_filter_person_out = $review_filter_person_out . "</tbody></table>";
+
+        }
         /* #endregion */
 
-      }
+
+
+        elseif ( isset($_POST["submit_form_filter_posts_restaurant"] )){ 
+          /* #region submit_form_review_filter_person */
+          $filter_posts_restaurant_open = "is_open";
+          $filter_posts_restaurant_id = test_input($_POST["filter_posts_restaurant_id"]);
+
+          $sql = "SELECT * FROM restaurant_review, restaurant WHERE restaurant_review.reviewed_restaurant = restaurant.restaurant_id";
+          if ($filter_posts_restaurant_id != "all"){
+            $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+      
+          $filter_posts_restaurant_out = "<table><thead><tr><td>Restaurant ID</td><td>Reviewer</td><td>Review ID</td><td>Review Star</td><td>Review Content</td></tr></thead><tbody>";
+          
+          while( $row = mysqli_fetch_array($query)) {
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['reviewed_by']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['review_id']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['review_star']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['review_content'] . "</td></tr>";
+          }
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . "</tbody></table>";
+          /* #endregion */ 
+
+          
+       
+          
+          $sql = "SELECT * FROM review_followup, restaurant, restaurant_review WHERE   restaurant.restaurant_id = restaurant_review.reviewed_restaurant AND restaurant_review.review_id = review_followup.for_review";
+          if ($filter_posts_restaurant_id != "all"){
+            $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Review Followup By</td><td>Followup ID</td><td>Followup Content</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $filter_posts_restaurant_out= $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $filter_posts_restaurant_out= $filter_posts_restaurant_out . "<td>" . $row['followed_up_by']  . "</td>";
+            $filter_posts_restaurant_out= $filter_posts_restaurant_out . "<td>" . $row['followup_id']  . "</td>";
+            $filter_posts_restaurant_out= $filter_posts_restaurant_out . "<td>" . $row['followup_content'] . "</td></tr>";
+          }
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . "</tbody></table>";
+
+
+          $sql = "SELECT * FROM restaurant_discussion, restaurant WHERE restaurant_discussion.discussed_restaurant = restaurant.restaurant_id";
+          if ($filter_posts_restaurant_id != "all"){
+            $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Discussed By</td><td>Discussion ID</td><td>Discussion Content</td></tr></thead><tbody>";
+          while( $row = mysqli_fetch_array($query)) {
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['discussed_by'] . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['discussion_id']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['discussion_content'] . "</td></tr>";
+          }
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . "</tbody></table>";
+
+        
+          $sql = "SELECT * FROM discussion_reply, restaurant, restaurant_discussion WHERE  restaurant.restaurant_id = restaurant_discussion.discussed_restaurant AND discussion_reply.for_discussion = restaurant_discussion.discussion_id";
+          if ($filter_posts_restaurant_id != "all"){
+            $sql = $sql . " AND restaurant.restaurant_id = " . $filter_posts_restaurant_id ;
+          } 
+          $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+          
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out.  "<table><thead><tr><td>Restaurant ID</td><td>Replied By</td><td>Discussion Reply ID</td><td>Reply Content</td></tr></thead><tbody>";
+    
+          while( $row = mysqli_fetch_array($query)) {
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['replied_by']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['reply_id']  . "</td>";
+            $filter_posts_restaurant_out = $filter_posts_restaurant_out . "<td>" . $row['reply_content'] . "</td></tr>";
+          }
+          $filter_posts_restaurant_out = $filter_posts_restaurant_out . "</tbody></table>";
+
+        }
+        /* #endregion */
+      
+        }
+      
     ?>
 
     <h5>
@@ -1950,19 +2104,13 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Restaurant Rating Filter</button>
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant By Location</button>
-      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
+       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
 
- 
-      <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Review Filter by Person</button>
-      <button class="tablinks" onclick="openPart(event, 'review_filter_restaurant')" id="<?php echo $review_filter_restaurant_open; ?>">Review Filter by Restaurant</button>
-      <button class="tablinks" onclick="openPart(event, 'review_sort_replies')" id="<?php echo $review_sort_replies_open; ?>">Review Sort by Most Replies</button>
-      <button class="tablinks" onclick="openPart(event, 'review_sort_lastUpdate')" id="<?php echo $review_sort_lastUpdate_open; ?>">Review Sort by Recent Update</button>
+      <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
+      <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
+      <button class="tablinks" onclick="openPart(event, ' a')" id="<?php echo $a_open; ?>">Sort Posts by Most Replies</button>
+      <button class="tablinks" onclick="openPart(event, ' b')" id="<?php echo $b_open; ?>">Sort Posts by Recent Update</button>
 
-      <button class="tablinks" onclick="openPart(event, 'discussion_filter_person')" id="<?php echo $discussion_filter_person_open; ?>">Discussion Filter by Person</button>
-      <button class="tablinks" onclick="openPart(event, 'discussion_filter_restaurant')" id="<?php echo $discussion_filter_resturant_open; ?>">Discussion Filter by Restaurant</button>
-      <button class="tablinks" onclick="openPart(event, 'discussion_sort_replies')" id="<?php echo $discussion_sort_replies_open; ?>">Discussion Sort by Most Replies</button>
-      <button class="tablinks" onclick="openPart(event, 'discussion_filter_lastUpdate')" id="<?php echo $discussion_filter_lastUpdate_open; ?>">Discussion Sort by Recent Date</button>
 
 
       <br>
@@ -3087,32 +3235,63 @@
 
 
 
-
-
-
     <div id="review_filter_person" class="tabcontent">
-      <h3>Restaurant Review Filter by Person </h3>
-       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <select name="review_filter_person">
-          <option value="all" selected="selected">All Persons</option>
+    <h3>Filter Posts by Persons </h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        <select name="review_filter_person_person_id">
+          <option value="all" <?php echo empty($review_filter_person_person_id) ? "selected=\"selected\"" : "" ?>>All Persons</option>
           <?php
-            $sql = "SELECT * FROM location";
+            $sql = "SELECT * FROM person";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $myTemp = "";
             while( $row = mysqli_fetch_array($query)) {
-              $myTemp = $myTemp . "<option value=\"" . $row['bldgMgmtNo'] . "\">" . $row['jibun_juso'] . "</option>";
+              $myTemp = $myTemp . "<option value=\"" . $row['person_id'] . "\" ";
+              if( $review_filter_person_person_id == $row['person_id'] ){
+                $myTemp = $myTemp . " selected=\"selected\" ";
+              }
+              $myTemp = $myTemp . ">" . $row['person_id'] . "</option>";
             }
             echo $myTemp;
           ?>
-          <input type="submit" name="submit_form_filter_location" value="Get Restaurants">
+          <input type="submit" name="submit_form_review_filter_person" value="Get Reviews">
         </select>
 
       </form>
-       <div id="filter_location_div">
-        <?php echo $filter_location_out; ?>
+       <div id="review_filter_person_div">
+        <?php echo $review_filter_person_out; ?>
       </div> 
     </div>
 
+ 
+
+
+
+    <div id="filter_posts_restaurant" class="tabcontent">
+    <h3>Filter Posts by Restaurants </h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        <select name="filter_posts_restaurant_id">
+          <option value="all" <?php echo empty($filter_posts_restaurant_id) ? "selected=\"selected\"" : "" ?>>All Restaurants</option>
+          <?php
+            $sql = "SELECT * FROM restaurant";
+            $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+            $myTemp = "";
+            while( $row = mysqli_fetch_array($query)) {
+              $myTemp = $myTemp . "<option value=\"" . $row['restaurant_id'] . "\" ";
+              if( $filter_posts_restaurant_id == $row['restaurant_id'] ){
+                $myTemp = $myTemp . " selected=\"selected\" ";
+              }
+              $myTemp = $myTemp . ">" . $row['restaurant_id'] . "</option>";
+            }
+            echo $myTemp;
+          ?>
+          <input type="submit" name="submit_form_filter_posts_restaurant" value="Get Reviews">
+        </select>
+
+      </form>
+       <div id="filter_posts_restaurant_id">
+        <?php echo $filter_posts_restaurant_out; ?>
+      </div> 
+    </div>
 
 
 
