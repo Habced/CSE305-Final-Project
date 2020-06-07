@@ -1520,10 +1520,14 @@
             if ($update_discussion_reply_reply_idErr === "") {
               $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             }
-          }
             /* #endregion */
+        }
+            
+          
+        /* #endregion */
 
-
+        
+        /* #region SUBMIT FORM DELETE */
         elseif ( isset($_POST["submit_form_delete_location"] )){ 
           /* #region submit_form_delete_location */
           $delete_location_open = "is_open";
@@ -2419,12 +2423,6 @@
       -->
       <h3>Update Serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <!-- $update_serves_open = $update_serves_out = "";
-        $update_serves_served_at_old = $update_serves_serving_old = "";
-        $update_serves_served_at_new = $update_serves_serving_new = "";
-        $update_serves_served_at_oldErr = $update_serves_serving_oldErr = "";
-        $update_serves_served_at_newErr = $update_serves_serving_newErr = ""; -->
-        
         *Current Business ID: 
         <input type="text" id="update_serves_served_at_old" name="update_serves_served_at_old" value="<?php echo $update_serves_served_at_old ?>">
         <font color="red"><?php echo $update_serves_served_at_oldErr ?></font><br>
