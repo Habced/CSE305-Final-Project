@@ -1829,6 +1829,7 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'discussion_filter')" id="<?php echo $discussion_filter_open; ?>">Review Filter</button>
       <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
       <br>
     </div>
