@@ -1888,7 +1888,10 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter By Location</button>
       <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
-<<<<<<< HEAD
+      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
+      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
+
+      <<<<<<< HEAD
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Review Filter by Person</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter_restaurant')" id="<?php echo $review_filter_restaurant_open; ?>">Review Filter by Restaurant</button>
@@ -1901,11 +1904,6 @@
       <button class="tablinks" onclick="openPart(event, 'discussion_filter_lastUpdate')" id="<?php echo $discussion_filter_lastUpdate_open; ?>">Discussion Sort by Recent Date</button>
 
 
-      <button class="tablinks" onclick="openPart(event, 'cuisine_filter')" id="<?php echo $cuisine_filter_open; ?>">Cuisine Filter</button>
-=======
-      <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
->>>>>>> 6b0cf240bb754f33520db3c2a932a72923c9dd38
       <br>
     </div>
     <!--
