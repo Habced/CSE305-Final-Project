@@ -271,11 +271,7 @@
       function read_restaurant($where_clause) {
         /* #region  read_restaurant */
         global $conn;
-        $sql = "SELECT * FROM restaurant r ";
-        if (!empty($where_clause)){
-          $sql = $sql . $where_clause;
-        } 
-        $sql = $sql . ";";
+        $sql = "SELECT * FROM restaurant r " . $where_clause . ";";
         echo $sql;
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
@@ -459,7 +455,45 @@
        /* #endregion */
       }
       
-
+      function read_restaurant_rating_filter($where , $order){
+        global $conn;
+        $restaurant_rating_filter_review_star = $_POST["restaurant_rating_filter_review_star"];
+        $sql = "SELECT restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, r.is_active, AVG(review_star) AS Star"  
+        . " FROM restaurant r, restaurant_review rr"
+        . " WHERE r.restaurant_id = rr.reviewed_restaurant AND r.Is_active=" 
+        . $where
+        . " GROUP BY restaurant_id"
+        . $order . ";";
+        $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
+        $restaurant_rating_filter_out = "";
+        $restaurant_rating_filter_message = "" ;
+        if ($where === "0") {
+          $restaurant_rating_filter_message = "All \"inactive\" restaurants of which average star is more than or equal to " . $restaurant_rating_filter_review_star;
+        } else {
+          $restaurant_rating_filter_message = "All \"active\" restaurants of which average star is more than or equal to " . $restaurant_rating_filter_review_star;
+        }
+        while( $row = mysqli_fetch_array($query)) {
+          if ($row['Star'] >= $restaurant_rating_filter_review_star ) {
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['Star'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekday_open_time'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekday_end_time'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekend_open_time'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekend_end_time'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekly_break_date'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['is_active'] . "</td></tr>";
+          }
+        }
+        if (empty($restaurant_rating_filter_out)){
+          $restaurant_rating_filter_out = "No result";
+        }else{
+          $restaurant_rating_filter_out = $restaurant_rating_filter_message . "<table><thead>"
+          . "<tr><th>restaurant_id</th><th>Star</th><th>Weekday open time</th><th>Weekday end time</th><th>Weekend Open Time</th><th>Weekend End Time</th>"
+          . "<th>Weekly Break Date</th><th>Last Update</th><th>Is Active?</th></tr></thead><tbody>" . $restaurant_rating_filter_out . "</table>";
+        }
+       
+        return $restaurant_rating_filter_out;
+      }
 
 
       // Hand multiple submits in a single file
@@ -1759,15 +1793,22 @@
         /* #endregion */
         elseif ( isset($_POST["submit_form_restaurant_rating_filter"] )){
           $restaurant_rating_filter_open = "is_open";
-          $where_clause =  "";
-          $restaurant_rating_filter_review_star = "0";
-          if (!empty($_POST["restaurant_rating_filter_review_star"])){
-            $restaurant_rating_filter_review_star = $_POST["restaurant_rating_filter_review_star"];
-            $where_clause = "WHERE ". $restaurant_rating_filter_review_star . "=<" . " (SELECT AVG(review_star) FROM restaurant_review rr WHERE r.restaurant_id=rr.reviewed_restaurant)";
+          $restaurant_rating_filter_out = "";
+          $order = $where = "";
+          if (empty($_POST["restaurant_rating_filter_order"])){
+            $restaurant_rating_filter_out = "The default order is descending<br>";
+          } elseif ($_POST["restaurant_rating_filter_order"] === "Highest to Lowest") {
+            $order = " ORDER BY Star DESC";
+          } elseif ($_POST["restaurant_rating_filter_order"] === "Lowest to Highest") {
+            $order = " ORDER BY Star ASC";
+          }
+          if (empty($_POST["restaurant_rating_filter_order"])) {
+            $where = "0";
+          } else {
+            $where = "1";
           }
 
-          $restaurant_rating_filter_out = "All restaurants of which average star is more than or equal to " . $restaurant_rating_filter_review_star . "<br>"; 
-          $restaurant_rating_filter_out = $restaurant_rating_filter_out . read_restaurant($where_clause);
+          $restaurant_rating_filter_out = $restaurant_rating_filter_out . read_restaurant_rating_filter($where, $order);
         }
 
         /* #region SUBMIT FORM FILTER */
@@ -1910,7 +1951,6 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Restaurant Rating Filter</button>
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter By Location</button>
-      <button class="tablinks" onclick="openPart(event, 'restaurant_filter')" id="<?php echo $restaurant_filter_open; ?>">Restaurant Filter</button>
       <button class="tablinks" onclick="openPart(event, 'review_filter')" id="<?php echo $review_filter_open; ?>">Review Filter</button>
       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
 
@@ -2998,7 +3038,16 @@
             <option value="3">
             <option value="4">
             <option value="5">
-          </datalist>
+          </datalist><br>
+          Order:
+          <input list="order" id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
+          <datalist id="order">
+            <option value="Highest to Lowest">
+            <option value="Lowest to Highest">
+          </datalist><br>
+          Is acitve:
+          <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
+          <br>
         <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
       </form>
       <button onclick="clearElement('restaurant_rating_filter_div')">Clear Output</button>
@@ -3006,6 +3055,7 @@
         <?php echo $restaurant_rating_filter_out; ?>
       </div> 
     </div>
+  
 
     <div id="filter_cuisine" class="tabcontent">
       <h3>Filter Restaurants by Cuisine</h3>
