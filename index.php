@@ -967,7 +967,7 @@
           $read_serves_open = "is_open";
           $sql = "SELECT * FROM serves";
           $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-          $read_serves_out = "<table><thead><tr><td>PK: Business ID</td><td>PK: Cuisine Id</td></tr></thead><tbody>";
+          $read_serves_out = "<table><thead><tr><td>PK: Business ID</td><td>PK: Cuisine ID</td></tr></thead><tbody>";
           while( $row = mysqli_fetch_array($query)) {
             $read_serves_out = $read_serves_out . "<tr><td>" . $row['served_at'] . "</td>";
             $read_serves_out = $read_serves_out . "<td>" . $row['serving'] . "</td></tr>";
@@ -2051,9 +2051,9 @@
     ?>
 
     <h5>
-      Kyuri Kyeong - 111827215 - kyuri.kyeong@stonybrook.edu<br>
-      Daekyung (Tim) Kim - 110887867 - daekyung.kim@stonybrooke.du<br>
-      Haseung Lee - 110983860 - haseung.lee@stonybrook.edu
+      111827215 - Kyuri Kyeong - kyuri.kyeong@stonybrook.edu<br>
+      110887867 - Daekyung Kim - daekyung.kim@stonybrooke.du<br>
+      110983860 - Haseung Lee - haseung.lee@stonybrook.edu
     </h5>
 
     <!-- Tab links -->
