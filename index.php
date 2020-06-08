@@ -490,22 +490,22 @@
         }
         while( $row = mysqli_fetch_array($query)) {
           if ($row['Star'] >= $restaurant_rating_filter_review_star ) {
-            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
-            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['Star'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<tr><td>" . $row['Star'] . "</td>";
+            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['restaurant_id'] . "</td>";
             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekday_open_time'] . "</td>";
             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekday_end_time'] . "</td>";
             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekend_open_time'] . "</td>";
             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekend_end_time'] . "</td>";
             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['weekly_break_date'] . "</td>";
-            $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['is_active'] . "</td></tr>";
+             $restaurant_rating_filter_out = $restaurant_rating_filter_out . "<td>" . $row['is_active'] . "</td></tr>";
           }
         }
         if (empty($restaurant_rating_filter_out)){
           $restaurant_rating_filter_out = "No result";
         }else{
           $restaurant_rating_filter_out = $restaurant_rating_filter_message . "<table><thead>"
-          . "<tr><th>Restaurant ID</th><th>Review Star</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
-          . "<th>Weekly-Break-Date</th><th>Last Update</th><th>Is Active?</th></tr></thead><tbody>" . $restaurant_rating_filter_out . "</table>";
+          . "<tr><th>Review Star</th><th>Restaurant ID</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
+          . "<th>Weekly-Break-Date</th><th>Is Active?</th></tr></thead><tbody>" . $restaurant_rating_filter_out . "</table>";
         }
        
         return $restaurant_rating_filter_out;
@@ -2130,7 +2130,7 @@
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
       <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
 
-      <button class="tablinks" onclick="openPart(event, 'create_business_restaurant')" id="<?php echo $create_business_restaurant_open; ?>">Create Restaurant(Auto)</button>
+      <button class="tablinks" onclick="openPart(event, 'create_business_restaurant')" id="<?php echo $create_business_restaurant_open; ?>">Create Restaurant (Auto)</button>
       
       <button class="tablinks" onclick="openPart(event, 'create_cuisine')" id="<?php echo $create_cuisine_open; ?>">Create Cuisine</button>
       <button class="tablinks" onclick="openPart(event, 'create_serves')" id="<?php echo $create_serves_open; ?>">Create Serves</button>
@@ -2306,19 +2306,19 @@
     -->
     
     <div id="create_restaurant" class="tabcontent">
-      <h3>create_restaurant</h3>
+      <h3>Create Restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        restaurant_id: <input type="number" id="create_restaurant_restaurant_id" name="create_restaurant_restaurant_id" value="<?php echo $create_restaurant_restaurant_id ?>">
+        Restaurant ID: <input type="number" id="create_restaurant_restaurant_id" name="create_restaurant_restaurant_id" value="<?php echo $create_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $create_restaurant_restaurant_idErr ?></font><br>
-        weekday_open_time: <input type="time" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
+        Weekday Open Time: <input type="time" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
         <font color="red"><?php echo $create_restaurant_weekday_open_timeErr ?></font><br>
-        weekday_end_time: <input type="time" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
+        Weekday End Time: <input type="time" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $create_restaurant_weekday_end_timeErr ?></font><br>
-        weekend_open_time: <input type="time" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
+        Weekend Open Time: <input type="time" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
-        weekend_end_time: <input type="time" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
+        Weekend End Time: <input type="time" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
-        weekly_break_date: <input type="radio" id="create_restaurant_weekly_break_date_None" name="create_restaurant_weekly_break_date" value="None"><label for="create_restaurant_weekly_break_date_None">None</label>
+        Weekly Break Date: <input type="radio" id="create_restaurant_weekly_break_date_None" name="create_restaurant_weekly_break_date" value="None"><label for="create_restaurant_weekly_break_date_None">None</label>
         <input type="radio" id="create_restaurant_weekly_break_date_Mon" name="create_restaurant_weekly_break_date" value="Mon"><label for="create_restaurant_weekly_break_date_Mon">Mon</label>
         <input type="radio" id="create_restaurant_weekly_break_date_Tue" name="create_restaurant_weekly_break_date" value="Tue"><label for="create_restaurant_weekly_break_date_Tue">Tue</label>
         <input type="radio" id="create_restaurant_weekly_break_date_Wed" name="create_restaurant_weekly_break_date" value="Wed"><label for="create_restaurant_weekly_break_date_Wed">Wed</label>
@@ -2350,9 +2350,9 @@
      -->
      
     <div id="create_business_restaurant" class="tabcontent">
-      <h3>Create Restaurant(AUTO)</h3>
+      <h3>Create Restaurant (Auto)</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        business_restaurant Name: 
+        Business-Restaurant Name: 
         <input type="text" id="create_business_restaurant_name" name="create_business_restaurant_name" value="<?php echo $create_business_restaurant_name ?>">
         <font color="red"><?php echo $create_business_restaurant_nameErr ?></font><br>
         
@@ -2364,23 +2364,23 @@
         <input type="text" id="create_business_restaurant_addr_detail" name="create_business_restaurant_addr_detail" value="<?php echo $create_business_restaurant_addr_detail ?>">
         <font color="red"><?php echo $create_business_restaurant_addr_detailErr ?></font><br>
         
-        weekday_open_time: 
+        Weekday Open Time: 
         <input type="time" id="create_business_restaurant_weekday_open_time" name="create_business_restaurant_weekday_open_time" value="<?php echo $create_business_restaurant_weekday_open_time ?>">
         <font color="red"><?php echo $create_business_restaurant_weekday_open_timeErr ?></font><br>
         
-        weekday_end_time: 
+        Weekday End Time: 
         <input type="time" id="create_business_restaurant_weekday_end_time" name="create_business_restaurant_weekday_end_time" value="<?php echo $create_business_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $create_business_restaurant_weekday_end_timeErr ?></font><br>
         
-        weekend_open_time: 
+        Weekend Open Time: 
         <input type="time" id="create_business_restaurant_weekend_open_time" name="create_business_restaurant_weekend_open_time" value="<?php echo $create_business_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $create_business_restaurant_weekend_open_timeErr ?></font><br>
         
-        weekend_end_time: 
+        Weekend End Time: 
         <input type="time" id="create_business_restaurant_weekend_end_time" name="create_business_restaurant_weekend_end_time" value="<?php echo $create_business_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $create_business_restaurant_weekend_end_timeErr ?></font><br>
         
-        weekly_break_date: 
+        Weekly Break Date: 
         <input type="radio" id="create_business_restaurant_weekly_break_date_None" name="create_business_restaurant_weekly_break_date" value="None">
         <label for="create_business_restaurant_weekly_break_date_None">None</label>
         <input type="radio" id="create_business_restaurant_weekly_break_date_Mon" name="create_business_restaurant_weekly_break_date" value="Mon">
@@ -3371,7 +3371,7 @@
       <h3>Filter Restaurants by Ratings</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
 
-         Choose Rating Greater or Equal to: <br>
+         Choose Review Star Rating Greater or Equal to: <br>
           <select  id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
           <option value="opt">--Choose Rating--</option>
             <option value="1">1</option>
@@ -3381,13 +3381,13 @@
             <option value="5">5</option>
             </select> <br><br><br>
        
-            Sort Restaurants Ratings by: <br>
+            Sort Restaurants Review Star Ratings by: <br>
            <select id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
            <option value="ord" id="order">--Choose Order--</option>
             <option value="Highest to Lowest">Highest to Lowest</order>
             <option value="Lowest to Highest">Lowest to Highest</order>
           </select><br><br>
-          Is Acitve:
+          Acitve Restaurant?:
           <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
           <br><br>
         <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
