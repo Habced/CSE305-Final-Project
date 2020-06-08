@@ -370,16 +370,16 @@
           $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['reviewed_restaurant'] . "</td>";
           $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['review_star'] . "</td>";
           $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['review_content'] . "</td>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['is_active'] . "</td>";
           $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['create_date'] . "</td>";
-          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['last_update'] . "</td>";
-          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['is_active'] . "</td></tr>";
+          $read_restaurant_review_out = $read_restaurant_review_out . "<td>" . $row['last_update'] . "</td></tr>";
         }
         if (empty($read_restaurant_review_out)){
           $read_restaurant_review_out = "No result";
         } else {
           $read_restaurant_review_out = "<table><thead>"
-        . "<tr><th>Review ID</th><th>Reviewed By</th><th>Reviewed Restaurant</th><th>Review Star</th><th>Review Content</th>"
-        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_review_out . "</table>";
+        . "<tr><th>Review ID</th><th>Reviewed By</th><th>Reviewed Restaurant</th><th>Review Star</th><th>Review Content</th><th>Is Active</th>"
+        . "<th>Create Date</th><th>Last Update</th></tr></thead><tbody>" . $read_restaurant_review_out . "</table>";
         }
         return $read_restaurant_review_out;
         /* #endregion */
@@ -397,16 +397,16 @@
           $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['followed_up_by'] . "</td>";
           $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['for_review'] . "</td>";
           $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['followup_content'] . "</td>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['is_active'] . "</td>";
           $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['create_date'] . "</td>";
-          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['last_update'] . "</td>";
-          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['is_active'] . "</td></tr>";
+          $read_restaurant_followup_out = $read_restaurant_followup_out . "<td>" . $row['last_update'] . "</td></tr>";
         }
         if (empty($read_restaurant_followup_out)){
           $read_restaurant_followup_out = "No result";
         } else {
           $read_restaurant_followup_out = "<table><thead>"
-        . "<tr><th>Followup ID</th><th>Followedup By</th><th>For Review</th><th>Followup Content</th>"
-        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_followup_out . "</table>";
+        . "<tr><th>Followup ID</th><th>Followedup By</th><th>For Review</th><th>Followup Content</th><th>Is Active</th>"
+        . "<th>Create Date</th><th>Last Update</th></tr></thead><tbody>" . $read_restaurant_followup_out . "</table>";
         }
         return $read_restaurant_followup_out;
         /* #endregion */
@@ -426,16 +426,17 @@
           $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussed_by'] . "</td>";
           $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussed_restaurant'] . "</td>";
           $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['discussion_content'] . "</td>";
+
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['is_active'] . "</td>";
           $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['create_date'] . "</td>";
-          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['last_update'] . "</td>";
-          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['is_active'] . "</td></tr>";
+          $read_restaurant_discussion_out = $read_restaurant_discussion_out . "<td>" . $row['last_update'] . "</td></tr>";
         }
         if (empty($read_restaurant_discussion_out)){
           $read_restaurant_discussion_out = "No result";
         } else {
           $read_restaurant_discussion_out = "<table><thead>"
-        . "<tr><th>Discussion ID</th><th>Discussed By</th><th>Discussed Restaurant</th><th>Discussion Content</th>"
-        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_discussion_out . "</table>";
+        . "<tr><th>Discussion ID</th><th>Discussed By</th><th>Discussed Restaurant</th><th>Discussion Content</th><th>Is Active</th>"
+        . "<th>Create Date</th><th>Last Update</th></tr></thead><tbody>" . $read_restaurant_discussion_out . "</table>";
         }
         return $read_restaurant_discussion_out;
         /* #endregion */
@@ -454,16 +455,16 @@
          $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['replied_by'] . "</td>";
          $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['for_discussion'] . "</td>";
          $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['reply_content'] . "</td>";
+         $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td>";
          $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['create_date'] . "</td>";
-         $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td>";
-         $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['is_active'] . "</td></tr>";
+         $read_discussion_reply_out = $read_discussion_reply_out . "<td>" . $row['last_update'] . "</td></tr>";
        }
        if (empty($read_discussion_reply_out)){
          $read_discussion_reply_out = "No result";
        } else {
          $read_discussion_reply_out = "<table><thead>"
-       . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th>"
-       . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_discussion_reply_out . "</table>";
+       . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th><th>Is Active</th>"
+       . "<th>Create Date</th><th>Last Update</th></tr></thead><tbody>" . $read_discussion_reply_out . "</table>";
        }
        return $read_discussion_reply_out;
        /* #endregion */
