@@ -2106,7 +2106,7 @@
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
-      <button class="tablinks" onclick="openPart(event, ' b')" id="<?php echo $b_open; ?>">Sort Posts by Recent Update</button>
+      <button class="tablinks" onclick="openPart(event, 'sort_posts')" id="<?php echo $sort_posts_open; ?>">Sort Posts by Recent Update</button>
 
 
 
