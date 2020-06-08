@@ -288,6 +288,7 @@
         /* #region  read_restaurant */
         global $conn;
         $sql = "SELECT * FROM restaurant r " . $where_clause . ";";
+        echo "hey222";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -663,12 +664,14 @@
           if ($create_business_restaurant_nameErr === "" && $create_business_restaurant_located_inErr === "" && $create_business_restaurant_addr_detailErr === "" 
           && $create_business_restaurant_weekday_open_timeErr === "" && $create_business_restaurant_weekday_end_timeErr === "" && $create_business_restaurant_weekend_open_timeErr === "" &&
           $create_business_restaurant_weekend_end_timeErr === "" && $create_business_restaurant_weekly_break_dateErr === "" ){
-            $sql = "START TRANSACTION; " . "INSERT INTO business (name, located_in, addr_detail, create_date, last_update, is_active) VALUES (\"" . $create_business_restaurant_name . "\", " . $create_business_restaurant_located_in . ", \"" . $create_business_restaurant_addr_detail . "\", \"" . $create_date . "\", \"" . $create_date . "\", 1 );"
-            ." INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, create_date, last_update, is_active) 
+            $sql1 = "INSERT INTO business (name, located_in, addr_detail, create_date, last_update, is_active) VALUES (\"" . $create_business_restaurant_name . "\", " . $create_business_restaurant_located_in . ", \"" . $create_business_restaurant_addr_detail . "\", \"" . $create_date . "\", \"" . $create_date . "\", 1 );";
+            $sql2 =" INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, create_date, last_update, is_active) 
             VALUES (LAST_INSERT_ID(), \"" . $create_business_restaurant_weekday_open_time . "\", \"" . $create_business_restaurant_weekday_end_time . "\", \"" 
-            . $create_business_restaurant_weekend_open_time . "\", \"" . $create_business_restaurant_weekend_end_time . "\", \"" . $create_business_restaurant_weekly_break_date . "\", \"" . $create_date . "\", \"" . $create_date . "\", " . 1 . ");"
-            . " COMMIT;";
-            $query = mysqli_multi_query($conn, $sql) or die ( mysqli_error($conn));
+            . $create_business_restaurant_weekend_open_time . "\", \"" . $create_business_restaurant_weekend_end_time . "\", \"" . $create_business_restaurant_weekly_break_date . "\", \"" . $create_date . "\", \"" . $create_date . "\", " . 1 . ");";
+            $conn->begin_transaction();
+            $conn->query($sql1);
+            $conn->query($sql2);
+            $conn->commit();
             $create_business_restaurant_out = "Success";
           }
           /* #endregion */
@@ -2127,7 +2130,9 @@
       <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
       <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
+
       <button class="tablinks" onclick="openPart(event, 'create_business_restaurant')" id="<?php echo $create_business_restaurant_open; ?>">Create Restaurant(Auto)</button>
+      
       <button class="tablinks" onclick="openPart(event, 'create_cuisine')" id="<?php echo $create_cuisine_open; ?>">Create Cuisine</button>
       <button class="tablinks" onclick="openPart(event, 'create_serves')" id="<?php echo $create_serves_open; ?>">Create Serves</button>
       <button class="tablinks" onclick="openPart(event, 'create_person')" id="<?php echo $create_person_open; ?>">Create Person</button>
@@ -2208,7 +2213,7 @@
     <div class="tab"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Filter Restaurants by Ratings</button>
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant by Location</button>
-       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler by Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Filter by Cuisine</button>
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
@@ -2300,6 +2305,7 @@
     <!-- 
       /* #region create_restaurant */
     -->
+    
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -2336,12 +2342,14 @@
         <?php echo $create_restaurant_out; ?>
       </div> 
     </div>
+    
     <!-- 
       /* #endregion */
     -->
     <!-- 
       /* #region   */
      -->
+     
     <div id="create_business_restaurant" class="tabcontent">
       <h3>Create Restaurant(AUTO)</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -2401,6 +2409,7 @@
         <?php echo $create_business_restaurant_out; ?>
       </div> 
     </div>
+    <?php echo "hey"?>
     <!-- 
       /* #endregion */
      -->
@@ -2431,7 +2440,7 @@
     <!-- 
       /* #endregion */
     -->
-
+    
     <!-- 
       /* #region create_serves */
     -->
@@ -2492,6 +2501,7 @@
     <!-- 
       /* #endregion */
     -->
+    
     
     <!-- 
       /* #region create_works_at */
@@ -2765,7 +2775,7 @@
         <?php echo $read_discussion_reply_out; ?>
       </div> 
     </div>
-
+   
     <!-- 
       /* #endregion */
     -->
@@ -2840,14 +2850,17 @@
         /* #endregion */
       -->
     </div>
-
+    
+   
     <div id="update_restaurant" class="tabcontent">
       <!-- 
         /* #region Update Restaurant */
       -->
+      
       <h3>Update Restaurant</h3>
       <div id="update_restaurant_read_div">
         <?php echo read_restaurant(""); ?>
+        
       </div> 
       <br>
       <font color="red"><?php echo $update_restaurantErr ?></font>
@@ -2858,10 +2871,12 @@
         <font color="red"><?php echo $update_restaurant_weekday_open_timeErr ?></font><br>
         Weekday End Time: <input type="time" id="update_restaurant_weekday_end_time" name="update_restaurant_weekday_end_time" value="<?php echo $update_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekday_end_timeErr ?></font><br>
+        
         Weekend Open Time: <input type="time" id="update_restaurant_weekend_open_time" name="update_restaurant_weekend_open_time" value="<?php echo $update_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_open_timeErr ?></font><br>
         Weekend End Time: <input type="time" id="update_restaurant_weekend_end_time" name="update_restaurant_weekend_end_time" value="<?php echo $update_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_end_timeErr ?></font><br>
+        
         Weekly Break Time: <input type="radio" id="update_restaurant_weekly_break_date_None" name="update_restaurant_weekly_break_date" value="None"><label for="update_restaurant_weekly_break_date_None">None</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Mon" name="update_restaurant_weekly_break_date" value="Mon"><label for="update_restaurant_weekly_break_date_Mon">Mon</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Tue" name="update_restaurant_weekly_break_date" value="Tue"><label for="update_restaurant_weekly_break_date_Tue">Tue</label>
@@ -2884,6 +2899,8 @@
         /* #endregion */
       -->
     </div>
+
+
 
     <div id="update_cuisine" class="tabcontent">
       <!-- 
@@ -2949,7 +2966,7 @@
         /* #endregion */
       -->
     </div>
-
+    
     <div id="update_person" class="tabcontent">
 
       <!-- 
@@ -3316,7 +3333,7 @@
     -->
 
    
-
+    
 
     <!-- ############################################### ######################## ############################################### -->
     <!-- ############################################### Filter Forms Tab Content ############################################### -->
@@ -3372,7 +3389,7 @@
             <option value="Highest to Lowest">Highest to Lowest</order>
             <option value="Lowest to Highest">Lowest to Highest</order>
           </select><br><br>
-          Is acitve:
+          Is Acitve:
           <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
           <br><br>
         <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
