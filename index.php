@@ -2124,7 +2124,7 @@
     <!-- 
       /* #region Create Tabs */
     --> 
-    <div class="tab"><!-- CREATE -->
+    <div class="tab" style="background-color: #cbdfe6;"><!-- CREATE -->
       <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
       <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
@@ -2147,7 +2147,7 @@
     <!-- 
       /* #region Read Tabs */
     --> 
-    <div class="tab"><!-- READ -->
+    <div class="tab" style="background-color: #F0F6F7FF;"><!-- READ -->
       <button class="tablinks" onclick="openPart(event, 'read_location')" id="<?php echo $read_location_open; ?>">Read Location</button>
       <button class="tablinks" onclick="openPart(event, 'read_business')" id="<?php echo $read_business_open; ?>">Read Business</button>
       <button class="tablinks" onclick="openPart(event, 'read_restaurant')" id="<?php echo $read_restaurant_open; ?>">Read Restaurant</button>
@@ -2167,7 +2167,7 @@
     <!-- 
       /* #region Update Tabs */
     --> 
-    <div class="tab"><!-- UPDATE -->
+    <div class="tab" style="background-color: #ddd8d5;"><!-- UPDATE -->
       <button class="tablinks" onclick="openPart(event, 'update_location')" id="<?php echo $update_location_open; ?>">Update Location</button>
       <button class="tablinks" onclick="openPart(event, 'update_business')" id="<?php echo $update_business_open; ?>">Update Business</button>
       <button class="tablinks" onclick="openPart(event, 'update_restaurant')" id="<?php echo $update_restaurant_open; ?>">Update Restaurant</button>
@@ -2188,7 +2188,7 @@
     <!-- 
       /* #region Delete Tabs */
     --> 
-    <div class="tab"><!-- DELETE -->
+    <div class="tab" style="background-color: #ffe6e6;"><!-- DELETE -->
       <button class="tablinks" onclick="openPart(event, 'delete_location')" id="<?php echo $delete_location_open; ?>">Delete Location</button>
       <button class="tablinks" onclick="openPart(event, 'delete_business')" id="<?php echo $delete_business_open; ?>">Delete Business</button>
       <button class="tablinks" onclick="openPart(event, 'delete_restaurant')" id="<?php echo $delete_restaurant_open; ?>">Delete Restaurant</button>
@@ -2208,7 +2208,7 @@
     <!-- 
       /* #region Filtering Tabs  */ 
     -->
-    <div class="tab"><!-- FILTER -->
+    <div class="tab" style="background-color: #f5e0a3;"><!-- FILTER -->
       <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Filter Restaurants by Ratings</button>
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant by Location</button>
        <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Filter by Cuisine</button>
