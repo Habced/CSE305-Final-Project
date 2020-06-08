@@ -2025,10 +2025,10 @@
            $sort_posts_out = "";
            $orderby = "";
           
-           if ($_POST["post_order"] === "Newest to Oldest") {
+           if ($_POST["post_order"] === "NtO") {
             $orderby = "ORDER BY last_update DESC";
             $sort_posts_out = $sort_posts_out . " <br> <h1>Newest Oldest</h1> ";
-          } elseif ($_POST["post_order"] === "Oldest to Newest") {
+          } elseif ($_POST["post_order"] === "OtN") {
             $orderby = "ORDER BY last_update ASC";
             $sort_posts_out = $sort_posts_out . " <br> <h1>Oldest Newest</h1>  ";
 
@@ -3342,8 +3342,9 @@
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" > 
           Last Update Time Order:
           <select id = "post_order" name="post_order">
-            <option value="Newest to Oldest">Newest to Oldest</option>
-            <option value="Oldest to Newest">Oldest to Newest</option>
+          <option value="defalt">--Choose Order--</option>
+            <option value="NtO">Newest to Oldest</option>
+            <option value="OtN">Oldest to Newest</option>
           </select> 
         <input type="submit" name="submit_form_sort_posts" value="Submit">
       </form>
