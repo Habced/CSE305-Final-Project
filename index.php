@@ -2143,13 +2143,13 @@
       /* #region Filtering Tabs  */ 
     -->
     <div class="tab"><!-- FILTER -->
-      <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Restaurant Rating Filter</button>
-      <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant By Location</button>
-       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
+      <button class="tablinks" onclick="openPart(event, 'restaurant_rating_filter')" id="<?php echo $restaurant_rating_filter_open; ?>">Filter Restaurants by Ratings</button>
+      <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant by Location</button>
+       <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler by Cuisine</button>
 
       <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
-      <button class="tablinks" onclick="openPart(event, 'sort_posts')" id="<?php echo $sort_posts_open; ?>">Sort Posts by Recent Update</button>
+      <button class="tablinks" onclick="openPart(event, 'sort_posts')" id="<?php echo $sort_posts_open; ?>">Sort Posts by Time</button>
 
 
 
@@ -3226,26 +3226,28 @@
     </div>
     
     <div id="restaurant_rating_filter" class="tabcontent">
-      <h3>Restaurant Rating Filter</h3>
+      <h3>Filter Restaurants by Ratings</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-          Rating more than or equal to: 
-          <input list="ratings" id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
-          <datalist id="ratings">
-            <option value="1">
-            <option value="2">
-            <option value="3">
-            <option value="4">
-            <option value="5">
-          </datalist><br>
-          Order:
-          <input list="order" id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
-          <datalist id="order">
-            <option value="Highest to Lowest">
-            <option value="Lowest to Highest">
-          </datalist><br>
+
+         Choose Rating Greater or Equal to: <br>
+          <select  id="restaurant_rating_filter_review_star" name="restaurant_rating_filter_review_star" >
+          <option value="opt">--Choose Rating--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            </select> <br><br><br>
+       
+            Sort Restaurants Ratings by: <br>
+           <select id="restaurant_rating_filter_order" name="restaurant_rating_filter_order">
+           <option value="ord" id="order">--Choose Order--</option>
+            <option value="Highest to Lowest">Highest to Lowest</order>
+            <option value="Lowest to Highest">Lowest to Highest</order>
+          </select><br><br>
           Is acitve:
           <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
-          <br>
+          <br><br>
         <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
       </form>
       <button onclick="clearElement('restaurant_rating_filter_div')">Clear Output</button>
