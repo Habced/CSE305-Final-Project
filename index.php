@@ -1438,7 +1438,6 @@
             $update_works_at_employed = $_POST["update_works_at_employed"];
             $sql = $sql . " AND employed=" . $update_works_at_employed . ";";
           }
-          echo $sql;
           if ($update_works_at_works_forErr === "" && $update_works_at_employedErr === "" && $update_works_at_employee_typeErr === "") {
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           }
@@ -1743,7 +1742,6 @@
             $delete_restaurant_restaurant_id = $_POST["delete_restaurant_restaurant_id"];
             $delete_restaurant_out = "The restaurant of which restaurant_id is ". $delete_restaurant_restaurant_id . " is deleted.";
             $sql = "DELETE FROM restaurant WHERE restaurant_id=" . $delete_restaurant_restaurant_id . ";";
-            echo $sql;
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
           }
          /* #endregion */
