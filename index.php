@@ -656,11 +656,11 @@
         elseif ( isset($_POST["submit_form_create_person"] )){ 
           /* #region submit_form_create_person */
           $create_person_open = "is_open";
-          if (empty($_POST["create_person_person_id"])) {
-            $create_person_person_idErr = "You must enter a value for create_person_person_id";
-          } else {
-            $create_person_person_id = $_POST["create_person_person_id"];
-          }
+          // if (empty($_POST["create_person_person_id"])) {
+          //   $create_person_person_idErr = "You must enter a value for create_person_person_id";
+          // } else {
+          //   $create_person_person_id = $_POST["create_person_person_id"];
+          // }
           if (empty($_POST["create_person_fullname"])) {
             $create_person_fullnameErr = "You must enter a value for create_person_fullname";
           } else {
@@ -698,8 +698,8 @@
           // }
           if ($create_person_person_idErr === "" && $create_person_fullnameErr === "" &&  $create_person_emailErr === "" &&  $create_person_usernameErr === "" &&  
           $create_person_passwordErr === "" && $create_person_is_activeErr === "") {
-            $sql = "INSERT INTO person (person_id, fullname, email, username, password, create_date, last_update, is_active) 
-            VALUES (" . $create_person_person_id . ", \"" . $create_person_fullname . "\", \"" . $create_person_email . "\", \"" . $create_person_username . "\", \"" 
+            $sql = "INSERT INTO person (fullname, email, username, password, create_date, last_update, is_active) 
+            VALUES ( \"" . $create_person_fullname . "\", \"" . $create_person_email . "\", \"" . $create_person_username . "\", \"" 
             . $create_person_password . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " .  1 . ")";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_person_out = "Success";
@@ -735,11 +735,11 @@
         elseif ( isset($_POST["submit_form_create_restaurant_review"] )){ 
           /* #region submit_form_create_restaurant_review */
           $create_restaurant_review_open = "is_open";
-          if (empty($_POST["create_restaurant_review_review_id"])) {
-            $create_restaurant_review_review_idErr = "You must enter a value for create_restaurant_review_review_id";
-          }else{
-            $create_restaurant_review_review_id = test_input($_POST["create_restaurant_review_review_id"]);
-          }
+          // if (empty($_POST["create_restaurant_review_review_id"])) {
+          //   $create_restaurant_review_review_idErr = "You must enter a value for create_restaurant_review_review_id";
+          // }else{
+          //   $create_restaurant_review_review_id = test_input($_POST["create_restaurant_review_review_id"]);
+          // }
           if (empty($_POST["create_restaurant_review_reviewed_by"])) {
             $create_restaurant_review_reviewed_byErr = "You must enter a value for create_restaurant_review_reviewed_by";
           }else{
@@ -786,10 +786,10 @@
           //   $create_restaurant_review_is_active = test_input($_POST["create_restaurant_review_is_active"]);
           // }
      
-          if( $create_restaurant_review_review_idErr === "" && $create_restaurant_review_reviewed_byErr === "" && $create_restaurant_review_reviewed_restaurantErr === ""  && $create_restaurant_review_review_starErr === ""
+          if(   $create_restaurant_review_reviewed_byErr === "" && $create_restaurant_review_reviewed_restaurantErr === ""  && $create_restaurant_review_review_starErr === ""
           && $create_restaurant_review_review_contentErr === "" ) {
-            $sql = "INSERT INTO restaurant_review (review_id, reviewed_by, reviewed_restaurant, review_star, review_content, create_date, last_update, is_active) VALUES
-             (" . $create_restaurant_review_review_id . ", " . $create_restaurant_review_reviewed_by . ", " . $create_restaurant_review_reviewed_restaurant . ", 
+            $sql = "INSERT INTO restaurant_review ( reviewed_by, reviewed_restaurant, review_star, review_content, create_date, last_update, is_active) VALUES
+             ( " . $create_restaurant_review_reviewed_by . ", " . $create_restaurant_review_reviewed_restaurant . ", 
               " . $create_restaurant_review_review_star . ", \"" . $create_restaurant_review_review_content . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_review_out = "Success";
@@ -800,11 +800,11 @@
           /* #region submit_form_create_review_followup */
           $create_review_followup_open = "is_open";
 
-          if (empty($_POST["create_review_followup_followup_id"])) {
-            $create_review_followup_followup_idErr = "You must enter a value for create_review_followup_followup_id";
-          }else{
-            $create_review_followup_followup_id = test_input($_POST["create_review_followup_followup_id"]);
-          }
+          // if (empty($_POST["create_review_followup_followup_id"])) {
+          //   $create_review_followup_followup_idErr = "You must enter a value for create_review_followup_followup_id";
+          // }else{
+          //   $create_review_followup_followup_id = test_input($_POST["create_review_followup_followup_id"]);
+          // }
           if (empty($_POST["create_review_followup_followed_up_by"])) {
             $create_review_followup_followed_up_byErr = "You must enter a value for create_review_followup_followed_up_by";
           }else{
@@ -820,13 +820,13 @@
           }else{
             $create_review_followup_followup_content = test_input($_POST["create_review_followup_followup_content"]);
           }  
-          if( $create_review_followup_followup_idErr === "" && $create_review_followup_followed_up_byErr === "" && $create_review_followup_for_reviewErr === ""
+          if( $create_review_followup_followed_up_byErr === "" && $create_review_followup_for_reviewErr === ""
           && $create_review_followup_followup_contentErr === "" ) {
-            $sql = "INSERT INTO review_followup (followup_id, followed_up_by, for_review, followup_content, create_date, last_update, is_active) VALUES
-             (" . $create_review_followup_followup_id . ", " . $create_review_followup_followed_up_by . ", " . $create_review_followup_for_review . ", 
+            $sql = "INSERT INTO review_followup ( followed_up_by, for_review, followup_content, create_date, last_update, is_active) VALUES
+             ( " . $create_review_followup_followed_up_by . ", " . $create_review_followup_for_review . ", 
              \"" . $create_review_followup_followup_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
-            $create_restaurant_followup_out = "Success";
+            $create_rev_followup_out = "Success";
           }
 
           /* #endregion */
@@ -835,11 +835,11 @@
           /* #region submit_form_create_restaurant_discussion */
           $create_restaurant_discussion_open = "is_open";
 
-          if (empty($_POST["create_restaurant_discussion_discussion_id"])) {
-            $create_restaurant_discussion_discussion_idErr = "You must enter a value for create_restaurant_discussion_discussion_id";
-          }else{
-            $create_restaurant_discussion_discussion_id = test_input($_POST["create_restaurant_discussion_discussion_id"]);
-          }
+          // if (empty($_POST["create_restaurant_discussion_discussion_id"])) {
+          //   $create_restaurant_discussion_discussion_idErr = "You must enter a value for create_restaurant_discussion_discussion_id";
+          // }else{
+          //   $create_restaurant_discussion_discussion_id = test_input($_POST["create_restaurant_discussion_discussion_id"]);
+          // }
           if (empty($_POST["create_restaurant_discussion_discussed_by"])) {
             $create_restaurant_discussion_discussed_byErr = "You must enter a value for create_restaurant_discussion_discussed_by";
           }else{
@@ -856,10 +856,10 @@
             $create_restaurant_discussion_discussion_content = test_input($_POST["create_restaurant_discussion_discussion_content"]);
           }
           
-          if( $create_restaurant_discussion_discussion_idErr === "" && $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
+          if(   $create_restaurant_discussion_discussed_byErr === "" && $create_restaurant_discussion_discussed_restaurantErr === ""
           && $create_restaurant_discussion_discussion_contentErr === "" ) {
-            $sql = "INSERT INTO restaurant_discussion (discussion_id, discussed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
-             (" . $create_restaurant_discussion_discussion_id . ", " . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
+            $sql = "INSERT INTO restaurant_discussion ( discussed_by, discussed_restaurant, discussion_content, create_date, last_update, is_active) VALUES
+             (" . $create_restaurant_discussion_discussed_by . ", " . $create_restaurant_discussion_discussed_restaurant . ", 
              \"" . $create_restaurant_discussion_discussion_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_discussion_out = "Success";
@@ -871,11 +871,11 @@
           /* #region submit_form_create_discussion_reply */
           $create_discussion_reply_open = "is_open";
 
-          if (empty($_POST["create_discussion_reply_reply_id"])) {
-            $create_discussion_reply_reply_idErr = "You must enter a value for create_discussion_reply_reply_id";
-          }else{
-            $create_discussion_reply_reply_id = test_input($_POST["create_discussion_reply_reply_id"]);
-          }
+          // if (empty($_POST["create_discussion_reply_reply_id"])) {
+          //   $create_discussion_reply_reply_idErr = "You must enter a value for create_discussion_reply_reply_id";
+          // }else{
+          //   $create_discussion_reply_reply_id = test_input($_POST["create_discussion_reply_reply_id"]);
+          // }
           if (empty($_POST["create_discussion_reply_replied_by"])) {
             $create_discussion_reply_replied_byErr = "You must enter a value for create_discussion_reply_replied_by";
           }else{
@@ -892,10 +892,10 @@
             $create_discussion_reply_reply_content = test_input($_POST["create_discussion_reply_reply_content"]); 
           }
          
-          if( $create_discussion_reply_reply_idErr === "" && $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
+          if( $create_discussion_reply_replied_byErr === "" && $create_discussion_reply_for_discussionErr === ""
           && $create_discussion_reply_reply_contentErr === "" ) {
-            $sql = "INSERT INTO discussion_reply (reply_id, replied_by, for_discussion, reply_content, create_date, last_update, is_active) VALUES
-             (" . $create_discussion_reply_reply_id . ", " . $create_discussion_reply_replied_by . ", " . $create_discussion_reply_for_discussion . ", 
+            $sql = "INSERT INTO discussion_reply ( replied_by, for_discussion, reply_content, create_date, last_update, is_active) VALUES
+             (" . $create_discussion_reply_replied_by . ", " . $create_discussion_reply_for_discussion . ", 
              \"" . $create_discussion_reply_reply_content . "\",  \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", 1 )";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_discussion_reply_out = "Success";
@@ -2340,8 +2340,8 @@
     <div id="create_person" class="tabcontent">
       <h3>create_person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        person_id: <input type="number" id="create_person_person_id" name="create_person_person_id" value="<?php echo $create_person_person_id ?>">
-          <font color="red"><?php echo $create_person_person_idErr ?></font><br>
+        <!-- person_id: <input type="number" id="create_person_person_id" name="create_person_person_id" value="<?php echo $create_person_person_id ?>">
+          <font color="red"><?php echo $create_person_person_idErr ?></font><br> -->
         fullname: <input type="text" id="create_person_fullname" name="create_person_fullname" value="<?php echo $create_person_fullname ?>">
           <font color="red"><?php echo $create_person_fullnameErr ?></font><br>
         email: <input type="email" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
@@ -2396,8 +2396,8 @@
     <div id="create_restaurant_review" class="tabcontent">
       <h3>Create Restaurant Review</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        Review ID: <input type="number" id="create_restaurant_review_review_id" name="create_restaurant_review_review_id" value="<?php echo $create_restaurant_review_review_id ?>">
-        <font color="red"><?php echo $create_restaurant_review_review_idErr ?></font><br>
+        <!-- Review ID: <input type="number" id="create_restaurant_review_review_id" name="create_restaurant_review_review_id" value="<?php echo $create_restaurant_review_review_id ?>">
+        <font color="red"><?php echo $create_restaurant_review_review_idErr ?></font><br> -->
         Reviewed By: <input type="number" id="create_restaurant_review_reviewed_by" name="create_restaurant_review_reviewed_by" value="<?php echo $create_restaurant_review_reviewed_by ?>">
         <font color="red"><?php echo $create_restaurant_review_reviewed_byErr ?></font><br>
         Reviewed Restaurant: <input type="number" id="create_restaurant_review_reviewed_restaurant" name="create_restaurant_review_reviewed_restaurant" value="<?php echo $create_restaurant_review_reviewed_restaurant ?>">
@@ -2430,8 +2430,8 @@
       <h3>Create Review Followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
 
-       Followup ID: <input type="number" id="create_review_followup_followup_id" name="create_review_followup_followup_id" value="<?php echo $create_review_followup_followup_id ?>">
-        <font color="red"><?php echo $create_review_followup_followup_idErr ?></font><br>
+       <!-- Followup ID: <input type="number" id="create_review_followup_followup_id" name="create_review_followup_followup_id" value="<?php echo $create_review_followup_followup_id ?>">
+        <font color="red"><?php echo $create_review_followup_followup_idErr ?></font><br> -->
         Followup By: <input type="number" id="create_review_followup_followed_up_by" name="create_review_followup_followed_up_by" value="<?php echo $create_review_followup_followed_up_by ?>">
         <font color="red"><?php echo $create_review_followup_followed_up_byErr ?></font><br>
         For Review: <input type="number" id="create_review_followup_for_review" name="create_review_followup_for_review" value="<?php echo $create_review_followup_for_review ?>">
@@ -2461,8 +2461,8 @@
     <div id="create_restaurant_discussion" class="tabcontent">
       <h3> Create Restaurant Discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      Discussion ID: <input type="number" id="create_restaurant_discussion_discussion_id" name="create_restaurant_discussion_discussion_id" value="<?php echo $create_restaurant_discussion_discussion_id ?>">
-        <font color="red"><?php echo $create_restaurant_discussion_discussion_idErr ?></font><br>
+      <!-- Discussion ID: <input type="number" id="create_restaurant_discussion_discussion_id" name="create_restaurant_discussion_discussion_id" value="<?php echo $create_restaurant_discussion_discussion_id ?>">
+        <font color="red"><?php echo $create_restaurant_discussion_discussion_idErr ?></font><br> -->
         Discussed By: <input type="number" id="create_restaurant_discussion_discussed_by" name="create_restaurant_discussion_discussed_by" value="<?php echo $create_restaurant_discussion_discussed_by ?>">
         <font color="red"><?php echo $create_restaurant_discussion_discussed_byErr ?></font><br>
         Discussed Restaurant: <input type="number" id="create_restaurant_discussion_discussed_restaurant" name="create_restaurant_discussion_discussed_restaurant" value="<?php echo $create_restaurant_discussion_discussed_restaurant ?>">
@@ -2487,8 +2487,8 @@
     <div id="create_discussion_reply" class="tabcontent">
       <h3>Create Discussion Reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        Reply ID: <input type="number" id="create_discussion_reply_reply_id" name="create_discussion_reply_reply_id" value="<?php echo $create_discussion_reply_reply_id ?>">
-        <font color="red"><?php echo $create_discussion_reply_reply_idErr ?></font><br>
+        <!-- Reply ID: <input type="number" id="create_discussion_reply_reply_id" name="create_discussion_reply_reply_id" value="<?php echo $create_discussion_reply_reply_id ?>">
+        <font color="red"><?php echo $create_discussion_reply_reply_idErr ?></font><br> -->
         Reply Replied By: <input type="number" id="create_discussion_reply_replied_by" name="create_discussion_reply_replied_by" value="<?php echo $create_discussion_reply_replied_by ?>">
         <font color="red"><?php echo $create_discussion_reply_replied_byErr ?></font><br>
         For Discussion : <input type="number" id="create_discussion_reply_for_discussion" name="create_discussion_reply_for_discussion" value="<?php echo $create_discussion_reply_for_discussion ?>">
@@ -3187,6 +3187,9 @@
     <!-- ############################################### Filter Forms Tab Content ############################################### -->
     <!-- ############################################### ######################## ############################################### -->
 
+ <!--
+    /* #region  FILTER */
+    -->
     <div id="filter_location" class="tabcontent">
       <h3>Filter Restaurants by Location</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -3354,8 +3357,9 @@
 
 
 
-
-
+<!--
+  /* #endregion */
+-->
     <script>
       function openPart(evt, part) {
         var i, tabcontent, tablinks;
