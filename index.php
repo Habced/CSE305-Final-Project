@@ -1698,7 +1698,7 @@
           /* #endregion */ 
         }
         elseif ( isset($_POST["submit_form_delete_serves"] )){ 
-          /* #region submit_form_delete_cuisine */
+          /* #region submit_form_delete_serves */
           $delete_serves_open = "is_open";
           if (empty($_POST["delete_serves_served_at"])) { 
             $delete_serves_served_atErr = "You must enter a Business ID.";
@@ -3083,7 +3083,16 @@
     <div id="delete_serves" class="tabcontent">
       <h3>Delete Serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        <input type="submit" name="submit_form_delete_serves" value="Submit">
+      
+        *Business ID: 
+        <input type="number" id="delete_serves_served_at" name="delete_serves_served_at" value="<?php echo $delete_serves_served_at ?>">
+        <font color="red"><?php echo $delete_serves_served_atErr ?></font><br>
+        
+        *Cuisine ID: 
+        <input type="number" id="delete_serves_serving" name="delete_serves_serving" value="<?php echo $delete_serves_serving ?>">
+        <font color="red"><?php echo $delete_serves_servingErr ?></font><br>
+        
+        <input type="submit" name="submit_form_delete_serves" value="Delete">
       </form>
       <button onclick="clearElement('delete_serves_div')">Clear Output</button>
       <div id="delete_serves_div">
