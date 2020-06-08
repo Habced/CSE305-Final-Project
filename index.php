@@ -284,14 +284,15 @@
 
 
 
-      function read_restaurant($where_clause) {
+      function read_restaurant() {
         /* #region  read_restaurant */
         global $conn;
-        $sql = "SELECT * FROM restaurant r " . $where_clause . ";";
+        $sql = "SELECT name, r.* FROM restaurant r, business b WHERE b.business_id = r.restaurant_id;";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
         while( $row = mysqli_fetch_array($query)) {
           $read_restaurant_out = $read_restaurant_out . "<tr><td>" . $row['restaurant_id'] . "</td>";
+          $read_restaurant_out = $read_restaurant_out . "<td>" . $row['name'] . "</td>";
           $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_open_time'] . "</td>";
           $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekday_end_time'] . "</td>";
           $read_restaurant_out = $read_restaurant_out . "<td>" . $row['weekend_open_time'] . "</td>";
@@ -305,7 +306,7 @@
           $read_restaurant_out = "No result";
         } else {
           $read_restaurant_out = "<table><thead>"
-        . "<tr><th>Restaurant ID</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
+        . "<tr><th>Restaurant ID</th><th>Name</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
         . "<th>Weekl-Break-Date</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
         }
         return $read_restaurant_out;
@@ -1010,7 +1011,7 @@
         elseif ( isset($_POST["submit_form_read_restaurant"] )){
           /* #region  submit_from_read_restaurant */
           $read_restaurant_open = "is_open"; 
-          $read_restaurant_out = read_restaurant("");
+          $read_restaurant_out = read_restaurant();
         }
           /* #endregion */
         elseif ( isset($_POST["submit_form_read_cuisine"] )){ 
@@ -2857,7 +2858,7 @@
       
       <h3>Update Restaurant</h3>
       <div id="update_restaurant_read_div">
-        <?php echo read_restaurant(""); ?>
+        <?php echo read_restaurant(); ?>
         
       </div> 
       <br>
@@ -3194,7 +3195,7 @@
     
     <div id="delete_restaurant" class="tabcontent">
       <h3>Delete Restaurant</h3>
-      <?php echo read_restaurant(""); ?>
+      <?php echo read_restaurant(); ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         Restaurant ID: <input type="number" id="delete_restaurant_restaurant_id" name="delete_restaurant_restaurant_id" value="<?php echo $delete_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $delete_restaurant_restaurant_idErr ?></font><br>
