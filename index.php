@@ -288,7 +288,6 @@
         /* #region  read_restaurant */
         global $conn;
         $sql = "SELECT * FROM restaurant r " . $where_clause . ";";
-        echo "hey222";
         $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
         $read_restaurant_out = "";
         while( $row = mysqli_fetch_array($query)) {
@@ -2409,7 +2408,6 @@
         <?php echo $create_business_restaurant_out; ?>
       </div> 
     </div>
-    <?php echo "hey"?>
     <!-- 
       /* #endregion */
      -->
