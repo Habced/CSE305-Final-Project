@@ -1245,7 +1245,7 @@
           $sql = "UPDATE restaurant SET ";
           
           if (!empty($_POST["update_restaurant_restaurant_id"]) && empty($_POST["update_restaurant_weekday_open_time"]) && empty($_POST["update_restaurant_weekday_end_time"])
-          && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
+          && empty($_POST["update_restaurant_weekly_break_date"]) && empty($_POST["update_restaurant_weekend_open_time"]) && empty($_POST["update_restaurant_weekend_end_time"])){
             $update_restaurantErr ="Notice: Only is_active is updated";
             // $update_restaurant_weekday_open_timeErr = "*";
             // $update_restaurant_weekday_end_timeErr = "*";
