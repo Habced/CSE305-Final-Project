@@ -300,8 +300,8 @@
           $read_restaurant_out = "No result";
         } else {
           $read_restaurant_out = "<table><thead>"
-        . "<tr><th>restaurant_id</th><th>weekday_open_time</th><th>weekday_end_time</th><th>weekend_open_time</th><th>weekend_end_time</th>"
-        . "<th>weekly_break_date</th><th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
+        . "<tr><th>Restaurant ID</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
+        . "<th>Weekl-Break-Date</th><th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_out . "</table>";
         }
         return $read_restaurant_out;
         /* #endregion */
@@ -317,7 +317,6 @@
           $read_person_out = $read_person_out . "<td>" . $row['fullname'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['email'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['username'] . "</td>";
-          $read_person_out = $read_person_out . "<td>" . $row['password'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['create_date'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['last_update'] . "</td>";
           $read_person_out = $read_person_out . "<td>" . $row['is_active'] . "</td></tr>";
@@ -326,8 +325,8 @@
           $read_person_out = "No result";
         } else {
           $read_person_out = "<table><thead>"
-        . "<tr><th>person_id</th><th>fullname</th><th>email</th><th>username</th><th>password</th>"
-        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_person_out . "</table>";
+        . "<tr><th>Person ID</th><th>Full Name</th><th>Email</th><th>User Name</th>"
+        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_person_out . "</table>";
         }
         return $read_person_out;
         /* #endregion */
@@ -347,7 +346,7 @@
           $read_works_at_out = "No result";
         } else {
           $read_works_at_out = "<table><thead>"
-          . "<tr><th>works_for</th><th>employed</th><th>employee_type</th></tr>" . $read_works_at_out . "</table>";
+          . "<tr><th>Works For</th><th>Employed</th><th>Employee Type</th></tr>" . $read_works_at_out . "</table>";
         }
         return $read_works_at_out;
         /* #endregion */
@@ -374,8 +373,8 @@
           $read_restaurant_review_out = "No result";
         } else {
           $read_restaurant_review_out = "<table><thead>"
-        . "<tr><th>review_id</th><th>reviewed_by</th><th>reviewed_restaurant</th><th>review_star</th><th>review_content</th>"
-        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_review_out . "</table>";
+        . "<tr><th>Review ID</th><th>Reviewed By</th><th>Reviewed Restaurant</th><th>Review Star</th><th>Review Content</th>"
+        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_review_out . "</table>";
         }
         return $read_restaurant_review_out;
         /* #endregion */
@@ -401,8 +400,8 @@
           $read_restaurant_followup_out = "No result";
         } else {
           $read_restaurant_followup_out = "<table><thead>"
-        . "<tr><th>followup_id</th><th>followed_up_by</th><th>for_review</th><th>followup_content</th>"
-        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_followup_out . "</table>";
+        . "<tr><th>Followup ID</th><th>Followedup By</th><th>For Review</th><th>Followup Content</th>"
+        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_followup_out . "</table>";
         }
         return $read_restaurant_followup_out;
         /* #endregion */
@@ -430,8 +429,8 @@
           $read_restaurant_discussion_out = "No result";
         } else {
           $read_restaurant_discussion_out = "<table><thead>"
-        . "<tr><th>discussion_id</th><th>discussed_by</th><th>discussed_restaurant</th><th>discussion_content</th>"
-        . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_restaurant_discussion_out . "</table>";
+        . "<tr><th>Discussion ID</th><th>Discussed By</th><th>Discussed Restaurant</th><th>Discussion Content</th>"
+        . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_restaurant_discussion_out . "</table>";
         }
         return $read_restaurant_discussion_out;
         /* #endregion */
@@ -458,8 +457,8 @@
          $read_discussion_reply_out = "No result";
        } else {
          $read_discussion_reply_out = "<table><thead>"
-       . "<tr><th>reply_id</th><th>replied_by</th><th>for_discussion</th><th>reply_content</th>"
-       . "<th>create_date</th><th>last_update</th><th>is_active</th></tr></thead><tbody>" . $read_discussion_reply_out . "</table>";
+       . "<tr><th>Reply ID</th><th>Replied By</th><th>For Discussion</th><th>Reply Content</th>"
+       . "<th>Create Date</th><th>Last Update</th><th>Is Active</th></tr></thead><tbody>" . $read_discussion_reply_out . "</table>";
        }
        return $read_discussion_reply_out;
        /* #endregion */
@@ -499,8 +498,8 @@
           $restaurant_rating_filter_out = "No result";
         }else{
           $restaurant_rating_filter_out = $restaurant_rating_filter_message . "<table><thead>"
-          . "<tr><th>restaurant_id</th><th>Star</th><th>Weekday open time</th><th>Weekday end time</th><th>Weekend Open Time</th><th>Weekend End Time</th>"
-          . "<th>Weekly Break Date</th><th>Last Update</th><th>Is Active?</th></tr></thead><tbody>" . $restaurant_rating_filter_out . "</table>";
+          . "<tr><th>Restaurant ID</th><th>Review Star</th><th>Weekday-Open-Time</th><th>Weekday-End-Time</th><th>Weekend-Open-Time</th><th>Weekend-End-Time</th>"
+          . "<th>Weekly-Break-Date</th><th>Last Update</th><th>Is Active?</th></tr></thead><tbody>" . $restaurant_rating_filter_out . "</table>";
         }
        
         return $restaurant_rating_filter_out;
@@ -2338,17 +2337,17 @@
       /* #region create_person */
     -->
     <div id="create_person" class="tabcontent">
-      <h3>create_person</h3>
+      <h3>Create Person</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <!-- person_id: <input type="number" id="create_person_person_id" name="create_person_person_id" value="<?php echo $create_person_person_id ?>">
           <font color="red"><?php echo $create_person_person_idErr ?></font><br> -->
-        fullname: <input type="text" id="create_person_fullname" name="create_person_fullname" value="<?php echo $create_person_fullname ?>">
+        Full Name: <input type="text" id="create_person_fullname" name="create_person_fullname" value="<?php echo $create_person_fullname ?>">
           <font color="red"><?php echo $create_person_fullnameErr ?></font><br>
-        email: <input type="email" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
+        Email: <input type="email" id="create_person_email" name="create_person_email" value="<?php echo $create_person_email ?>">
           <font color="red"><?php echo $create_person_emailErr ?></font><br>
-        username: <input type="text" id="create_person_username" name="create_person_username" value="<?php echo $create_person_username ?>">
+        Username: <input type="text" id="create_person_username" name="create_person_username" value="<?php echo $create_person_username ?>">
           <font color="red"><?php echo $create_person_usernameErr ?></font><br>
-        password: <input type="password" id="create_person_password" name="create_person_password" value="<?php echo $create_person_password ?>">
+        Password: <input type="password" id="create_person_password" name="create_person_password" value="<?php echo $create_person_password ?>">
           <font color="red"><?php echo $create_person_passwordErr ?></font><br>
         <!-- create_date: <input type="date" id="create_person_create_date" name="create_person_create_date" value="<?php echo $create_person_create_date ?>">
           <font color="red"><?php echo $create_person_create_dateErr ?></font><br>
@@ -2371,13 +2370,13 @@
       /* #region create_works_at */
     -->
     <div id="create_works_at" class="tabcontent">
-      <h3>create_works_at</h3>
+      <h3>Create Works At</h3>
       <form method="post" id="create_works_at_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        works_for: <input type="number" id="create_works_at_works_for" name="create_works_at_works_for" value="<?php echo $create_works_at_works_for ?>">
+        Works For: <input type="number" id="create_works_at_works_for" name="create_works_at_works_for" value="<?php echo $create_works_at_works_for ?>">
         <font color="red"><?php echo $create_works_at_works_forErr ?></font><br>
-        employed: <input type="number" id="create_works_at_employed" name="create_works_at_employed" value="<?php echo $create_works_at_employed ?>">
+        Employed: <input type="number" id="create_works_at_employed" name="create_works_at_employed" value="<?php echo $create_works_at_employed ?>">
         <font color="red"><?php echo $create_works_at_employedErr ?></font><br>
-        employee_type: <input type="text" id="create_works_at_employee_type" name="create_works_at_employee_type" value="<?php echo $create_works_at_employee_type ?>">
+        Employee Type: <input type="text" id="create_works_at_employee_type" name="create_works_at_employee_type" value="<?php echo $create_works_at_employee_type ?>">
         <font color="red"><?php echo $create_works_at_employee_typeErr ?></font><br>
         <input type="submit" name="submit_form_create_works_at" value="Submit">
         <button type="reset" onclick="clearElement('create_works_at_div')" value="Reset">Clear Output</button>
@@ -2726,17 +2725,17 @@
       <br>
       <font color="red"><?php echo $update_restaurantErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        restaurant_id: <input type="number" id="update_restaurant_restaurant_id" name="update_restaurant_restaurant_id" value="<?php echo $update_restaurant_restaurant_id ?>">
+        *Restaurant ID: <input type="number" id="update_restaurant_restaurant_id" name="update_restaurant_restaurant_id" value="<?php echo $update_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $update_restaurant_restaurant_idErr ?></font><br>
-        weekday_open_time: <input type="time" id="update_restaurant_weekday_open_time" name="update_restaurant_weekday_open_time" value="<?php echo $update_restaurant_weekday_open_time ?>">
+        Weekday Open Time: <input type="time" id="update_restaurant_weekday_open_time" name="update_restaurant_weekday_open_time" value="<?php echo $update_restaurant_weekday_open_time ?>">
         <font color="red"><?php echo $update_restaurant_weekday_open_timeErr ?></font><br>
-        weekday_end_time: <input type="time" id="update_restaurant_weekday_end_time" name="update_restaurant_weekday_end_time" value="<?php echo $update_restaurant_weekday_end_time ?>">
+        Weekday End Time: <input type="time" id="update_restaurant_weekday_end_time" name="update_restaurant_weekday_end_time" value="<?php echo $update_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekday_end_timeErr ?></font><br>
-        weekend_open_time: <input type="time" id="update_restaurant_weekend_open_time" name="update_restaurant_weekend_open_time" value="<?php echo $update_restaurant_weekend_open_time ?>">
+        Weekend Open Time: <input type="time" id="update_restaurant_weekend_open_time" name="update_restaurant_weekend_open_time" value="<?php echo $update_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_open_timeErr ?></font><br>
-        weekend_end_time: <input type="time" id="update_restaurant_weekend_end_time" name="update_restaurant_weekend_end_time" value="<?php echo $update_restaurant_weekend_end_time ?>">
+        Weekend End Time: <input type="time" id="update_restaurant_weekend_end_time" name="update_restaurant_weekend_end_time" value="<?php echo $update_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_end_timeErr ?></font><br>
-        weekly_break_date: <input type="radio" id="update_restaurant_weekly_break_date_None" name="update_restaurant_weekly_break_date" value="None"><label for="update_restaurant_weekly_break_date_None">None</label>
+        Weekly Break Time: <input type="radio" id="update_restaurant_weekly_break_date_None" name="update_restaurant_weekly_break_date" value="None"><label for="update_restaurant_weekly_break_date_None">None</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Mon" name="update_restaurant_weekly_break_date" value="Mon"><label for="update_restaurant_weekly_break_date_Mon">Mon</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Tue" name="update_restaurant_weekly_break_date" value="Tue"><label for="update_restaurant_weekly_break_date_Tue">Tue</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Wed" name="update_restaurant_weekly_break_date" value="Wed"><label for="update_restaurant_weekly_break_date_Wed">Wed</label>
@@ -2746,7 +2745,7 @@
         <input type="radio" id="update_restaurant_weekly_break_date_Sun" name="update_restaurant_weekly_break_date" value="Sun"><label for="update_restaurant_weekly_break_date_Sun">Sun</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Weekend" name="update_restaurant_weekly_break_date" value="Weekend"><label for="update_restaurant_weekly_break_date_Weekend">Weekend</label>
         <font color="red"><?php echo $update_restaurant_weekly_break_dateErr ?></font><br>
-        is_active: <input type="checkbox" id="update_restaurant_is_active" name="update_restaurant_is_active">
+        Is Active: <input type="checkbox" id="update_restaurant_is_active" name="update_restaurant_is_active">
         <font color="red"><?php echo $update_restaurant_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_restaurant" value="Submit">
         <button type="reset" onclick="clearElement('update_restaurant_div')" value="Reset">Clear Output</button>
@@ -2829,24 +2828,24 @@
       <!-- 
         /* #region  Update Person */
        -->
-      <h3>update_person</h3>
+      <h3>Update Person</h3>
       <div id="update_person_read_div">
         <?php echo read_person(); ?>
       </div> 
       <br>
       <font color="red"><?php echo $update_personErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        person_id: <input type="number" id="update_person_person_id" name="update_person_person_id" value="<?php echo $update_person_person_id ?>">
+        *Person ID: <input type="number" id="update_person_person_id" name="update_person_person_id" value="<?php echo $update_person_person_id ?>">
           <font color="red"><?php echo $update_person_person_idErr ?></font><br>
-        fullname: <input type="text" id="update_person_fullname" name="update_person_fullname" value="<?php echo $update_person_fullname ?>">
+        Full Name: <input type="text" id="update_person_fullname" name="update_person_fullname" value="<?php echo $update_person_fullname ?>">
           <font color="red"><?php echo $update_person_fullnameErr ?></font><br>
-        email: <input type="email" id="update_person_email" name="update_person_email" value="<?php echo $update_person_email ?>">
+        Email: <input type="email" id="update_person_email" name="update_person_email" value="<?php echo $update_person_email ?>">
           <font color="red"><?php echo $update_person_emailErr ?></font><br>
-        username: <input type="text" id="update_person_username" name="update_person_username" value="<?php echo $update_person_username ?>">
+        Username: <input type="text" id="update_person_username" name="update_person_username" value="<?php echo $update_person_username ?>">
           <font color="red"><?php echo $update_person_usernameErr ?></font><br>
-        password: <input type="password" id="update_person_password" name="update_person_password" value="<?php echo $update_person_password ?>">
+        Password: <input type="password" id="update_person_password" name="update_person_password" value="<?php echo $update_person_password ?>">
           <font color="red"><?php echo $update_person_passwordErr ?></font><br>
-        is_active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active">
+        Is Active: <input type="checkbox" id="update_person_is_active" name="update_person_is_active">
         <font color="red"><?php echo $update_person_is_activeErr ?></font><br>
         <input type="submit" name="submit_form_update_person" value="Submit">
         <button type="reset" onclick="clearElement('update_person_div')" value="Reset">Clear Output</button>
@@ -2866,11 +2865,11 @@
       </div> 
       <br>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        works_for: <input type="number" id="update_works_at_works_for" name="update_works_at_works_for" value="<?php echo $update_works_at_works_for ?>">
+        *Works For: <input type="number" id="update_works_at_works_for" name="update_works_at_works_for" value="<?php echo $update_works_at_works_for ?>">
         <font color="red"><?php echo $update_works_at_works_forErr ?></font><br>
-        employed: <input type="number" id="update_works_at_employed" name="update_works_at_employed" value="<?php echo $update_works_at_employed ?>">
+        *Employed: <input type="number" id="update_works_at_employed" name="update_works_at_employed" value="<?php echo $update_works_at_employed ?>">
         <font color="red"><?php echo $update_works_at_employedErr ?></font><br>
-        employee_type: <input type="text" id="update_works_at_employee_type" name="update_works_at_employee_type" value="<?php echo $update_works_at_employee_type ?>">
+        Employee Type: <input type="text" id="update_works_at_employee_type" name="update_works_at_employee_type" value="<?php echo $update_works_at_employee_type ?>">
         <font color="red"><?php echo $update_works_at_employee_typeErr ?></font><br>
         <input type="submit" name="submit_form_update_works_at" value="Submit">
         <button type="reset" onclick="clearElement('update_works_at_div')" value="Reset">Clear Output</button>
@@ -2889,7 +2888,7 @@
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
  
 
-        Desired Restaurant Review Review ID to update: <input type="number" id="update_restaurant_review_review_id" name="update_restaurant_review_review_id" value="<?php echo $update_restaurant_review_review_id ?>">
+        *Desired Restaurant Review Review ID to Update: <input type="number" id="update_restaurant_review_review_id" name="update_restaurant_review_review_id" value="<?php echo $update_restaurant_review_review_id ?>">
         <font color="red"><?php echo $update_restaurant_review_review_idErr ?></font><br>
         <!-- restaurant_review_reviewed_by: <input type="number" id="update_restaurant_review_reviewed_by" name="update_restaurant_review_reviewed_by" value="<?php echo $update_restaurant_review_reviewed_by ?>"> -->
 
@@ -2921,7 +2920,7 @@
       <br>
       <font color="red"><?php echo $update_restaurant_review_followupErr ?></font>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        Desired Followup ID to update: <input type="number" id="update_review_followup_followup_id" name="update_review_followup_followup_id" value="<?php echo $update_review_followup_followup_id ?>">
+        *Desired Followup ID to Update: <input type="number" id="update_review_followup_followup_id" name="update_review_followup_followup_id" value="<?php echo $update_review_followup_followup_id ?>">
           <font color="red"><?php echo $update_review_followup_followup_idErr ?></font><br>
         <!-- followed_up_by: <input type="number" id="update_review_followup_followed_up_by" name="update_review_followup_followed_up_by" value="<?php echo $update_review_followup_followed_up_by ?>">
           <font color="red"><?php echo $update_review_followup_followed_up_byErr ?></font><br>
@@ -2949,7 +2948,7 @@
           <br>
           <font color="red"><?php echo $update_restaurant_discussionErr ?></font>
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-            Desired Discussion ID to update: <input type="number" id="update_restaurant_discussion_discussion_id" name="update_restaurant_discussion_discussion_id" value="<?php echo $update_restaurant_discussion_discussion_id ?>">
+            *Desired Discussion ID to Update: <input type="number" id="update_restaurant_discussion_discussion_id" name="update_restaurant_discussion_discussion_id" value="<?php echo $update_restaurant_discussion_discussion_id ?>">
               <font color="red"><?php echo $update_restaurant_discussion_discussion_idErr ?></font><br>
             <!-- discussed_by: <input type="number" id="update_restaurant_discussion_discussed_by" name="update_restaurant_discussion_discussed_by" value="<?php echo $update_restaurant_discussion_discussed_by ?>">
               <font color="red"><?php echo $update_restaurant_discussion_discussed_byErr ?></font><br>
@@ -2978,7 +2977,7 @@
         <br>
         <font color="red"><?php echo $update_discussion_replyErr ?></font>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-          Desired Reply ID to update: <input type="number" id="update_discussion_reply_reply_id" name="update_discussion_reply_reply_id" value="<?php echo $update_discussion_reply_reply_id ?>">
+          *Desired Reply ID to Update: <input type="number" id="update_discussion_reply_reply_id" name="update_discussion_reply_reply_id" value="<?php echo $update_discussion_reply_reply_id ?>">
             <font color="red"><?php echo $update_discussion_reply_reply_idErr ?></font><br>
           <!-- for_discussion: <input type="number" id="update_discussion_reply_for_discussion" name="update_discussion_reply_for_discussion" value="<?php echo $update_discussion_reply_for_discussion ?>">
             <font color="red"><?php echo $update_discussion_reply_for_discussionErr ?></font><br> -->
@@ -3052,10 +3051,10 @@
     </div>
     
     <div id="delete_restaurant" class="tabcontent">
-      <h3>delete_restaurant</h3>
+      <h3>Delete Restaurant</h3>
       <?php echo read_restaurant(""); ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        restaurant_id: <input type="number" id="delete_restaurant_restaurant_id" name="delete_restaurant_restaurant_id" value="<?php echo $delete_restaurant_restaurant_id ?>">
+        Restaurant ID: <input type="number" id="delete_restaurant_restaurant_id" name="delete_restaurant_restaurant_id" value="<?php echo $delete_restaurant_restaurant_id ?>">
         <font color="red"><?php echo $delete_restaurant_restaurant_idErr ?></font><br>
         <input type="submit" name="submit_form_delete_restaurant" value="Submit">
         <button type="reset" onclick="clearElement('delete_restaurant_div')" value="Reset">Clear Output</button>
@@ -3082,7 +3081,7 @@
     </div>
 
     <div id="delete_serves" class="tabcontent">
-      <h3>delete_serves</h3>
+      <h3>Delete Serves</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
         <input type="submit" name="submit_form_delete_serves" value="Submit">
       </form>
@@ -3093,10 +3092,10 @@
     </div>
 
     <div id="delete_person" class="tabcontent">
-      <h3>delete_person</h3>
+      <h3>Delete Person</h3>
       <?php echo read_person() ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-          person_id: <input type="number" id="delete_person_person_id" name="delete_person_person_id" value="<?php echo $delete_person_person_id ?>">
+          Person ID: <input type="number" id="delete_person_person_id" name="delete_person_person_id" value="<?php echo $delete_person_person_id ?>">
           <font color="red"><?php echo $delete_person_person_idErr ?></font><br>
         <input type="submit" name="submit_form_delete_person" value="Submit">
         <button type="reset" onclick="clearElement('delete_person_div')" value="Reset">Clear Output</button>
@@ -3107,12 +3106,12 @@
     </div>
     
     <div id="delete_works_at" class="tabcontent">
-      <h3>delete_works_at</h3>
+      <h3>Delete Works At</h3>
       <?php echo read_works_at() ?>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-        works_for: <input type="number" id="delete_works_at_works_for" name="delete_works_at_works_for" value="<?php echo $delete_works_at_works_for ?>">
+        Works For: <input type="number" id="delete_works_at_works_for" name="delete_works_at_works_for" value="<?php echo $delete_works_at_works_for ?>">
         <font color="red"><?php echo $delete_works_at_works_forErr ?></font><br>
-        employed: <input type="number" id="delete_works_at_employed" name="delete_works_at_employed" value="<?php echo $delete_works_at_employed ?>">
+        Employed: <input type="number" id="delete_works_at_employed" name="delete_works_at_employed" value="<?php echo $delete_works_at_employed ?>">
         <font color="red"><?php echo $update_works_at_employedErr ?></font><br>
         <input type="submit" name="submit_form_delete_works_at" value="Submit">
         <button type="reset" onclick="clearElement('delete_works_at_div')" value="Reset">Clear Output</button>
@@ -3123,11 +3122,11 @@
     </div>
     
     <div id="delete_restaurant_review" class="tabcontent">
-      <h3>delete_restaurant_review</h3>
+      <h3>Delete Restaurant Review</h3>
       <?php echo read_restaurant_review("") ?>
 
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-          review_id: <input type="number" id="delete_restaurant_review_review_id" name="delete_restaurant_review_review_id" value="<?php echo $delete_restaurant_review_review_id ?>">
+          Review ID: <input type="number" id="delete_restaurant_review_review_id" name="delete_restaurant_review_review_id" value="<?php echo $delete_restaurant_review_review_id ?>">
           <font color="red"><?php echo $delete_restaurant_review_review_idErr ?></font><br>
           <input type="submit" name="submit_form_delete_restaurant_review" value="Submit">
         <button type="reset" onclick="clearElement('delete_restaurant_review_div')" value="Reset">Clear Output</button>
@@ -3138,9 +3137,9 @@
     </div>
     
     <div id="delete_review_followup" class="tabcontent">
-      <h3>delete_review_followup</h3>
+      <h3>Delete Review Followup</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      followup_id: <input type="number" id="delete_review_followup_followup_id" name="delete_review_followup_followup_id" value="<?php echo $delete_review_followup_followup_id ?>">
+      Followup ID: <input type="number" id="delete_review_followup_followup_id" name="delete_review_followup_followup_id" value="<?php echo $delete_review_followup_followup_id ?>">
           <font color="red"><?php echo $delete_review_followup_followup_idErr ?></font><br>
           <input type="submit" name="submit_form_delete_review_followup" value="Submit">
         <button type="reset" onclick="clearElement('delete_review_followup_div')" value="Reset">Clear Output</button>
@@ -3151,9 +3150,9 @@
     </div>
     
     <div id="delete_restaurant_discussion" class="tabcontent">
-      <h3> delete_restaurant_discussion </h3>
+      <h3> Delete Restaurant Discussion </h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      discussion_id: <input type="number" id="delete_restaurant_discussion_discussion_id" name="delete_restaurant_discussion_discussion_id" value="<?php echo $delete_restaurant_discussion_discussion_id ?>">
+      Discussion ID: <input type="number" id="delete_restaurant_discussion_discussion_id" name="delete_restaurant_discussion_discussion_id" value="<?php echo $delete_restaurant_discussion_discussion_id ?>">
           <font color="red"><?php echo $delete_restaurant_discussion_discussion_idErr ?></font><br>
           <input type="submit" name="submit_form_delete_restaurant_discussion" value="Submit">
         <button type="reset" onclick="clearElement('delete_restaurant_discussion_div')" value="Reset">Clear Output</button>
@@ -3164,9 +3163,9 @@
     </div>
 
     <div id="delete_discussion_reply" class="tabcontent">
-      <h3>delete_discussion_reply</h3>
+      <h3>Delete Dicusion Reply</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-      reply_id: <input type="number" id="delete_discussion_reply_reply_id" name="delete_discussion_reply_reply_id" value="<?php echo $delete_discussion_reply_reply_id ?>">
+      Reply ID: <input type="number" id="delete_discussion_reply_reply_id" name="delete_discussion_reply_reply_id" value="<?php echo $delete_discussion_reply_reply_id ?>">
           <font color="red"><?php echo $delete_discussion_reply_reply_idErr ?></font><br>
           <input type="submit" name="submit_form_delete_discussion_reply" value="Submit">
         <button type="reset" onclick="clearElement('delete_discussion_reply_div')" value="Reset">Clear Output</button>
