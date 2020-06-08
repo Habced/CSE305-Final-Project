@@ -2066,6 +2066,7 @@
       <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
       <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
+      <button class="tablinks" onclick="openPart(event, 'create_business_restaurant')" id="<?php echo $create_business_restaurant_open; ?>">Create Restaurant(Auto)</button>
       <button class="tablinks" onclick="openPart(event, 'create_cuisine')" id="<?php echo $create_cuisine_open; ?>">Create Cuisine</button>
       <button class="tablinks" onclick="openPart(event, 'create_serves')" id="<?php echo $create_serves_open; ?>">Create Serves</button>
       <button class="tablinks" onclick="openPart(event, 'create_person')" id="<?php echo $create_person_open; ?>">Create Person</button>
@@ -2148,7 +2149,8 @@
       <button class="tablinks" onclick="openPart(event, 'filter_location')" id="<?php echo $filter_location_open; ?>">Filter Restaurant By Location</button>
        <button class="tablinks" onclick="openPart(event, 'filter_cuisine')" id="<?php echo $filter_cuisine_open; ?>">Fitler By Cuisine</button>
 
-      <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $review_filter_person_open; ?>">Filter Posts by Persons</button>
+      <button class="tablinks" onclick="openPart(event, 'review_filter_person')" id="<?php echo $
+      review_filter_person_open; ?>">Filter Posts by Persons</button>
       <button class="tablinks" onclick="openPart(event, 'filter_posts_restaurant')" id="<?php echo $filter_posts_restaurant_open; ?>">Filter Posts by Restaurants</button>
       <button class="tablinks" onclick="openPart(event, 'sort_posts')" id="<?php echo $sort_posts_open; ?>">Sort Posts by Recent Update</button>
 
@@ -2277,7 +2279,49 @@
     <!-- 
       /* #endregion */
     -->
+    <!-- 
+      /* #region   */
+     -->
 
+    <div id="create_business_restaurant" class="tabcontent">
+      <h3>Create Restaurant(AUTO)</h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        restaurant_id: <input type="number" id="create_restaurant_restaurant_id" name="create_restaurant_restaurant_id" value="<?php echo $create_restaurant_restaurant_id ?>">
+        <font color="red"><?php echo $create_restaurant_restaurant_idErr ?></font><br>
+        weekday_open_time: <input type="time" id="create_restaurant_weekday_open_time" name="create_restaurant_weekday_open_time" value="<?php echo $create_restaurant_weekday_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_open_timeErr ?></font><br>
+        weekday_end_time: <input type="time" id="create_restaurant_weekday_end_time" name="create_restaurant_weekday_end_time" value="<?php echo $create_restaurant_weekday_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekday_end_timeErr ?></font><br>
+        weekend_open_time: <input type="time" id="create_restaurant_weekend_open_time" name="create_restaurant_weekend_open_time" value="<?php echo $create_restaurant_weekend_open_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_open_timeErr ?></font><br>
+        weekend_end_time: <input type="time" id="create_restaurant_weekend_end_time" name="create_restaurant_weekend_end_time" value="<?php echo $create_restaurant_weekend_end_time ?>">
+        <font color="red"><?php echo $create_restaurant_weekend_end_timeErr ?></font><br>
+        weekly_break_date: <input type="radio" id="create_restaurant_weekly_break_date_None" name="create_restaurant_weekly_break_date" value="None"><label for="create_restaurant_weekly_break_date_None">None</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Mon" name="create_restaurant_weekly_break_date" value="Mon"><label for="create_restaurant_weekly_break_date_Mon">Mon</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Tue" name="create_restaurant_weekly_break_date" value="Tue"><label for="create_restaurant_weekly_break_date_Tue">Tue</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Wed" name="create_restaurant_weekly_break_date" value="Wed"><label for="create_restaurant_weekly_break_date_Wed">Wed</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Thu" name="create_restaurant_weekly_break_date" value="Thu"><label for="create_restaurant_weekly_break_date_Thu">Thu</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Fri" name="create_restaurant_weekly_break_date" value="Fri"><label for="create_restaurant_weekly_break_date_Fri">Fri</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Sat" name="create_restaurant_weekly_break_date" value="Sat"><label for="create_restaurant_weekly_break_date_Sat">Sat</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Sun" name="create_restaurant_weekly_break_date" value="Sun"><label for="create_restaurant_weekly_break_date_Sun">Sun</label>
+        <input type="radio" id="create_restaurant_weekly_break_date_Weekend" name="create_restaurant_weekly_break_date" value="Weekend"><label for="create_restaurant_weekly_break_date_Weekend">Weekend</label>
+        <font color="red"><?php echo $create_restaurant_weekly_break_dateErr ?></font><br>
+        <!-- create_date: <input type="date" id="create_restaurant_create_date" name="create_restaurant_create_date" value="<?php echo $create_restaurant_create_date ?>">
+        <font color="red"><?php echo $create_restaurant_create_dateErr ?></font><br>
+        last_update: <input type="date" id="create_restaurant_last_update" name="create_restaurant_last_update" value="<?php echo $create_restaurant_last_update ?>">
+        <font color="red"><?php echo $create_restaurant_last_updateErr ?></font><br>
+        is_active: <input type="checkbox" id="create_restaurant_is_active" name="create_restaurant_is_active" value="<?php echo $create_restaurant_is_active ?>">
+        <font color="red"><?php echo $create_restaurant_is_activeErr ?></font><br> -->
+        <input type="submit" name="submit_form_create_restaurant" value="Submit">
+        <button type="reset" onclick="clearElement('create_restaurant_div')" value="Reset">Clear Output</button>
+      </form>
+      <div id="create_restaurant_div">
+        <?php echo $create_restaurant_out; ?>
+      </div> 
+    </div>
+    <!-- 
+      /* #endregion */
+     -->
     <!-- 
       /* #region create_cuisine */
     -->
