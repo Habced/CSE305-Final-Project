@@ -102,7 +102,12 @@
       = $create_restaurant_weekly_break_date = $create_restaurant_create_date = $create_restaurant_last_update = $create_restaurant_is_active = "";
       $create_restaurant_restaurant_idErr = $create_restaurant_weekday_open_timeErr = $create_restaurant_weekday_end_timeErr = $create_restaurant_weekend_open_timeErr = $create_restaurant_weekend_end_timeErr
       = $create_restaurant_has_weekly_breakErr = $create_restaurant_weekly_break_dateErr = $create_restaurant_create_dateErr = $create_restaurant_last_updateErr = $create_restaurant_is_activeErr = "";
-
+      
+      $create_business_restaurant_name = $create_business_restaurant_located_in = $create_business_restaurant_addr_detail = $create_business_restaurant_weekday_open_time = $create_business_restaurant_weekday_end_time = 
+      $create_business_restaurant_weekend_open_time = $create_business_restaurant_weekend_end_time = $create_business_restaurant_weekly_break_date = $create_business_restaurant_open = $create_business_restaurant_out = "";
+      $create_business_restaurant_nameErr = $create_business_restaurant_located_inErr = $create_business_restaurant_addr_detailErr = $create_business_restaurant_weekday_open_timeErr = $create_business_restaurant_weekday_end_timeErr = 
+      $create_business_restaurant_weekend_open_timeErr = $create_business_restaurant_weekend_end_timeErr = $create_business_restaurant_weekly_break_dateErr = "";
+    
       $create_cuisine_open = $create_cuisine_out = "";
       $create_cuisine_cuisine_type = $create_cuisine_cuisine_info = "";
       $create_cuisine_cuisine_typeErr = $create_cuisine_cuisine_infoErr = "";
@@ -265,7 +270,7 @@
 
 
       $review_filter_person_open = $review_filter_person_out =
-       $review_filter_person_person_id="";
+      $review_filter_person_person_id="";
 
 
       $filter_posts_restaurant_open = $filter_posts_restaurant_out =
@@ -608,6 +613,65 @@
             . $create_restaurant_weekend_open_time . "\", \"" . $create_restaurant_weekend_end_time . "\", \"" . $create_restaurant_weekly_break_date . "\", \"" . date("Y-m-d h:i:s") . "\", \"" . date("Y-m-d h:i:s") . "\", " . 1 . ")";
             $query = mysqli_query($conn, $sql) or die ( mysqli_error($conn));
             $create_restaurant_out = "Success";
+          }
+          /* #endregion */
+        }
+        elseif ( isset($_POST["submit_form_create_business_restaurant"] )){ 
+          /* #region submit_form_create_business_restaurant */
+          $create_business_restaurant_open = "is_open";
+          if (empty($_POST["create_business_restaurant_name"])) { 
+            $create_business_restaurant_nameErr = "You must enter a value for Name"; 
+          } else {
+            $create_business_restaurant_name = test_input($_POST["create_business_restaurant_name"]);
+          }
+          if (empty($_POST["create_business_restaurant_located_in"])) { 
+            $create_business_restaurant_located_inErr = "You must enter a value for location"; 
+          } else {
+            $create_business_restaurant_located_in = test_input($_POST["create_business_restaurant_located_in"]);
+          }
+          if (empty($_POST["create_business_restaurant_addr_detail"])) {
+            $create_business_restaurant_addr_detailErr = "You must enter address details"; 
+          } else {
+            $create_business_restaurant_addr_detail = test_input($_POST["create_business_restaurant_addr_detail"]);
+          }
+          if (empty($_POST["create_business_restaurant_weekday_open_time"])) {
+            $create_business_restaurant_weekday_open_timeErr = "You must enter a value for create_business_restaurant_weekday_open_time";
+          } else {
+            $create_business_restaurant_weekday_open_time = test_input($_POST["create_business_restaurant_weekday_open_time"]);
+          }
+          if (empty($_POST["create_business_restaurant_weekday_end_time"])) {
+            $create_business_restaurant_weekday_end_timeErr = "You must enter a value for create_business_restaurant_weekday_end_time";
+          } else {
+            $create_business_restaurant_weekday_end_time = test_input($_POST["create_business_restaurant_weekday_end_time"]);
+          }
+          if (empty($_POST["create_business_restaurant_weekend_open_time"])) {
+            $create_business_restaurant_weekend_open_timeErr = "You must enter a value for create_business_restaurant_weekend_open_time";
+          } else {
+            $create_business_restaurant_weekend_open_time = test_input($_POST["create_business_restaurant_weekend_open_time"]);
+          }
+          if (empty($_POST["create_business_restaurant_weekend_end_time"])) {
+            $create_business_restaurant_weekend_end_timeErr = "You must enter a value for create_business_restaurant_weekend_end_time";
+          } else {
+            $create_business_restaurant_weekend_end_time = test_input($_POST["create_business_restaurant_weekend_end_time"]);
+          }
+          if (empty($_POST["create_business_restaurant_weekly_break_date"])){
+            $create_business_restaurant_weekly_break_dateErr = "You must select a weekly_break_date"; 
+          }else {
+            $create_business_restaurant_weekly_break_date = test_input($_POST["create_business_restaurant_weekly_break_date"]);
+          }
+          $create_date = date("Y-m-d h:i:s");
+          if ($create_business_restaurant_nameErr === "" && $create_business_restaurant_located_inErr === "" && $create_business_restaurant_addr_detailErr === "" 
+          && $create_business_restaurant_weekday_open_timeErr === "" && $create_business_restaurant_weekday_end_timeErr === "" && $create_business_restaurant_weekend_open_timeErr === "" &&
+          $create_business_restaurant_weekend_end_timeErr === "" && $create_business_restaurant_weekly_break_dateErr === "" ){
+            $sql1 = "INSERT INTO business (name, located_in, addr_detail, create_date, last_update, is_active) VALUES (\"" . $create_business_restaurant_name . "\", " . $create_business_restaurant_located_in . ", \"" . $create_business_restaurant_addr_detail . "\", \"" . $create_date . "\", \"" . $create_date . "\", 1 );";
+            $sql2 =" INSERT INTO restaurant (restaurant_id, weekday_open_time, weekday_end_time, weekend_open_time, weekend_end_time, weekly_break_date, create_date, last_update, is_active) 
+            VALUES (LAST_INSERT_ID(), \"" . $create_business_restaurant_weekday_open_time . "\", \"" . $create_business_restaurant_weekday_end_time . "\", \"" 
+            . $create_business_restaurant_weekend_open_time . "\", \"" . $create_business_restaurant_weekend_end_time . "\", \"" . $create_business_restaurant_weekly_break_date . "\", \"" . $create_date . "\", \"" . $create_date . "\", " . 1 . ");";
+            $conn->begin_transaction();
+            $conn->query($sql1);
+            $conn->query($sql2);
+            $conn->commit();
+            $create_business_restaurant_out = "Success";
           }
           /* #endregion */
         }
@@ -1815,7 +1879,7 @@
           } elseif ($_POST["restaurant_rating_filter_order"] === "Lowest to Highest") {
             $order = " ORDER BY Star ASC";
           }
-          if (empty($_POST["restaurant_rating_filter_order"])) {
+          if (empty($_POST["restaurant_rating_filter_is_active"])) {
             $where = "0";
           } else {
             $where = "1";
@@ -2056,7 +2120,6 @@
       110887867 - Daekyung Kim - daekyung.kim@stonybrooke.du<br>
       110983860 - Haseung Lee - haseung.lee@stonybrook.edu
     </h5>
-
     <!-- Tab links -->
     
     <!-- 
@@ -2066,6 +2129,9 @@
       <button class="tablinks" onclick="openPart(event, 'create_location')" id="<?php echo $create_location_open; ?>">Create Location</button>
       <button class="tablinks" onclick="openPart(event, 'create_business')" id="<?php echo $create_business_open; ?>">Create Business</button>
       <button class="tablinks" onclick="openPart(event, 'create_restaurant')" id="<?php echo $create_restaurant_open; ?>">Create Restaurant</button>
+
+      <button class="tablinks" onclick="openPart(event, 'create_business_restaurant')" id="<?php echo $create_business_restaurant_open; ?>">Create Restaurant(Auto)</button>
+      
       <button class="tablinks" onclick="openPart(event, 'create_cuisine')" id="<?php echo $create_cuisine_open; ?>">Create Cuisine</button>
       <button class="tablinks" onclick="openPart(event, 'create_serves')" id="<?php echo $create_serves_open; ?>">Create Serves</button>
       <button class="tablinks" onclick="openPart(event, 'create_person')" id="<?php echo $create_person_open; ?>">Create Person</button>
@@ -2238,6 +2304,7 @@
     <!-- 
       /* #region create_restaurant */
     -->
+    
     <div id="create_restaurant" class="tabcontent">
       <h3>create_restaurant</h3>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
@@ -2274,10 +2341,76 @@
         <?php echo $create_restaurant_out; ?>
       </div> 
     </div>
+    
     <!-- 
       /* #endregion */
     -->
+    <!-- 
+      /* #region   */
+     -->
+     
+    <div id="create_business_restaurant" class="tabcontent">
+      <h3>Create Restaurant(AUTO)</h3>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+        business_restaurant Name: 
+        <input type="text" id="create_business_restaurant_name" name="create_business_restaurant_name" value="<?php echo $create_business_restaurant_name ?>">
+        <font color="red"><?php echo $create_business_restaurant_nameErr ?></font><br>
+        
+        Located In FK: Location's Building Management Number:
+        <input type="number" id="create_business_restaurant_located_in" name="create_business_restaurant_located_in" value="<?php echo $create_business_restaurant_located_in ?>">
+        <font color="red"><?php echo $create_business_restaurant_located_inErr ?></font><br>
+        
+        Address Detail: 
+        <input type="text" id="create_business_restaurant_addr_detail" name="create_business_restaurant_addr_detail" value="<?php echo $create_business_restaurant_addr_detail ?>">
+        <font color="red"><?php echo $create_business_restaurant_addr_detailErr ?></font><br>
+        
+        weekday_open_time: 
+        <input type="time" id="create_business_restaurant_weekday_open_time" name="create_business_restaurant_weekday_open_time" value="<?php echo $create_business_restaurant_weekday_open_time ?>">
+        <font color="red"><?php echo $create_business_restaurant_weekday_open_timeErr ?></font><br>
+        
+        weekday_end_time: 
+        <input type="time" id="create_business_restaurant_weekday_end_time" name="create_business_restaurant_weekday_end_time" value="<?php echo $create_business_restaurant_weekday_end_time ?>">
+        <font color="red"><?php echo $create_business_restaurant_weekday_end_timeErr ?></font><br>
+        
+        weekend_open_time: 
+        <input type="time" id="create_business_restaurant_weekend_open_time" name="create_business_restaurant_weekend_open_time" value="<?php echo $create_business_restaurant_weekend_open_time ?>">
+        <font color="red"><?php echo $create_business_restaurant_weekend_open_timeErr ?></font><br>
+        
+        weekend_end_time: 
+        <input type="time" id="create_business_restaurant_weekend_end_time" name="create_business_restaurant_weekend_end_time" value="<?php echo $create_business_restaurant_weekend_end_time ?>">
+        <font color="red"><?php echo $create_business_restaurant_weekend_end_timeErr ?></font><br>
+        
+        weekly_break_date: 
+        <input type="radio" id="create_business_restaurant_weekly_break_date_None" name="create_business_restaurant_weekly_break_date" value="None">
+        <label for="create_business_restaurant_weekly_break_date_None">None</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Mon" name="create_business_restaurant_weekly_break_date" value="Mon">
+        <label for="create_business_restaurant_weekly_break_date_Mon">Mon</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Tue" name="create_business_restaurant_weekly_break_date" value="Tue">
+        <label for="create_business_restaurant_weekly_break_date_Tue">Tue</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Wed" name="create_business_restaurant_weekly_break_date" value="Wed">
+        <label for="create_business_restaurant_weekly_break_date_Wed">Wed</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Thu" name="create_business_restaurant_weekly_break_date" value="Thu">
+        <label for="create_business_restaurant_weekly_break_date_Thu">Thu</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Fri" name="create_business_restaurant_weekly_break_date" value="Fri">
+        <label for="create_business_restaurant_weekly_break_date_Fri">Fri</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Sat" name="create_business_restaurant_weekly_break_date" value="Sat">
+        <label for="create_business_restaurant_weekly_break_date_Sat">Sat</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Sun" name="create_business_restaurant_weekly_break_date" value="Sun">
+        <label for="create_business_restaurant_weekly_break_date_Sun">Sun</label>
+        <input type="radio" id="create_business_restaurant_weekly_break_date_Weekend" name="create_business_restaurant_weekly_break_date" value="Weekend">
+        <label for="create_business_restaurant_weekly_break_date_Weekend">Weekend</label>
+        <font color="red"><?php echo $create_business_restaurant_weekly_break_dateErr ?></font><br>
 
+        <input type="submit" name="submit_form_create_business_restaurant" value="Submit">
+        <button type="reset" onclick="clearElement('create_business_restaurant_div')" value="Reset">Clear Output</button>
+      </form>
+      <div id="create_business_restaurant_div">
+        <?php echo $create_business_restaurant_out; ?>
+      </div> 
+    </div>
+    <!-- 
+      /* #endregion */
+     -->
     <!-- 
       /* #region create_cuisine */
     -->
@@ -2305,7 +2438,7 @@
     <!-- 
       /* #endregion */
     -->
-
+    
     <!-- 
       /* #region create_serves */
     -->
@@ -2366,6 +2499,7 @@
     <!-- 
       /* #endregion */
     -->
+    
     
     <!-- 
       /* #region create_works_at */
@@ -2639,7 +2773,7 @@
         <?php echo $read_discussion_reply_out; ?>
       </div> 
     </div>
-
+   
     <!-- 
       /* #endregion */
     -->
@@ -2714,14 +2848,17 @@
         /* #endregion */
       -->
     </div>
-
+    
+   
     <div id="update_restaurant" class="tabcontent">
       <!-- 
         /* #region Update Restaurant */
       -->
+      
       <h3>Update Restaurant</h3>
       <div id="update_restaurant_read_div">
         <?php echo read_restaurant(""); ?>
+        
       </div> 
       <br>
       <font color="red"><?php echo $update_restaurantErr ?></font>
@@ -2732,10 +2869,12 @@
         <font color="red"><?php echo $update_restaurant_weekday_open_timeErr ?></font><br>
         Weekday End Time: <input type="time" id="update_restaurant_weekday_end_time" name="update_restaurant_weekday_end_time" value="<?php echo $update_restaurant_weekday_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekday_end_timeErr ?></font><br>
+        
         Weekend Open Time: <input type="time" id="update_restaurant_weekend_open_time" name="update_restaurant_weekend_open_time" value="<?php echo $update_restaurant_weekend_open_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_open_timeErr ?></font><br>
         Weekend End Time: <input type="time" id="update_restaurant_weekend_end_time" name="update_restaurant_weekend_end_time" value="<?php echo $update_restaurant_weekend_end_time ?>">
         <font color="red"><?php echo $update_restaurant_weekend_end_timeErr ?></font><br>
+        
         Weekly Break Time: <input type="radio" id="update_restaurant_weekly_break_date_None" name="update_restaurant_weekly_break_date" value="None"><label for="update_restaurant_weekly_break_date_None">None</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Mon" name="update_restaurant_weekly_break_date" value="Mon"><label for="update_restaurant_weekly_break_date_Mon">Mon</label>
         <input type="radio" id="update_restaurant_weekly_break_date_Tue" name="update_restaurant_weekly_break_date" value="Tue"><label for="update_restaurant_weekly_break_date_Tue">Tue</label>
@@ -2758,6 +2897,8 @@
         /* #endregion */
       -->
     </div>
+
+
 
     <div id="update_cuisine" class="tabcontent">
       <!-- 
@@ -2823,7 +2964,7 @@
         /* #endregion */
       -->
     </div>
-
+    
     <div id="update_person" class="tabcontent">
 
       <!-- 
@@ -3190,7 +3331,7 @@
     -->
 
    
-
+    
 
     <!-- ############################################### ######################## ############################################### -->
     <!-- ############################################### Filter Forms Tab Content ############################################### -->
@@ -3246,7 +3387,7 @@
             <option value="Highest to Lowest">Highest to Lowest</order>
             <option value="Lowest to Highest">Lowest to Highest</order>
           </select><br><br>
-          Is acitve:
+          Is Acitve:
           <input type="checkbox" id="restaurant_rating_filter_is_active" name="restaurant_rating_filter_is_active">
           <br><br>
         <input type="submit" name="submit_form_restaurant_rating_filter" value="Submit">
